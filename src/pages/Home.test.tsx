@@ -88,10 +88,13 @@ describe('home', () => {
 })
 
 describe('about', () => {
-  it('shows only the links that exist and no contact form', () => {
+  it('shows the GitHub and LinkedIn links (clean urls) and no contact form', () => {
     renderWithState(<About />)
     expect(screen.getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', 'https://github.com/NemirovskyDev')
-    expect(screen.queryByRole('link', { name: 'LinkedIn' })).toBeNull()
+    expect(screen.getByRole('link', { name: 'LinkedIn' })).toHaveAttribute(
+      'href',
+      'https://www.linkedin.com/in/bernardo-nemirovsky-b21a4a3b2/',
+    )
     expect(document.querySelector('form, input, textarea, a[href^="mailto:"]')).toBeNull()
   })
 })
