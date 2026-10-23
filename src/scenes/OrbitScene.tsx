@@ -4,7 +4,7 @@ import { useTexture } from '@react-three/drei'
 import { MathUtils, type Group } from 'three'
 
 const RADIUS = 4.4
-const SIZE: [number, number] = [1.6, 2.4] // 2:3 covers
+const SIZE: [number, number] = [2, 3] // 2:3 covers
 
 function Ring({ covers }: { covers: string[] }) {
   const textures = useTexture(covers)
@@ -26,7 +26,7 @@ function Ring({ covers }: { covers: string[] }) {
         return (
           <mesh key={covers[i]} position={[Math.sin(a) * RADIUS, 0, Math.cos(a) * RADIUS]} rotation={[0, a, 0]}>
             <planeGeometry args={SIZE} />
-            <meshBasicMaterial map={map} transparent opacity={0.38} toneMapped={false} />
+            <meshBasicMaterial map={map} transparent opacity={0.8} toneMapped={false} />
           </mesh>
         )
       })}
@@ -47,7 +47,8 @@ export default function OrbitScene({ covers }: { covers: string[] }) {
     <Canvas
       dpr={[1, 1.5]}
       frameloop={visible ? 'always' : 'never'}
-      camera={{ position: [0, 0.6, 9.5], fov: 45 }}
+      camera={{ position: [0, 2.6, 10], fov: 45 }}
+      onCreated={({ camera }) => camera.lookAt(0, -0.3, 0)}
       gl={{ antialias: true, powerPreference: 'low-power' }}
     >
       <Ring covers={covers} />
