@@ -1,0 +1,12 @@
+:root {
+  --bg: #07080d;
+  --card: #11131c;
+  --fg: #f4f5f8;
+  --muted: #9aa3b5;
+  --border: #2a2f3d;
+  --accent: #f5b83d;
+  --on-accent: #07080d;
+  --radius: 14px;
+  --gutter: clamp(16px, 4vw, 48px);
+  --font: 'Inter', system-ui, sans-serif;
+}

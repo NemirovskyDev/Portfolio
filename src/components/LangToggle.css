@@ -1,0 +1,10 @@
+.lang-toggle {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 12px;
+  font-weight: 600;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+.lang-toggle:hover { border-color: var(--accent); }

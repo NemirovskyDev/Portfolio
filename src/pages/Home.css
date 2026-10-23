@@ -1,0 +1,30 @@
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px var(--gutter, 16px);
+  background: linear-gradient(to bottom, rgb(7 8 13 / 92%), rgb(7 8 13 / 0%));
+}
+.wordmark {
+  min-width: 0;
+  overflow: hidden;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.topbar-actions { display: flex; flex: none; align-items: center; gap: 8px; }
+.topbar-btn {
+  min-height: 44px;
+  white-space: nowrap;
+  padding: 0 14px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+.topbar-btn:hover { border-color: var(--accent); }

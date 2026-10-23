@@ -1,0 +1,22 @@
+.morph {
+  --u: min(44vmin, 380px);
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: var(--bg);
+  pointer-events: none;
+  overflow: hidden;
+}
+.morph-tile {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: clamp(56px, 11vmin, 110px);
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  will-change: transform;
+}
+.morph-tile img { width: 100%; height: 100%; object-fit: cover; display: block; }

@@ -1,0 +1,5 @@
+.about { max-width: 720px; padding: 32px var(--gutter, 16px) 64px; }
+.about h2 { margin: 0 0 8px; font-size: 1.25rem; }
+.about p { color: var(--muted); }
+.about-links { display: flex; gap: 16px; margin: 16px 0 0; padding: 0; list-style: none; }
+.about-links a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; }

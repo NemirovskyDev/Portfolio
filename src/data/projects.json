@@ -1,0 +1,172 @@
+[
+  {
+    "id": "reveste",
+    "categoria": "Sites",
+    "capa": "projetos/reveste/cover.webp",
+    "fundo": "projetos/reveste/backdrop.webp",
+    "titulo": { "pt": "Reveste", "en": "Reveste" },
+    "resumo": {
+      "pt": "Site de aluguel de roupas de marca por assinatura, com compra avulsa, doação de peças, guia de medidas e looks.",
+      "en": "Website for renting designer clothes by subscription, with one-off purchase, clothing donation, a size guide and curated looks."
+    },
+    "proposito": {
+      "pt": "Tornar roupas de marca acessíveis no Brasil e incentivar o reaproveitamento, com uma experiência animada de entrar na loja e foco em conversão.",
+      "en": "Make designer clothes accessible in Brazil and encourage reuse, with an animated walk-into-the-store experience focused on conversion."
+    },
+    "papel": {
+      "pt": "Design e desenvolvimento completos do front-end, regras de negócio e publicação.",
+      "en": "Full front-end design and development, business rules and deployment."
+    },
+    "stack": ["Next.js", "React", "Tailwind CSS", "motion", "GSAP", "React Three Fiber", "zustand", "Zod", "vitest"],
+    "status": "no-ar",
+    "links": [{ "label": "Site", "url": "https://nemirovskydev.github.io/Reveste/" }]
+  },
+  {
+    "id": "pkz",
+    "categoria": "Sites",
+    "capa": "projetos/pkz/cover.webp",
+    "fundo": "projetos/pkz/backdrop.webp",
+    "titulo": { "pt": "PKZ Lab e One to One", "en": "PKZ Lab and One to One" },
+    "resumo": {
+      "pt": "Landing de entrada e dois sites para duas marcas, um em tema escuro e outro em tema claro.",
+      "en": "A gateway landing page and two websites for two brands, one in a dark theme and one in a light theme."
+    },
+    "proposito": {
+      "pt": "Projeto extensionista de Front-End: entregar sites reais para clientes, com identidade visual própria para cada marca.",
+      "en": "Front-End outreach project: deliver real websites for clients, with a distinct visual identity for each brand."
+    },
+    "papel": {
+      "pt": "Desenvolvimento em equipe de 7 pessoas.",
+      "en": "Development as part of a team of 7."
+    },
+    "stack": ["HTML", "CSS", "JavaScript"],
+    "status": "em-andamento"
+  },
+  {
+    "id": "tabbit",
+    "categoria": "Hackathons",
+    "capa": "projetos/tabbit/cover.webp",
+    "fundo": "projetos/tabbit/backdrop.webp",
+    "titulo": { "pt": "Tabbit", "en": "Tabbit" },
+    "resumo": {
+      "pt": "Vale-refeição pago em USDC na rede Solana, criado no hackathon Colosseum Brasil.",
+      "en": "A meal voucher paid in USDC on the Solana network, built at the Colosseum Brazil hackathon."
+    },
+    "proposito": {
+      "pt": "Mostrar como benefícios de alimentação podem ser pagos com stablecoins, de forma simples para empresas e funcionários.",
+      "en": "Show how meal benefits can be paid with stablecoins, in a simple way for companies and employees."
+    },
+    "papel": {
+      "pt": "Dev B: desenvolvimento do app web.",
+      "en": "Dev B: built the web app."
+    },
+    "stack": ["Solana", "USDC", "Web"],
+    "status": "no-ar",
+    "links": [{ "label": "Site", "url": "https://tabbit-sol.vercel.app" }]
+  },
+  {
+    "id": "orquestrador",
+    "categoria": "IA e Agentes",
+    "capa": "projetos/orquestrador/cover.webp",
+    "fundo": "projetos/orquestrador/backdrop.webp",
+    "titulo": { "pt": "Orquestrador multiagente", "en": "Multi-agent orchestrator" },
+    "resumo": {
+      "pt": "Prompt para o Claude Code que divide o trabalho entre três níveis de modelos: Opus orquestra e valida, Sonnet lidera e Haiku executa.",
+      "en": "A Claude Code prompt that splits work across three model tiers: Opus orchestrates and validates, Sonnet leads and Haiku executes."
+    },
+    "proposito": {
+      "pt": "Entregar tarefas grandes com mais qualidade e menor custo, usando o modelo certo para cada papel.",
+      "en": "Deliver large tasks with higher quality and lower cost by using the right model for each role."
+    },
+    "papel": {
+      "pt": "Autoria do desenho dos papéis e do prompt.",
+      "en": "Author of the role design and the prompt."
+    },
+    "stack": ["Claude Code", "Prompt engineering", "Agentes"],
+    "status": "concluido"
+  },
+  {
+    "id": "companion",
+    "categoria": "IA e Agentes",
+    "capa": "projetos/companion/cover.webp",
+    "fundo": "projetos/companion/backdrop.webp",
+    "titulo": { "pt": "Companion App e Validador", "en": "Companion App and Validator" },
+    "resumo": {
+      "pt": "App offline do jogo da AP2 que detecta dados sensíveis em prompts e deixa o avaliador revisar antes de dar a nota.",
+      "en": "Offline companion for the AP2 board game that detects sensitive data in prompts and lets the judge review before scoring."
+    },
+    "proposito": {
+      "pt": "Dar ao jogo um juiz confiável e rápido, que funciona no celular em modo avião.",
+      "en": "Give the game a fast and reliable judge that works on a phone in airplane mode."
+    },
+    "papel": {
+      "pt": "Desenho e desenvolvimento do app e da lógica de detecção.",
+      "en": "Design and development of the app and the detection logic."
+    },
+    "stack": ["HTML", "CSS", "JavaScript"],
+    "status": "em-andamento"
+  },
+  {
+    "id": "ap2",
+    "categoria": "Universidade",
+    "capa": "projetos/ap2/cover.webp",
+    "fundo": "projetos/ap2/backdrop.webp",
+    "titulo": { "pt": "Foi isso que eu pedi?", "en": "Is this what I asked for?" },
+    "resumo": {
+      "pt": "Jogo de tabuleiro sobre engenharia de prompt, ambientado na Cidade-Prompt de 2050.",
+      "en": "A board game about prompt engineering, set in Prompt City in the year 2050."
+    },
+    "proposito": {
+      "pt": "Ensinar a escrever pedidos claros para IA de forma divertida, aplicando Scrum na disciplina de Métodos Ágeis.",
+      "en": "Teach how to write clear requests to AI in a fun way, applying Scrum in the Agile Methods course."
+    },
+    "papel": {
+      "pt": "Scrum Master do time, com Kanban no Notion e roadmap no Miro.",
+      "en": "Team Scrum Master, with a Kanban board in Notion and a roadmap in Miro."
+    },
+    "stack": ["Scrum", "Notion", "Miro"],
+    "status": "em-andamento"
+  },
+  {
+    "id": "bombas",
+    "categoria": "Hardware",
+    "capa": "projetos/bombas/cover.webp",
+    "fundo": "projetos/bombas/backdrop.webp",
+    "titulo": { "pt": "3 Bombas", "en": "3 Pumps" },
+    "resumo": {
+      "pt": "Sistema com três bombas controlado por um Arduino Mega, com LEDs, potenciômetros, display de 7 segmentos e buzzer.",
+      "en": "A three-pump system driven by an Arduino Mega, with LEDs, potentiometers, a 7-segment display and a buzzer."
+    },
+    "proposito": {
+      "pt": "Trabalho de Arquitetura de Computadores para praticar eletrônica, programação de microcontrolador e montagem.",
+      "en": "Computer Architecture project to practice electronics, microcontroller programming and assembly."
+    },
+    "papel": {
+      "pt": "Montagem da placa, programação e projeto da caixa impressa em 3D.",
+      "en": "Board assembly, programming and design of the 3D-printed enclosure."
+    },
+    "stack": ["Arduino", "C/C++", "Eletrônica", "Impressão 3D"],
+    "status": "em-andamento"
+  },
+  {
+    "id": "b3",
+    "categoria": "Ferramentas",
+    "capa": "projetos/b3/cover.webp",
+    "fundo": "projetos/b3/backdrop.webp",
+    "titulo": { "pt": "Consulta à B3", "en": "B3 Lookup" },
+    "resumo": {
+      "pt": "App em Python que consulta a bolsa brasileira e mostra preços, variações e indicadores dos ativos.",
+      "en": "A Python app that queries the Brazilian stock exchange and shows prices, variations and indicators."
+    },
+    "proposito": {
+      "pt": "Reunir os dados de análise de ações e FIIs em um só lugar, sem abrir várias páginas.",
+      "en": "Gather stock and REIT analysis data in one place without opening several pages."
+    },
+    "papel": {
+      "pt": "Desenvolvimento completo.",
+      "en": "Full development."
+    },
+    "stack": ["Python", "yfinance", "Web scraping"],
+    "status": "em-andamento"
+  }
+]
