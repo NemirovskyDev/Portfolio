@@ -20,8 +20,8 @@
   min-width: 0;
   overflow: hidden;
   font-family: var(--display);
-  font-size: 1.5rem;
-  letter-spacing: 0.04em;
+  font-size: 1rem;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   text-overflow: ellipsis;
   white-space: nowrap;

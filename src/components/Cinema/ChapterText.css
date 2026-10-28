@@ -9,6 +9,8 @@
   pointer-events: none;
 }
 .chapter-text .chapter-open { pointer-events: auto; }
+/* the big opening title sits lower, clear of the small name in the header on short windows */
+.chapter-text:has(.chapter-title--opening) { padding-bottom: calc(7svh + 60px); }
 .chapter-block { display: grid; gap: 16px; max-width: min(100%, 1200px); }
 
 .chapter-title {
@@ -22,8 +24,7 @@
   text-wrap: balance;
   overflow-wrap: anywhere;
 }
-/* two lines must also fit the viewport height, or the title runs under the header on short windows */
-.chapter-title--opening { font-size: clamp(4rem, min(17vw, 24svh), 13rem); }
+.chapter-title--opening { font-size: clamp(4rem, 17vw, 13rem); }
 /* the mask clips the rise animation; the padding keeps accents on capitals (À, Ç) from being cut */
 .chapter-line { display: inline-block; overflow: hidden; vertical-align: top; padding-top: 0.14em; margin-top: -0.14em; }
 .chapter-word { display: inline-block; }
