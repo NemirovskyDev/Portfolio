@@ -19,7 +19,7 @@ Real range, built by one person: AI agents, web sites with clients and live depl
 Static site on GitHub Pages (https://nemirovskydev.github.io/Portfolio/), built with Vite, React, TypeScript, React Three Fiber, motion and Lenis; deploys through GitHub Actions on every push to `main` after lint, tests and build. Content lives in `src/data/projects.json` (PT and EN per field); images are in `public/projetos/<id>/` (cover 2:3, backdrop 16:9, screenshots). Commits are authored as Bernardo; nothing is pushed or deployed without his confirmation.
 
 ## Capabilities and Constraints
-- 10 projects: Reveste, PKZ Lab and One to One, Tabbit, Orquestrador multiagente, Companion App and Validator, Foi isso que eu pedi? (AP2), 3 Bombas, Consulta à B3, Jarvis, Chat Amigos.
+- 10 projects: Reveste, PKZ Lab and One to One, Tabbit, Orquestrador multiagente, Companion App and Validator, Foi isso que eu pedi? (AP2), 3 Bombas, Consultas B3, Jarvis, Chat Amigos.
 - Content, galleries and links of those 10 projects stay as they are; only the way they are presented may change.
 - PT-BR and EN must keep working from any screen; every project keeps a direct link (`#/p/<id>`).
 - Open product decision: the profile gate (Recrutador, Dev, Curioso) was not listed as a commitment; it may be kept, reshaped or dropped by the redesign.

@@ -243,7 +243,7 @@
     "categoria": "Ferramentas",
     "capa": "projetos/b3/cover.webp",
     "fundo": "projetos/b3/backdrop.webp",
-    "titulo": { "pt": "Consulta à B3", "en": "B3 Lookup" },
+    "titulo": { "pt": "Consultas B3", "en": "B3 Lookup" },
     "resumo": {
       "pt": "App em Python que consulta a bolsa brasileira e mostra preços, variações e indicadores dos ativos.",
       "en": "A Python app that queries the Brazilian stock exchange and shows prices, variations and indicators."
