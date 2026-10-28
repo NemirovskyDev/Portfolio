@@ -259,5 +259,74 @@
       {"pt":"coletores.py busca os dados e consultas.py cuida da interação, então a fonte pode mudar sem mexer no resto.","en":"coletores.py fetches the data and consultas.py handles interaction, so a source can change without touching the rest."}
     ],
     "desafios": {"pt":"O Fundamentus não tem uma página fácil por ticker, então o app baixa a tabela inteira e filtra o ativo. Ainda tenho um bug aberto: a codificação ISO-8859-1 corrompe os nomes das colunas.","en":"Fundamentus has no easy per-ticker page, so the app downloads the whole table and filters it. One bug is still open: the ISO-8859-1 encoding garbles the column names."}
+  },
+  {
+    "id": "jarvis",
+    "categoria": "IA e Agentes",
+    "capa": "projetos/jarvis/cover.webp",
+    "fundo": "projetos/jarvis/backdrop.webp",
+    "titulo": { "pt": "Jarvis", "en": "Jarvis" },
+    "resumo": {
+      "pt": "Assistente de voz pessoal para Windows, inspirado no JARVIS do Homem de Ferro, que entende português e responde em inglês britânico.",
+      "en": "Personal voice assistant for Windows, inspired by Iron Man's JARVIS, that understands Portuguese and answers in British English."
+    },
+    "proposito": {
+      "pt": "Ter um assistente que ouve e fala no próprio PC, com memória em notas do Obsidian e raciocínio vindo do Claude Code, sem chave de API.",
+      "en": "Have an assistant that listens and speaks on my own PC, with memory in Obsidian notes and reasoning from Claude Code, with no API key."
+    },
+    "papel": {
+      "pt": "Desenvolvimento completo.",
+      "en": "Full development."
+    },
+    "stack": ["Python", "Claude Code", "faster-whisper", "Kokoro", "openWakeWord", "pywebview", "Obsidian"],
+    "status": "concluido",
+    "links": [{ "label": "GitHub", "url": "https://github.com/NemirovskyDev/Jarvis" }],
+    "funcionalidades": [
+      {"pt":"Chamado por \"Hey Jarvis\", duas palmas, clique na esfera ou texto.","en":"Called by saying \"Hey Jarvis\", clapping twice, clicking the sphere or typing."},
+      {"pt":"Entende português e responde em inglês britânico, com voz formal de mordomo (Kokoro).","en":"Understands Portuguese and answers in British English, in a formal butler voice (Kokoro)."},
+      {"pt":"Reconhecimento e síntese de voz rodam no PC; o raciocínio vem do Claude Code, com a conta do Claude e sem chave de API.","en":"Speech recognition and synthesis run on the PC; the reasoning comes from Claude Code, using the Claude account with no API key."},
+      {"pt":"Painel azul em tela cheia com clima, agenda, e-mails (só leitura), cotações, notícias e uso do plano Claude.","en":"Full-screen blue panel with weather, calendar, e-mails (read-only), market quotes, news and Claude plan usage."},
+      {"pt":"Second Brain em notas Markdown no Obsidian, lido antes de cada resposta; edições aparecem em cerca de 3 segundos.","en":"A Second Brain of Markdown notes in Obsidian, read before every answer; edits show up in about 3 seconds."},
+      {"pt":"Morning Digest falado todo dia: agenda, e-mails de ação, notícias, cotações e prazos.","en":"A daily spoken Morning Digest: agenda, action e-mails, news, quotes and deadlines."}
+    ],
+    "desafios": {"pt":"Meu desafio foi juntar uma voz totalmente local (palavra de ativação, palmas, Whisper e Kokoro) com o raciocínio do Claude Code, sem chave de API, e deixar a privacidade clara: o áudio fica no PC, os conectores de e-mail e agenda são só de leitura e o README documenta o que sai do computador.","en":"My challenge was combining a fully local voice pipeline (wake word, claps, Whisper and Kokoro) with Claude Code reasoning, with no API key, and keeping privacy clear: audio stays on the PC, the e-mail and calendar connectors are read-only, and the README documents what leaves the computer."},
+    "galeria": [
+      {"src":"projetos/jarvis/shot-1.webp","alt":{"pt":"Painel do Jarvis com a esfera do Second Brain, clima, uso do sistema e uso do Claude","en":"Jarvis panel with the Second Brain sphere, weather, system usage and Claude usage"}}
+    ]
+  },
+  {
+    "id": "chat-amigos",
+    "categoria": "Sites",
+    "capa": "projetos/chat-amigos/cover.webp",
+    "fundo": "projetos/chat-amigos/backdrop.webp",
+    "titulo": { "pt": "Chat Amigos", "en": "Chat Amigos" },
+    "resumo": {
+      "pt": "App leve de vídeo, áudio, compartilhamento de tela e chat para um grupo de amigos.",
+      "en": "A lightweight video, audio, screen-sharing and chat app for a group of friends."
+    },
+    "proposito": {
+      "pt": "Ter um lugar leve para o grupo de amigos conversar por vídeo, áudio e chat.",
+      "en": "Have a lightweight place for a group of friends to talk by video, audio and chat."
+    },
+    "papel": {
+      "pt": "Desenvolvimento completo.",
+      "en": "Full development."
+    },
+    "stack": ["Node.js", "Express", "Socket.io", "WebRTC", "JavaScript"],
+    "status": "concluido",
+    "links": [{ "label": "GitHub", "url": "https://github.com/NemirovskyDev/chat-amigos" }],
+    "funcionalidades": [
+      {"pt":"Salas em que se entra com um nome, escolhendo se câmera e microfone começam ligados.","en":"Rooms you join with a name, choosing whether the camera and mic start on."},
+      {"pt":"Vídeo e áudio ponto a ponto por WebRTC; o Socket.io (servidor Express) só cuida de sinalização, presença e chat.","en":"Peer-to-peer video and audio over WebRTC; Socket.io (Express server) only handles signaling, presence and chat."},
+      {"pt":"Compartilhamento de tela que troca a faixa de vídeo ao vivo.","en":"Screen sharing that swaps the video track live."},
+      {"pt":"Chat de texto e mensagens de voz curtas gravadas no navegador.","en":"Text chat and short voice messages recorded in the browser."},
+      {"pt":"Grade de vídeo que sempre cabe na tela, layout para celular e botão de tela cheia em cada vídeo, inspirados no Discord.","en":"A video grid that always fits the screen, a phone layout and a fullscreen button on every tile, inspired by Discord."},
+      {"pt":"Avisos de entrada e saída no chat.","en":"Join and leave notices in the chat."}
+    ],
+    "desafios": {"pt":"Meu desafio foi fazer as chamadas funcionarem entre redes diferentes, onde a conexão direta do WebRTC falha por causa do NAT. Usei um relay TURN, com credenciais buscadas na Metered por variáveis de ambiente, e tentei gastar o mínimo da cota paga: STUN do Google primeiro, limite de bitrate e correção de vazamentos de recursos.","en":"My challenge was making calls work across different networks, where direct WebRTC fails because of NAT. I used a TURN relay, with credentials fetched from Metered through environment variables, and tried to spend as little of the paid quota as possible: Google STUN first, a bitrate cap and fixes for resource leaks."},
+    "galeria": [
+      {"src":"projetos/chat-amigos/shot-1.webp","alt":{"pt":"Tela de entrada com nome e sala","en":"Entry screen with name and room"}},
+      {"src":"projetos/chat-amigos/shot-2.webp","alt":{"pt":"Sala com canal de texto, canal de voz e uma mensagem no chat","en":"Room with a text channel, a voice channel and a chat message"}}
+    ]
   }
 ]

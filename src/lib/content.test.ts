@@ -44,6 +44,19 @@ describe('project detail content', () => {
     })
   })
 
+  it('includes jarvis and chat-amigos with GitHub links', () => {
+    const expected = {
+      jarvis: ['IA e Agentes', 'https://github.com/NemirovskyDev/Jarvis'],
+      'chat-amigos': ['Sites', 'https://github.com/NemirovskyDev/chat-amigos'],
+    }
+    for (const [id, [categoria, url]] of Object.entries(expected)) {
+      const p = projects.find((x) => x.id === id)
+      expect(p, id).toBeDefined()
+      expect(p!.categoria).toBe(categoria)
+      expect(p!.links).toContainEqual({ label: 'GitHub', url })
+    }
+  })
+
   it('names no people and has no financial data', () => {
     for (const word of FORBIDDEN) expect(raw).not.toContain(word)
   })

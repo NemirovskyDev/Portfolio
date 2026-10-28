@@ -70,6 +70,6 @@ describe('Row and StaticGrid', () => {
 
   it('StaticGrid renders every project', () => {
     renderWithState(<StaticGrid projects={projects} onOpen={() => {}} />)
-    expect(screen.getAllByRole('button')).toHaveLength(8)
+    expect(screen.getAllByRole('button')).toHaveLength(projects.length)
   })
 })

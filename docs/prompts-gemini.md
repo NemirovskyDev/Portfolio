@@ -96,3 +96,25 @@ Backdrop:
 ```text
 Horizontal 16:9 financial city skyline at night, luminous amber chart lines (#F5B83D) arcing across the sky like trend curves, no numbers or letters, near-black blue sky (#07080D), wide anamorphic lens, soft haze, film grain. Open dark space on the left for text. No text, no letters, no logos, no watermark.
 ```
+
+## Jarvis: `public/projetos/jarvis/`
+
+Cover:
+```text
+Vertical 2:3 cinematic poster. A glowing holographic sphere made of thin cyan and amber light strands floats above a dark desk, small luminous nodes orbiting it like a network of notes, a faint sound wave rippling from its core as if it is listening, near-black blue room (#07080D) with warm amber accents (#F5B83D), 50mm lens, shallow depth of field, fine film grain. Lower third dark and quiet. No text, no letters, no logos, no watermark, no superhero characters.
+```
+Backdrop:
+```text
+Horizontal 16:9 cinematic wide shot of a dark home office at night, a large monitor glowing with an abstract blue interface of circular gauges and a central light sphere, faint holographic sound waves drifting in the air, a single amber desk lamp (#F5B83D), near-black blue shadows (#07080D), volumetric haze, film grain. Open dark space on the left for text. No readable text on screens, no logos, no watermark, no superhero characters.
+```
+
+## Chat Amigos: `public/projetos/chat-amigos/`
+
+Cover:
+```text
+Vertical 2:3 cinematic poster. Several small glowing video-call tiles float in a dark space, each showing only a soft silhouette of a friend in warm light, connected by thin luminous lines like a peer-to-peer network, chat bubbles without any writing drifting between them, near-black blue background (#07080D) with amber highlights (#F5B83D) and a touch of soft violet, shallow depth of field, fine film grain. Lower third dark and quiet. No text, no letters, no logos, no watermark, no identifiable faces.
+```
+Backdrop:
+```text
+Horizontal 16:9 cinematic wide shot of a dark living room at night where a laptop screen shows a grid of glowing video-call tiles with soft silhouettes, a headset on the desk, thin light lines rising from the screen toward the ceiling like signals connecting distant homes, near-black blue tones (#07080D) with amber (#F5B83D) and soft violet accents, volumetric haze, film grain. Open dark space on the left for text. No readable text, no logos, no watermark, no identifiable faces.
+```
