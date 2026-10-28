@@ -2,6 +2,7 @@ import type { Lang, L10n, Status } from './types'
 
 const dict: Record<string, L10n> = {
   'site.name': { pt: 'Bernardo Nemirovsky', en: 'Bernardo Nemirovsky' },
+  'site.fullName': { pt: 'Bernardo Paes Nemirovsky Borges', en: 'Bernardo Paes Nemirovsky Borges' },
   'chapter.details': { pt: 'Ver detalhes', en: 'See details' },
   'modal.close': { pt: 'Fechar', en: 'Close' },
   'modal.purpose': { pt: 'Propósito', en: 'Purpose' },

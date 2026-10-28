@@ -54,7 +54,7 @@ export function CinemaStage({ chapters, projectCount, header, onOpen }: Props) {
     window.scrollTo({ top: Math.max(el.offsetTop + (index / last) * travel, 0), behavior: 'auto' })
     // a jump swaps the visible chapter while focus stays on the marker, so say what is now showing
     const c = chapters[index]
-    if (c) setAnnounce(`${c.kind === 'project' ? c.project.titulo[lang] : c.kind === 'opening' ? t('site.name', lang) : t('about.title', lang)}, ${index + 1}/${chapters.length}`)
+    if (c) setAnnounce(`${c.kind === 'project' ? c.project.titulo[lang] : c.kind === 'opening' ? t('site.fullName', lang) : t('about.title', lang)}, ${index + 1}/${chapters.length}`)
   }
 
   // the closing button vanishes with the credits, so focus moves to the timeline instead of falling to <body>

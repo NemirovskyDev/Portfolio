@@ -29,7 +29,7 @@ export function Home({ projects }: Props) {
 
   const header = (
     <header className="topbar">
-      <h1 className="wordmark">{t('site.name', lang)}</h1>
+      <h1 className="wordmark">{t('site.fullName', lang)}</h1>
       <div className="topbar-actions">
         <button type="button" className="topbar-btn" aria-haspopup="dialog" onClick={() => setIndexOpen(true)}>
           {t('index.open', lang)}

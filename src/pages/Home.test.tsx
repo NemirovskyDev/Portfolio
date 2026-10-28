@@ -37,7 +37,7 @@ describe('cinema mode', () => {
     expect(screen.getByRole('navigation', { name: 'Linha do tempo dos projetos' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Índice' })).toBeInTheDocument()
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1)
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Bernardo Nemirovsky')
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Bernardo Paes Nemirovsky Borges')
   })
 
   it('only the active chapter is reachable: the first project button is not focusable at the opening', () => {

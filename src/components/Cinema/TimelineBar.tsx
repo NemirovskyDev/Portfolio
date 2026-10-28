@@ -10,7 +10,7 @@ type Props = { chapters: Chapter[]; activeIndex: number; onJump: (index: number)
 const pad = (n: number) => String(n).padStart(2, '0')
 
 function chapterTitle(c: Chapter, lang: Lang): string {
-  if (c.kind === 'opening') return t('site.name', lang)
+  if (c.kind === 'opening') return t('site.fullName', lang)
   if (c.kind === 'credits') return t('about.title', lang)
   return c.project.titulo[lang]
 }

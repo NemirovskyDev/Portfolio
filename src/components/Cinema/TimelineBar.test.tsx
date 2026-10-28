@@ -17,7 +17,7 @@ describe('TimelineBar', () => {
     const nav = screen.getByRole('navigation', { name: 'Linha do tempo dos projetos' })
     const buttons = within(nav).getAllByRole('button')
     expect(buttons).toHaveLength(chapters.length)
-    expect(within(nav).getByRole('button', { name: 'Bernardo Nemirovsky' })).toBeInTheDocument()
+    expect(within(nav).getByRole('button', { name: 'Bernardo Paes Nemirovsky Borges' })).toBeInTheDocument()
     expect(within(nav).getByRole('button', { name: projects[0].titulo.pt })).toBeInTheDocument()
     expect(within(nav).getByRole('button', { name: 'Sobre mim e contato' })).toBeInTheDocument()
     expect(buttons.every((b) => b.getAttribute('type') === 'button')).toBe(true)
