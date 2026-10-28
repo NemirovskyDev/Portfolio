@@ -1,7 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { MorphTransition } from './MorphTransition'
-import { TunnelRows } from '../TunnelRows/TunnelRows'
 import { mockReducedMotion } from '../../test/utils'
 
 beforeEach(() => mockReducedMotion(false))
@@ -28,32 +27,5 @@ describe('MorphTransition', () => {
     const onDone = vi.fn()
     render(<MorphTransition covers={[]} onDone={onDone} />)
     expect(onDone).toHaveBeenCalledTimes(1)
-  })
-})
-
-describe('TunnelRows', () => {
-  it('renders rows with no transform when motion is reduced', () => {
-    mockReducedMotion(true)
-    render(
-      <TunnelRows>
-        <section>one</section>
-        <section>two</section>
-      </TunnelRows>,
-    )
-    expect(screen.getByText('one')).toBeInTheDocument()
-    expect(screen.getByText('two')).toBeInTheDocument()
-    expect(document.querySelector('.tunnel-static')).not.toBeNull()
-    expect(document.querySelector('[style*="transform"]')).toBeNull()
-  })
-
-  it('still renders every row when motion is allowed', () => {
-    render(
-      <TunnelRows>
-        <section>one</section>
-        <section>two</section>
-      </TunnelRows>,
-    )
-    expect(screen.getByText('one')).toBeInTheDocument()
-    expect(screen.getByText('two')).toBeInTheDocument()
   })
 })

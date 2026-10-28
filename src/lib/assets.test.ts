@@ -7,6 +7,10 @@ describe('assets', () => {
     expect(existsSync(`public/${path}`)).toBe(true)
   })
 
+  it.each(projects.flatMap((p) => (p.galeria ?? []).map((g) => g.src)))('gallery image public/%s exists', (path) => {
+    expect(existsSync(`public/${path}`)).toBe(true)
+  })
+
   it('has an Open Graph image and complete meta tags in index.html', () => {
     expect(existsSync('public/og.png')).toBe(true)
     const html = readFileSync('index.html', 'utf8')

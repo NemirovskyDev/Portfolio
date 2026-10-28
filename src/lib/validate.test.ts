@@ -51,3 +51,50 @@ describe('validateProjects', () => {
     expect(() => validateProjects({}, { strict: true })).toThrow(/array/)
   })
 })
+
+describe('validateProjects: detail fields', () => {
+  const detailed = {
+    ...valid,
+    funcionalidades: [{ pt: 'Uma coisa', en: 'One thing' }, { pt: 'Outra coisa', en: '' }],
+    desafios: { pt: 'Foi difícil', en: 'It was hard' },
+    galeria: [{ src: 'projetos/x/shot-1.webp', alt: { pt: 'Tela inicial', en: '' } }],
+  }
+
+  it('accepts the optional fields and falls back to pt when en is empty', () => {
+    const p = validateProjects([detailed], { strict: true })[0]
+    expect(p.funcionalidades?.map((f) => f.en)).toEqual(['One thing', 'Outra coisa'])
+    expect(p.desafios?.en).toBe('It was hard')
+    expect(p.galeria?.[0]).toEqual({ src: 'projetos/x/shot-1.webp', alt: { pt: 'Tela inicial', en: 'Tela inicial' } })
+  })
+
+  it('leaves the fields undefined when the project has none', () => {
+    const p = validateProjects([valid], { strict: true })[0]
+    expect(p.funcionalidades).toBeUndefined()
+    expect(p.desafios).toBeUndefined()
+    expect(p.galeria).toBeUndefined()
+  })
+
+  it('rejects funcionalidades that are not a list or have an empty pt', () => {
+    expect(() => validateProjects([{ ...detailed, funcionalidades: 'x' }], { strict: true })).toThrow(/funcionalidades/)
+    expect(() => validateProjects([{ ...detailed, funcionalidades: [{ pt: '', en: 'x' }] }], { strict: true })).toThrow(/funcionalidades/)
+  })
+
+  it.each(['//cdn.example/x.png', '../secret.webp', '/abs.webp', 'projetos/x/shot.gif', 'https://x.dev/a.webp'])(
+    'rejects gallery src %s (only relative image paths)',
+    (src) => {
+      expect(() => validateProjects([{ ...detailed, galeria: [{ src, alt: { pt: 'a', en: 'a' } }] }], { strict: true })).toThrow(/galeria/)
+    },
+  )
+
+  it('rejects a gallery item without src or alt', () => {
+    expect(() => validateProjects([{ ...detailed, galeria: [{ alt: { pt: 'a', en: 'a' } }] }], { strict: true })).toThrow(/galeria/)
+    expect(() => validateProjects([{ ...detailed, galeria: [{ src: 'a.webp', alt: { pt: '', en: '' } }] }], { strict: true })).toThrow(/galeria/)
+  })
+
+  it('does not drop the project in production when a detail field is bad: it drops only that project', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+    const bad = { ...detailed, id: 'bad', desafios: 5 }
+    expect(validateProjects([bad, valid], { strict: false }).map((p) => p.id)).toEqual(['x'])
+    warn.mockRestore()
+  })
+})

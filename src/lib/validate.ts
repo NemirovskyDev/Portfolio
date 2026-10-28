@@ -25,6 +25,22 @@ function l10n(id: string, field: string, v: unknown): L10n {
   return { pt, en: str(v.en) || pt }
 }
 
+function list(id: string, field: string, v: unknown): unknown[] {
+  if (!Array.isArray(v)) throw new ProjectError(id, field, 'must be a list')
+  return v
+}
+
+function parseGalleryItem(id: string, i: number, v: unknown) {
+  const field = `galeria[${i}]`
+  if (!isObj(v)) throw new ProjectError(id, field, 'must be an object')
+  const src = text(id, `${field}.src`, v.src)
+  // relative paths only: a leading slash or '//' would escape the deploy base or load from another host
+  if (!/^[\w\-./]+\.(webp|png|jpe?g|avif)$/i.test(src) || src.startsWith('/') || src.includes('..')) {
+    throw new ProjectError(id, `${field}.src`, 'must be a relative image path')
+  }
+  return { src, alt: l10n(id, `${field}.alt`, v.alt) }
+}
+
 function parseProject(raw: unknown): Project {
   if (!isObj(raw)) throw new ProjectError('?', 'item', 'is not an object')
   const id = text('?', 'id', raw.id)
@@ -53,6 +69,11 @@ function parseProject(raw: unknown): Project {
     stack: (raw.stack as string[]).map((s) => s.trim()),
     status,
     ...(links ? { links } : {}),
+    ...(raw.funcionalidades !== undefined
+      ? { funcionalidades: list(id, 'funcionalidades', raw.funcionalidades).map((f, i) => l10n(id, `funcionalidades[${i}]`, f)) }
+      : {}),
+    ...(raw.desafios !== undefined ? { desafios: l10n(id, 'desafios', raw.desafios) } : {}),
+    ...(raw.galeria !== undefined ? { galeria: list(id, 'galeria', raw.galeria).map((g, i) => parseGalleryItem(id, i, g)) } : {}),
   }
 }
 

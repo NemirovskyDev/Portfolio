@@ -23,3 +23,7 @@ a { color: var(--accent); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }
+
+/* browser surfaces follow the palette too */
+::selection { background: var(--accent); color: var(--on-accent); }
+html { scrollbar-color: var(--border) var(--bg); }

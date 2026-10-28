@@ -19,7 +19,21 @@
     },
     "stack": ["Next.js", "React", "Tailwind CSS", "motion", "GSAP", "React Three Fiber", "zustand", "Zod", "vitest"],
     "status": "no-ar",
-    "links": [{ "label": "Site", "url": "https://nemirovskydev.github.io/Reveste/" }]
+    "links": [{ "label": "Site", "url": "https://nemirovskydev.github.io/Reveste/" }],
+    "funcionalidades": [
+      {"pt":"Plano mensal de 4 peças, com 5% de desconto no Essencial e 10% no Premium.","en":"Monthly plan of 4 pieces, with 5% off the Essencial plan and 10% off the Premium plan."},
+      {"pt":"Aluguel avulso de 7, 14 ou 30 dias, por 15%, 25% ou 40% do valor da peça.","en":"One-off rental of 7, 14 or 30 days, for 15%, 25% or 40% of the piece value."},
+      {"pt":"Compra de qualquer peça por 70% do valor, menos o aluguel já pago.","en":"Buy any piece for 70% of its value, minus the rental already paid."},
+      {"pt":"Doação de roupas: a cada 3 peças, de 15% a 50% de desconto, conforme o tipo e a confirmação da equipe.","en":"Clothing donation: every 3 pieces earn a 15% to 50% discount depending on type, confirmed by the team."},
+      {"pt":"Guia de medidas com calculadora de tamanho.","en":"Size guide with a size calculator."},
+      {"pt":"Looks com 8 fotos de pessoas geradas por IA; as roupas são peças reais do catálogo e viram botões de compra.","en":"Styled looks with 8 AI-generated photos of people; the clothes are real catalog pieces and work as buy buttons."}
+    ],
+    "desafios": {"pt":"Meu maior desafio foi modelar as regras de preço: o aluguel custa uma porcentagem do valor da peça e a compra desconta o que já foi pago. Como não há servidor, sacola, pedido, conta e login ficam no navegador, e eu precisei manter tudo consistente só no front-end, com os dados validados com Zod.","en":"My biggest challenge was modeling the pricing rules: a rental costs a percentage of the piece value and a purchase subtracts what was already paid. With no server, the bag, orders, account and login live in the browser, so I had to keep everything consistent on the front end alone, with data validated with Zod."},
+    "galeria": [
+      {"src":"projetos/reveste/shot-1.webp","alt":{"pt":"Página inicial do Reveste com a arara 3D","en":"Reveste home page with the 3D clothing rack"}},
+      {"src":"projetos/reveste/shot-2.webp","alt":{"pt":"Catálogo com filtros de linha, marca, tipo e tamanho","en":"Catalog with line, brand, type and size filters"}},
+      {"src":"projetos/reveste/shot-3.webp","alt":{"pt":"Guia de medidas com instruções de como medir","en":"Size guide with measuring instructions"}}
+    ]
   },
   {
     "id": "pkz",
@@ -40,7 +54,24 @@
       "en": "Development as part of a team of 7."
     },
     "stack": ["HTML", "CSS", "JavaScript"],
-    "status": "em-andamento"
+    "status": "em-andamento",
+    "links": [
+      { "label": "Site", "url": "https://enzotrotto-ibmec.github.io/PFE-2026-2-Grupo-1-vanila/" },
+      { "label": "GitHub", "url": "https://github.com/enzotrotto-ibmec/PFE-2026-2-AP1-Grupo1-terca" }
+    ],
+    "funcionalidades": [
+      {"pt":"Landing de entrada que leva às duas marcas, PKZ Lab (tema escuro) e One to One (tema claro).","en":"A gateway landing page that leads to the two brands, PKZ Lab (dark theme) and One to One (light theme)."},
+      {"pt":"HTML, CSS e JavaScript puros, sem framework, por exigência da disciplina.","en":"Plain HTML, CSS and JavaScript with no framework, as the course required."},
+      {"pt":"Mobile-first, com menu hambúrguer no celular e menu completo no desktop.","en":"Mobile-first, with a hamburger menu on phones and the full menu on desktop."},
+      {"pt":"Sistema de agendamento integrado, com lógica em JavaScript fornecida pelo professor.","en":"Scheduling system integrated with JavaScript logic provided by the professor."},
+      {"pt":"Publicação no GitHub Pages, com documentação Scrum e protótipo.","en":"Published on GitHub Pages, with Scrum documentation and a prototype."}
+    ],
+    "desafios": {"pt":"Aprendi a integrar o sistema de agendamento usando a lógica em JavaScript que o professor forneceu, testando cada mudança para não quebrar o que já funcionava. Ainda tenho um bug aberto: uma pequena área de rolagem interna que prende a rolagem da página.","en":"I learned to integrate the scheduling system using the JavaScript logic the professor provided, testing every change so it would not break what already worked. One bug is still open: a small nested scroll area that traps page scrolling."},
+    "galeria": [
+      {"src":"projetos/pkz/shot-1.webp","alt":{"pt":"Portal que apresenta as duas marcas","en":"Portal presenting both brands"}},
+      {"src":"projetos/pkz/shot-2.webp","alt":{"pt":"Site da PKZ Lab em tema escuro","en":"PKZ Lab site in a dark theme"}},
+      {"src":"projetos/pkz/shot-3.webp","alt":{"pt":"Site do Studio One To One em tema claro","en":"Studio One To One site in a light theme"}}
+    ]
   },
   {
     "id": "tabbit",
@@ -62,7 +93,22 @@
     },
     "stack": ["Solana", "USDC", "Web"],
     "status": "no-ar",
-    "links": [{ "label": "Site", "url": "https://tabbit-sol.vercel.app" }]
+    "links": [
+      { "label": "Site", "url": "https://tabbit-sol.vercel.app" },
+      { "label": "GitHub", "url": "https://github.com/eftrotto/Tabbit" }
+    ],
+    "funcionalidades": [
+      {"pt":"A empresa financia um cofre do programa e define o saldo e as regras de cada funcionário, com recarga mensal.","en":"The employer funds a program vault and sets each employee's balance and rules, with a monthly top-up."},
+      {"pt":"Importação de planilha com erro por linha.","en":"Spreadsheet import with per-line errors."},
+      {"pt":"O funcionário entra com e-mail ou Google e paga o restaurante por QR, sem app de carteira e sem SOL.","en":"Employees sign in with email or Google and pay a restaurant by QR, with no wallet app and no SOL."},
+      {"pt":"Pagamento gasless: quem paga a taxa só co-assina depois de uma validação rigorosa.","en":"Gasless payment: the fee payer co-signs only after strict validation."},
+      {"pt":"O restaurante recebe na mesma transação, em cerca de um segundo, com vendas e estornos ao vivo.","en":"The restaurant is paid in the same transaction, in about a second, with live sales and refunds."},
+      {"pt":"Página pública mostra os pagamentos ao vivo e prova que os cofres cobrem os benefícios.","en":"A public page shows payments live and proves the vaults cover the benefits."}
+    ],
+    "desafios": {"pt":"Como Dev B, cuidei do app web. O mais difícil foi mostrar mensagens claras quando uma regra on-chain falha: o programa reverte o pagamento inteiro e a pessoa precisa entender o motivo, sem conhecer nada de blockchain.","en":"As Dev B, I built the web app. The hard part was showing clear messages when an on-chain rule fails: the program reverts the whole payment and the person needs to understand why, without knowing anything about blockchain."},
+    "galeria": [
+      {"src":"projetos/tabbit/shot-1.webp","alt":{"pt":"Página de transparência com os pagamentos da rede ao vivo","en":"Transparency page with live network payments"}}
+    ]
   },
   {
     "id": "orquestrador",
@@ -83,7 +129,16 @@
       "en": "Author of the role design and the prompt."
     },
     "stack": ["Claude Code", "Prompt engineering", "Agentes"],
-    "status": "concluido"
+    "status": "concluido",
+    "funcionalidades": [
+      {"pt":"Só ativa em projetos de várias etapas; perguntas simples recebem resposta normal.","en":"Only activates for multi-step projects; simple questions get a normal answer."},
+      {"pt":"Antes de agir, escolhe o papel, roda uma skill de planejamento e define critérios de aceite objetivos.","en":"Before acting, it picks the role, runs a planning skill and sets objective acceptance criteria."},
+      {"pt":"Time de até 2 subagentes líderes (Sonnet), cada um com até 2 executores (Haiku).","en":"A team of up to 2 lead subagents (Sonnet), each with up to 2 executors (Haiku)."},
+      {"pt":"Cada subagente recebe uma skill específica, e os líderes repassam a saída completa dos executores.","en":"Each subagent gets a specific skill, and leads pass along the full output of their executors."},
+      {"pt":"O Opus valida toda entrega, diz exatamente o que corrigir e encerra após 3 rodadas.","en":"Opus validates every delivery, says exactly what to fix, and stops after 3 rounds."},
+      {"pt":"Se um subagente trava e outro está livre, o trabalho é redistribuído e os dois atuam em dupla.","en":"If one subagent gets stuck and another is free, the work is reassigned and the two work as a pair."}
+    ],
+    "desafios": {"pt":"O principal desafio foi ter qualidade sem gastar tokens à toa, dando a cada papel o modelo certo. O outro foi evitar ciclos de correção infinitos: a validação tem no máximo 3 rodadas e, se os critérios não forem atendidos, o prompt para e relata a falha exata em vez de insistir.","en":"My biggest challenge was getting quality without wasting tokens, by giving each role the right model. The other was avoiding endless correction loops: validation has at most 3 rounds and, if the criteria are still not met, the prompt stops and reports the exact failure instead of retrying."}
   },
   {
     "id": "companion",
@@ -92,8 +147,8 @@
     "fundo": "projetos/companion/backdrop.webp",
     "titulo": { "pt": "Companion App e Validador", "en": "Companion App and Validator" },
     "resumo": {
-      "pt": "App offline do jogo da AP2 que detecta dados sensíveis em prompts e deixa o avaliador revisar antes de dar a nota.",
-      "en": "Offline companion for the AP2 board game that detects sensitive data in prompts and lets the judge review before scoring."
+      "pt": "App offline do jogo Foi isso que eu pedi? que detecta dados sensíveis em prompts e deixa o avaliador revisar antes de dar a nota.",
+      "en": "Offline companion app for the board game Is this what I asked for? that detects sensitive data in prompts and lets the judge review before scoring."
     },
     "proposito": {
       "pt": "Dar ao jogo um juiz confiável e rápido, que funciona no celular em modo avião.",
@@ -104,7 +159,19 @@
       "en": "Design and development of the app and the detection logic."
     },
     "stack": ["HTML", "CSS", "JavaScript"],
-    "status": "em-andamento"
+    "status": "em-andamento",
+    "funcionalidades": [
+      {"pt":"Funciona offline, em modo avião, num único arquivo HTML, com um aparelho por mesa.","en":"Works offline in airplane mode as a single HTML file, with one device per table."},
+      {"pt":"Cronometra cada turno pelo nível da casa do tabuleiro: 60, 120 ou 180 segundos.","en":"Times each turn by the board square level: 60, 120 or 180 seconds."},
+      {"pt":"Pontua até 4 jogadores ou grupos, no modo individual ou em grupo.","en":"Scores up to 4 players or groups, in individual or group mode."},
+      {"pt":"Avalia o prompt escrito pelo jogador, com detector de dados sensíveis.","en":"Evaluates the prompt a player wrote, with a sensitive-data detector."},
+      {"pt":"O avaliador humano revisa o prompt antes de a nota valer.","en":"The human evaluator reviews the prompt before the score counts."}
+    ],
+    "desafios": {"pt":"Aprendi a fazer uma checagem confiável sem internet e sem IA. Reaproveitei o detector de dados sensíveis de um protótipo anterior, com 74 casos de teste, e documentei 3 limitações conhecidas em vez de fingir que ele acerta tudo.","en":"I learned to build a reliable check with no internet and no AI. I reused the sensitive-data detector from an earlier prototype, with 74 test cases, and documented 3 known limitations instead of pretending it catches everything."},
+    "galeria": [
+      {"src":"projetos/companion/shot-1.webp","alt":{"pt":"Tela de início da partida: modo, jogadores e apelidos","en":"Match setup screen: mode, players and nicknames"}},
+      {"src":"projetos/companion/shot-2.webp","alt":{"pt":"Tela que pergunta quem joga e em que casa parou","en":"Screen asking who plays and which square they landed on"}}
+    ]
   },
   {
     "id": "ap2",
@@ -125,7 +192,15 @@
       "en": "Team Scrum Master, with a Kanban board in Notion and a roadmap in Miro."
     },
     "stack": ["Scrum", "Notion", "Miro"],
-    "status": "em-andamento"
+    "status": "em-andamento",
+    "funcionalidades": [
+      {"pt":"Tabuleiro de 40 casas em 3 níveis de dificuldade, mais 10 casas de desafio e uma torre final.","en":"A 40-square board in 3 difficulty levels, plus 10 challenge squares and a final tower."},
+      {"pt":"30 cartas de problema e cartas de superpoder.","en":"30 problem cards and superpower cards."},
+      {"pt":"Movimento com dois dados, para até 4 jogadores ou grupos.","en":"Movement with two dice, for up to 4 players or groups."},
+      {"pt":"Tema Cidade-Prompt, Ano 2050, que aborda vieses, dados sensíveis e LGPD.","en":"Theme \"Cidade-Prompt: Ano 2050\", on biases, sensitive data and LGPD."},
+      {"pt":"Feito para estudantes de escolas sem internet.","en":"Made for students in schools without internet."}
+    ],
+    "desafios": {"pt":"Como Scrum Master de um time de 6, conduzi 5 sprints na disciplina de Métodos Ágeis, com Kanban no Notion e visão e roadmap no Miro. Ainda falta vincular as 85 tarefas do Notion às histórias de usuário.","en":"As Scrum Master of a team of 6, I ran 5 sprints in the Agile Methods course, with a Kanban board in Notion and the vision and roadmap in Miro. Still pending: linking the 85 Notion tasks to user stories."}
   },
   {
     "id": "bombas",
@@ -138,15 +213,22 @@
       "en": "A three-pump system driven by an Arduino Mega, with LEDs, potentiometers, a 7-segment display and a buzzer."
     },
     "proposito": {
-      "pt": "Trabalho de Arquitetura de Computadores para praticar eletrônica, programação de microcontrolador e montagem.",
-      "en": "Computer Architecture project to practice electronics, microcontroller programming and assembly."
+      "pt": "Trabalho de Arquitetura de Computadores, que vale 30% da primeira nota, para praticar eletrônica, programação de microcontrolador e montagem.",
+      "en": "Computer Architecture project worth 30% of the first-term grade, to practice electronics, microcontroller programming and assembly."
     },
     "papel": {
       "pt": "Montagem da placa, programação e projeto da caixa impressa em 3D.",
       "en": "Board assembly, programming and design of the 3D-printed enclosure."
     },
     "stack": ["Arduino", "C/C++", "Eletrônica", "Impressão 3D"],
-    "status": "em-andamento"
+    "status": "em-andamento",
+    "funcionalidades": [
+      {"pt":"Arduino Mega 2560 como base do projeto.","en":"Arduino Mega 2560 as the base of the project."},
+      {"pt":"LEDs, potenciômetros, display de 7 segmentos (D5611) e buzzer.","en":"LEDs, potentiometers, a 7-segment display (D5611) and a buzzer."},
+      {"pt":"Placa soldada à mão.","en":"Hand-soldered board."},
+      {"pt":"Caixa sob medida impressa em 3D numa Ultimaker 3.","en":"Custom enclosure 3D-printed on an Ultimaker 3."}
+    ],
+    "desafios": {"pt":"Meu desafio foi soldar e planejar a ligação de vários componentes na mesma placa e projetar uma caixa que desse para imprimir. Ainda estou ligando potenciômetros, display e buzzer e descobrindo se o display é de ânodo comum ou cátodo comum.","en":"My challenge was soldering and planning the wiring of many components on one board, and designing an enclosure that could be printed. I am still wiring the potentiometers, display and buzzer, and finding out whether the display is common anode or common cathode."}
   },
   {
     "id": "b3",
@@ -167,6 +249,15 @@
       "en": "Full development."
     },
     "stack": ["Python", "yfinance", "Web scraping"],
-    "status": "em-andamento"
+    "status": "em-andamento",
+    "funcionalidades": [
+      {"pt":"Pede um ticker (PETR4, MXRF11) e mostra o preço atual.","en":"Asks for a ticker (PETR4, MXRF11) and shows the current price."},
+      {"pt":"Variação em R$ (não em %), com sinal explícito, no dia, em 1 mês, 6 meses e 1 ano.","en":"Change in R$ (not %), with explicit sign, for the day, 1 month, 6 months and 1 year."},
+      {"pt":"Máxima e mínima do dia só com o mercado fechado.","en":"Day high and low only when the market is closed."},
+      {"pt":"Indicadores do Fundamentus: P/L, P/VP e dividend yield; em FIIs, segmento e vacância média.","en":"Fundamentus indicators: P/E, P/B and dividend yield; for REITs, segment and average vacancy."},
+      {"pt":"Histórico opcional salvo em historico.xlsx.","en":"Optional history saved to historico.xlsx."},
+      {"pt":"coletores.py busca os dados e consultas.py cuida da interação, então a fonte pode mudar sem mexer no resto.","en":"coletores.py fetches the data and consultas.py handles interaction, so a source can change without touching the rest."}
+    ],
+    "desafios": {"pt":"O Fundamentus não tem uma página fácil por ticker, então o app baixa a tabela inteira e filtra o ativo. Ainda tenho um bug aberto: a codificação ISO-8859-1 corrompe os nomes das colunas.","en":"Fundamentus has no easy per-ticker page, so the app downloads the whole table and filters it. One bug is still open: the ISO-8859-1 encoding garbles the column names."}
   }
 ]

@@ -7,7 +7,9 @@
   justify-content: space-between;
   gap: 12px;
   padding: 8px var(--gutter, 16px);
-  background: linear-gradient(to bottom, rgb(7 8 13 / 92%), rgb(7 8 13 / 0%));
+  /* solid enough that the hero copy fading underneath never collides with the wordmark */
+  background: rgb(7 8 13 / 94%);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
 }
 .wordmark {
   min-width: 0;

@@ -16,6 +16,10 @@ const dict: Record<string, L10n> = {
   'modal.close': { pt: 'Fechar', en: 'Close' },
   'modal.purpose': { pt: 'Propósito', en: 'Purpose' },
   'modal.role': { pt: 'Meu papel', en: 'My role' },
+  'modal.features': { pt: 'Funcionalidades', en: 'Key features' },
+  'modal.challenges': { pt: 'Desafios e aprendizados', en: 'Challenges and lessons learned' },
+  'modal.gallery': { pt: 'Capturas de tela', en: 'Screenshots' },
+  'link.newTab': { pt: 'abre em nova aba', en: 'opens in a new tab' },
   'modal.stack': { pt: 'Tecnologias', en: 'Technologies' },
   'modal.links': { pt: 'Links', en: 'Links' },
   'status.concluido': { pt: 'Concluído', en: 'Completed' },
@@ -47,6 +51,15 @@ export function t(key: string, lang: Lang): string {
 
 export function categoryLabel(categoria: string, lang: Lang): string {
   return categories[categoria]?.[lang] ?? categoria
+}
+
+const linkLabels: Record<string, L10n> = {
+  Site: { pt: 'Site', en: 'Website' },
+}
+
+/** Link labels live in the data as plain strings; known ones are translated, others shown as written. */
+export function linkLabel(label: string, lang: Lang): string {
+  return linkLabels[label]?.[lang] ?? label
 }
 
 export function statusLabel(status: Status, lang: Lang): string {

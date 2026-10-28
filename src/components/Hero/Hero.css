@@ -4,8 +4,12 @@
   align-items: flex-end;
   min-height: clamp(360px, 62vh, 620px);
   overflow: hidden;
+  perspective: 900px;
   background: radial-gradient(120% 90% at 20% 10%, var(--border), var(--bg));
 }
+/* a keyboard user who tabs back to the faded CTA must see it (beats motion's inline opacity) */
+.hero-copy:focus-within { opacity: 1 !important; }
+.hero-bg-layer { position: absolute; inset: 0; transform-origin: 50% 0; }
 .hero-bg {
   position: absolute;
   inset: 0;

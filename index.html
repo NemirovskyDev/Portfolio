@@ -8,20 +8,65 @@
       name="description"
       content="Portfólio de Bernardo Nemirovsky, estudante de Engenharia de Computação focado em IA: sites, agentes, hackathons e hardware."
     />
+    <meta name="author" content="Bernardo Nemirovsky" />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
     <meta name="theme-color" content="#07080d" />
+    <link rel="canonical" href="https://nemirovskydev.github.io/Portfolio/" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+
+    <!-- Social previews need absolute URLs; relative ones show no image on LinkedIn, WhatsApp and X -->
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://nemirovskydev.github.io/Portfolio/" />
+    <meta property="og:site_name" content="Bernardo Nemirovsky" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:locale:alternate" content="en_US" />
     <meta property="og:title" content="Bernardo Nemirovsky | Portfólio" />
     <meta
       property="og:description"
       content="Projetos de sites, IA e agentes, hackathons e hardware, em formato de catálogo."
     />
-    <meta property="og:image" content="./og.png" />
+    <meta property="og:image" content="https://nemirovskydev.github.io/Portfolio/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Bernardo Nemirovsky, portfólio" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Bernardo Nemirovsky | Portfólio" />
+    <meta
+      name="twitter:description"
+      content="Projetos de sites, IA e agentes, hackathons e hardware, em formato de catálogo."
+    />
+    <meta name="twitter:image" content="https://nemirovskydev.github.io/Portfolio/og.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Bernardo Nemirovsky",
+        "url": "https://nemirovskydev.github.io/Portfolio/",
+        "description": "Estudante de Engenharia de Computação no IBMEC, com foco em Inteligência Artificial, agentes e orquestração multiagente.",
+        "sameAs": [
+          "https://github.com/NemirovskyDev",
+          "https://www.linkedin.com/in/bernardo-nemirovsky-b21a4a3b2/"
+        ]
+      }
+    </script>
   </head>
   <body>
-    <noscript>Este portfólio precisa de JavaScript para exibir o catálogo de projetos.</noscript>
-    <div id="root"></div>
+    <noscript>
+      Este portfólio precisa de JavaScript para exibir o catálogo de projetos.
+      <a href="https://github.com/NemirovskyDev">GitHub</a> ·
+      <a href="https://www.linkedin.com/in/bernardo-nemirovsky-b21a4a3b2/">LinkedIn</a>
+    </noscript>
+    <!-- Readable by crawlers and link previews; React replaces it on mount -->
+    <div id="root">
+      <main>
+        <h1>Bernardo Nemirovsky</h1>
+        <p>
+          Estudante de Engenharia de Computação no IBMEC, com foco em Inteligência Artificial, agentes e orquestração
+          multiagente. Portfólio de sites, IA e agentes, hackathons e hardware.
+        </p>
+      </main>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

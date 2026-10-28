@@ -18,11 +18,17 @@
   border-radius: calc(var(--radius) + 6px);
   box-shadow: 0 30px 80px rgb(0 0 0 / 70%);
 }
-.modal-close {
-  position: absolute;
-  top: 12px;
-  right: 12px;
+/* zero-height sticky bar: the button floats over the cover and stays put while the dialog scrolls */
+.modal-close-bar {
+  position: sticky;
+  top: 0;
   z-index: 1;
+  display: flex;
+  justify-content: flex-end;
+  height: 0;
+}
+.modal-close {
+  margin: 12px 12px 0 0;
   min-height: 44px;
   padding: 0 16px;
   background: rgb(7 8 13 / 80%);
@@ -42,4 +48,28 @@
 .modal-body h3 { margin: 20px 0 4px; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
 .modal-status { margin: 0 0 12px; color: var(--accent); font-weight: 600; }
 .tags, .links { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.features { margin: 0; padding-left: 20px; }
+.features li { margin: 4px 0; }
+.features li::marker { color: var(--accent); }
+.gallery {
+  display: flex;
+  gap: 12px;
+  margin: 0;
+  padding: 4px 0 8px;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+.gallery li { flex: 0 0 auto; scroll-snap-align: start; }
+.gallery a { display: block; border-radius: var(--radius); }
+.gallery a:hover img { border-color: var(--accent); }
+.links a { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; font-weight: 600; }
+.external-icon { flex: none; }
+.gallery img {
+  display: block;
+  height: clamp(140px, 30vw, 220px);
+  width: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
 .tags li { padding: 4px 12px; border: 1px solid var(--border); border-radius: 999px; font-size: 0.875rem; }

@@ -1,15 +1,56 @@
 import { useEffect, useId, useRef, useState, type KeyboardEvent } from 'react'
 import { motion } from 'motion/react'
-import type { Project } from '../../lib/types'
+import type { Lang, Project } from '../../lib/types'
 import { asset } from '../../lib/assets'
-import { statusLabel, t } from '../../lib/i18n'
+import { linkLabel, statusLabel, t } from '../../lib/i18n'
 import { useReducedMotion } from '../../lib/useReducedMotion'
 import { useAppState } from '../../state/AppState'
 import './ProjectModal.css'
 
 const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+// Prints are ~800x500 screenshots; the attributes reserve space before they load (no layout shift).
+const SHOT_WIDTH = 800
+const SHOT_HEIGHT = 500
 
 type Props = { project: Project; onClose: () => void }
+
+function ExternalIcon() {
+  return (
+    <svg className="external-icon" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false">
+      <path d="M6 3h7v7M13 3 4 12" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+/** Prints that fail to load disappear; when none is left, the whole section (heading included) goes too. */
+function Gallery({ items, lang }: { items: NonNullable<Project['galeria']>; lang: Lang }) {
+  const [failed, setFailed] = useState<ReadonlySet<string>>(new Set())
+  const visible = items.filter((g) => !failed.has(g.src))
+  if (!visible.length) return null
+  return (
+    <>
+      <h3>{t('modal.gallery', lang)}</h3>
+      {/* role="list" keeps list semantics in Safari, which drops them when list-style is none */}
+      <ul className="gallery" role="list">
+        {visible.map((g) => (
+          <li key={g.src}>
+            <a href={asset(g.src)} target="_blank" rel="noopener noreferrer">
+              <img
+                src={asset(g.src)}
+                alt={g.alt[lang]}
+                width={SHOT_WIDTH}
+                height={SHOT_HEIGHT}
+                loading="lazy"
+                onError={() => setFailed((prev) => new Set(prev).add(g.src))}
+              />
+              <span className="sr-only"> ({t('link.newTab', lang)})</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </>
+  )
+}
 
 export function ProjectModal({ project, onClose }: Props) {
   const { lang } = useAppState()
@@ -42,10 +83,13 @@ export function ProjectModal({ project, onClose }: Props) {
     if (!items.length) return
     const first = items[0]
     const last = items[items.length - 1]
-    if (e.shiftKey && document.activeElement === first) {
+    const active = document.activeElement
+    // Focus on the dialog itself (after clicking plain text) counts as "outside the controls".
+    const outside = !active || active === panel.current || !items.includes(active as HTMLElement)
+    if (e.shiftKey && (active === first || outside)) {
       e.preventDefault()
       last.focus()
-    } else if (!e.shiftKey && document.activeElement === last) {
+    } else if (!e.shiftKey && (active === last || outside)) {
       e.preventDefault()
       first.focus()
     }
@@ -63,15 +107,20 @@ export function ProjectModal({ project, onClose }: Props) {
         className="modal"
         role="dialog"
         aria-modal="true"
+        tabIndex={-1}
+        data-lenis-prevent // the dialog scrolls itself; Lenis must not hijack the wheel
         aria-labelledby={titleId}
         onKeyDown={trapTab}
         initial={reduce ? false : { opacity: 0, scale: 0.94, y: 24 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: reduce ? 0 : 0.35, ease: 'easeOut' }}
       >
-        <button ref={closeBtn} type="button" className="modal-close" onClick={onClose}>
-          {t('modal.close', lang)}
-        </button>
+        {/* sticky so the close button stays reachable on phones, where there is no Esc key */}
+        <div className="modal-close-bar">
+          <button ref={closeBtn} type="button" className="modal-close" onClick={onClose}>
+            {t('modal.close', lang)}
+          </button>
+        </div>
 
         {!noBackdrop && (
           <img className="modal-cover" src={asset(project.fundo)} alt="" onError={() => setNoBackdrop(true)} />
@@ -85,30 +134,52 @@ export function ProjectModal({ project, onClose }: Props) {
           <h3>{t('modal.purpose', lang)}</h3>
           <p>{project.proposito[lang]}</p>
 
+          {project.funcionalidades?.length ? (
+            <>
+              <h3>{t('modal.features', lang)}</h3>
+              <ul className="features">
+                {project.funcionalidades.map((f, i) => (
+                  <li key={`${i}-${f.pt}`}>{f[lang]}</li>
+                ))}
+              </ul>
+            </>
+          ) : null}
+
           <h3>{t('modal.role', lang)}</h3>
           <p>{project.papel[lang]}</p>
 
+          {project.desafios && (
+            <>
+              <h3>{t('modal.challenges', lang)}</h3>
+              <p>{project.desafios[lang]}</p>
+            </>
+          )}
+
+          {project.galeria?.length ? <Gallery items={project.galeria} lang={lang} /> : null}
+
           <h3>{t('modal.stack', lang)}</h3>
-          <ul className="tags">
+          <ul className="tags" role="list">
             {project.stack.map((s) => (
               <li key={s}>{s}</li>
             ))}
           </ul>
 
-          {project.links && (
+          {project.links?.length ? (
             <>
               <h3>{t('modal.links', lang)}</h3>
-              <ul className="links">
+              <ul className="links" role="list">
                 {project.links.map((l) => (
                   <li key={l.url}>
                     <a href={l.url} target="_blank" rel="noopener noreferrer">
-                      {l.label} <span aria-hidden="true">↗</span>
+                      {linkLabel(l.label, lang)}
+                      <span className="sr-only"> ({t('link.newTab', lang)})</span>
+                      <ExternalIcon />
                     </a>
                   </li>
                 ))}
               </ul>
             </>
-          )}
+          ) : null}
         </div>
       </motion.div>
     </div>

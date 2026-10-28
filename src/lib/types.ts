@@ -14,4 +14,7 @@ export type Project = {
   stack: string[]
   status: Status
   links?: { label: string; url: string }[]
+  funcionalidades?: L10n[]
+  desafios?: L10n
+  galeria?: { src: string; alt: L10n }[]
 }

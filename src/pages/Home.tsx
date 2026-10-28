@@ -3,13 +3,15 @@ import type { Project } from '../lib/types'
 import { categoriesFor, featuredFor, type Profile } from '../lib/profiles'
 import { t } from '../lib/i18n'
 import { useHashProject } from '../lib/useHashProject'
+import { useReducedMotion } from '../lib/useReducedMotion'
+import { useSmoothScroll } from '../lib/useSmoothScroll'
 import { useAppState } from '../state/AppState'
 import { About } from '../components/About/About'
 import { Hero } from '../components/Hero/Hero'
 import { LangToggle } from '../components/LangToggle'
 import { ProjectModal } from '../components/ProjectModal/ProjectModal'
 import { Row } from '../components/Row/Row'
-import { TunnelRows } from '../components/TunnelRows/TunnelRows'
+import { RevealRows } from '../components/RevealRows/RevealRows'
 import './Home.css'
 
 type Props = { profile: Profile; projects: Project[]; onSwitchProfile: () => void }
@@ -17,6 +19,8 @@ type Props = { profile: Profile; projects: Project[]; onSwitchProfile: () => voi
 export function Home({ profile, projects, onSwitchProfile }: Props) {
   const { lang } = useAppState()
   const { project: open, open: openProject, close } = useHashProject(projects)
+  const reduce = useReducedMotion()
+  useSmoothScroll({ enabled: !reduce, paused: Boolean(open) })
   const rows = useMemo(() => categoriesFor(profile, projects), [profile, projects])
   const featured = useMemo(() => featuredFor(profile, projects), [profile, projects])
 
@@ -33,11 +37,11 @@ export function Home({ profile, projects, onSwitchProfile }: Props) {
       </header>
       <main>
         {featured && <Hero project={featured} onOpen={openProject} />}
-        <TunnelRows>
+        <RevealRows>
           {rows.map((r) => (
             <Row key={r.categoria} categoria={r.categoria} projects={r.items} onOpen={openProject} />
           ))}
-        </TunnelRows>
+        </RevealRows>
         <About />
       </main>
       {open && <ProjectModal project={open} onClose={close} />}
