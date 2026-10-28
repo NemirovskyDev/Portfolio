@@ -15,7 +15,19 @@
   text-transform: uppercase;
 }
 .credits .about p { color: var(--ink); opacity: 0.86; }
-.credits .about-links a { color: var(--accent-chapter); }
+/* same pill as "back to the top", in the accent color; fills on hover and focus */
+.credits .about-links a {
+  min-height: 44px;
+  padding: 0 24px;
+  color: var(--accent-chapter);
+  border: 1px solid var(--accent-chapter);
+  border-radius: 999px;
+}
+.credits .about-links a:hover,
+.credits .about-links a:focus-visible {
+  color: var(--ground);
+  background: var(--accent-chapter);
+}
 .credits-top {
   min-height: 44px;
   padding: 0 24px;
