@@ -325,6 +325,7 @@
     ],
     "desafios": {"pt":"Meu desafio foi fazer as chamadas funcionarem entre redes diferentes, onde a conexão direta do WebRTC falha por causa do NAT. Usei um relay TURN, com credenciais buscadas na Metered por variáveis de ambiente, e tentei gastar o mínimo da cota paga: STUN do Google primeiro, limite de bitrate e correção de vazamentos de recursos.","en":"My challenge was making calls work across different networks, where direct WebRTC fails because of NAT. I used a TURN relay, with credentials fetched from Metered through environment variables, and tried to spend as little of the paid quota as possible: Google STUN first, a bitrate cap and fixes for resource leaks."},
     "galeria": [
+      {"src":"projetos/chat-amigos/shot-3.webp","alt":{"pt":"Chamada de vídeo com três participantes de exemplo na sala de voz","en":"Video call with three sample participants in the voice room"}},
       {"src":"projetos/chat-amigos/shot-1.webp","alt":{"pt":"Tela de entrada com nome e sala","en":"Entry screen with name and room"}},
       {"src":"projetos/chat-amigos/shot-2.webp","alt":{"pt":"Sala com canal de texto, canal de voz e uma mensagem no chat","en":"Room with a text channel, a voice channel and a chat message"}}
     ]
