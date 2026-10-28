@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-28T00:00:00Z",
+  "title": "Design System: Bernardo Nemirovsky Portfolio (Cinema Scroll)",
+  "extensions": {
+    "colorMeta": {
+      "opening-ground": { "role": "neutral", "displayName": "Opening Ground", "canonical": "#08090c", "tonalRamp": ["#08090c", "#14161c", "#20232c", "#2e323d", "#444956", "#6a7080", "#a0a5b2", "#dcdee4"] },
+      "warm-white-ink": { "role": "neutral", "displayName": "Warm White Ink", "canonical": "#f4f2ee", "tonalRamp": ["#2a2825", "#47443f", "#645f59", "#867f77", "#a9a29a", "#c8c2bb", "#e1ddd8", "#f4f2ee"] },
+      "marquee-amber": { "role": "primary", "displayName": "Marquee Amber", "canonical": "#f5b83d", "tonalRamp": ["#3d2a05", "#5e4109", "#85600f", "#ad7f18", "#d19a2a", "#f5b83d", "#f9d078", "#fcebc4"] },
+      "page-black": { "role": "neutral", "displayName": "Page Black", "canonical": "#07080d", "tonalRamp": ["#07080d", "#11131c", "#1b1e2a", "#2a2f3d", "#444a5c", "#6a7185", "#9aa3b5", "#d4d8e0"] },
+      "reveste-accent": { "role": "secondary", "displayName": "Reveste Rose", "canonical": "#d65c8f", "tonalRamp": ["#331521", "#5c2540", "#85335f", "#ad4577", "#d65c8f", "#e287ad", "#eeb2ca", "#f8dde8"] },
+      "pkz-accent": { "role": "secondary", "displayName": "PKZ Periwinkle", "canonical": "#6d80db", "tonalRamp": ["#151a34", "#252e5c", "#364585", "#4a5eb0", "#6d80db", "#93a1e6", "#b9c1f0", "#e0e4f8"] },
+      "tabbit-accent": { "role": "secondary", "displayName": "Tabbit Green", "canonical": "#2bab6b", "tonalRamp": ["#143223", "#1a5238", "#1f7a50", "#2bab6b", "#58c78d", "#87d9ae", "#b5ebcd", "#e0f7ea"] },
+      "orquestrador-accent": { "role": "secondary", "displayName": "Orquestrador Blue", "canonical": "#5188d4", "tonalRamp": ["#142031", "#1f3a5e", "#2d5489", "#3b6fb4", "#5188d4", "#7ba5e1", "#a6c2ec", "#d3e1f6"] },
+      "companion-accent": { "role": "secondary", "displayName": "Companion Violet", "canonical": "#9a6cda", "tonalRamp": ["#211532", "#3c2760", "#583d8c", "#7554b5", "#9a6cda", "#b794e5", "#d1b7ef", "#eadef8"] },
+      "ap2-accent": { "role": "secondary", "displayName": "AP2 Magenta", "canonical": "#d65cad", "tonalRamp": ["#321529", "#5c2549", "#853468", "#ad4588", "#d65cad", "#e287c4", "#eeb2d9", "#f8dded"] },
+      "bombas-accent": { "role": "secondary", "displayName": "Bombas Ochre", "canonical": "#c48731", "tonalRamp": ["#332615", "#5c441f", "#85612a", "#a87329", "#c48731", "#d6a560", "#e6c392", "#f4e1c8"] },
+      "b3-accent": { "role": "secondary", "displayName": "B3 Teal", "canonical": "#2aa893", "tonalRamp": ["#14302b", "#1a5248", "#1f7a6b", "#2aa893", "#55c2ae", "#85d6c7", "#b4e8df", "#dff6f2"] },
+      "jarvis-accent": { "role": "secondary", "displayName": "Jarvis Cyan-Teal", "canonical": "#2ba2ac", "tonalRamp": ["#153134", "#1a4f54", "#1f7078", "#2ba2ac", "#58bcc4", "#87d0d6", "#b5e3e7", "#e0f4f6"] },
+      "chat-amigos-accent": { "role": "secondary", "displayName": "Chat Amigos Orchid", "canonical": "#c15ad6", "tonalRamp": ["#2c1431", "#4f2459", "#733480", "#9847ad", "#c15ad6", "#d385e3", "#e4b0ee", "#f4dbf8"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Chapter Title", "purpose": "League Gothic uppercase project titles, unmasked word by word on scroll." },
+      "display-opening": { "displayName": "Opening Title", "purpose": "The name on the first viewport only." },
+      "headline": { "displayName": "Credits Heading", "purpose": "Closing chapter heading." },
+      "title": { "displayName": "Index Title", "purpose": "Project index dialog heading." },
+      "wordmark": { "displayName": "Wordmark", "purpose": "Topbar name." },
+      "summary": { "displayName": "Summary", "purpose": "Chapter summary, max 62ch." },
+      "label": { "displayName": "Label", "purpose": "Timeline readout, meta line, tags; tabular numerals." }
+    },
+    "shadows": [
+      { "name": "index-lift", "value": "0 30px 80px rgb(0 0 0 / 70%)", "purpose": "The only shadow: lifts the index dialog off its dim backdrop." }
+    ],
+    "motion": [
+      { "name": "progress-f", "value": "scrollYProgress [0,1] -> [0, chapters-1]", "purpose": "Single scroll value that drives colour, shelf, text and timeline." },
+      { "name": "title-unmask", "value": "enter = clamp01((f - i + 0.5)/0.4 - min(order,3)*0.15); clip-path inset(0 0 (1-enter)*100% 0); y (1-enter)*60%", "purpose": "Word-by-word rise and unmask before a chapter centres." },
+      { "name": "block-leave", "value": "y = -clamp01(f-i)*12svh; opacity = min(1 - clamp01((f-i)/0.5), clamp01((f-i+0.5)/0.3))", "purpose": "Chapter text fades in late and rises out." },
+      { "name": "shelf-layout", "value": "d=i-f, a=|d|; x=sign(d)*(a<=1 ? 3.2a : 3.2+1.9(a-1)); z=-1.6a; rotY=-0.35d; opacity=1-0.6*min(1,a); scale=lerp(1,1.7,smoothstep(1-a/0.5))", "purpose": "3D cover arc around the focus." },
+      { "name": "backdrop-crossfade", "value": "floor(f) under, ceil(f) over at opacity f-floor(f)", "purpose": "Chapter backdrops blend with scroll." },
+      { "name": "pointer-parallax", "value": "damp 3; tilt 0.06 rad; backdrop 0.4 / 0.25 units", "purpose": "Mouse-reactive shelf and backdrop." },
+      { "name": "marker-fade", "value": "opacity/background 0.2s", "purpose": "Timeline marker state changes." },
+      { "name": "reduced-motion", "value": "static mode: stacked chapters, no f-driven animation; transitions 0.01ms", "purpose": "Fallback for prefers-reduced-motion, weak devices, no WebGL." }
+    ],
+    "breakpoints": [
+      { "name": "mobile-dpr", "value": "768px" },
+      { "name": "portrait", "value": "aspect < 1" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Chapter Open Button",
+      "kind": "button",
+      "refersTo": "chapter-open",
+      "description": "Filled pill that opens a project; inverts on hover.",
+      "html": "<button class=\"ds-chapter-open\">Details</button>",
+      "css": ".ds-chapter-open { min-height: 44px; padding: 0 24px; color: var(--ground, #331521); background: var(--accent-chapter, #d65c8f); border: 2px solid var(--accent-chapter, #d65c8f); border-radius: 999px; font: 600 16px Inter, system-ui, sans-serif; cursor: pointer; } .ds-chapter-open:hover { background: transparent; color: var(--accent-chapter, #d65c8f); } .ds-chapter-open:focus-visible { outline: 3px solid var(--ink, #f4f2ee); outline-offset: 3px; }"
+    },
+    {
+      "name": "Topbar Button",
+      "kind": "button",
+      "refersTo": "topbar-btn",
+      "description": "Ghost pill on a translucent ground chip.",
+      "html": "<button class=\"ds-topbar-btn\">Index</button>",
+      "css": ".ds-topbar-btn { min-height: 44px; padding: 0 16px; font: 600 16px Inter, system-ui, sans-serif; color: var(--ink, #f4f2ee); background: color-mix(in srgb, var(--ground, #331521) 70%, transparent); border: 1px solid color-mix(in srgb, var(--ink, #f4f2ee) 35%, transparent); border-radius: 999px; cursor: pointer; } .ds-topbar-btn:hover { border-color: var(--accent-chapter, #d65c8f); } .ds-topbar-btn:focus-visible { outline: 3px solid var(--accent-chapter, #d65c8f); outline-offset: 3px; }"
+    },
+    {
+      "name": "Chapter Tag",
+      "kind": "chip",
+      "refersTo": "chapter-tag",
+      "description": "Outlined stack pill under the summary.",
+      "html": "<span class=\"ds-tag\">React</span>",
+      "css": ".ds-tag { display: inline-block; padding: 4px 12px; border: 1px solid currentcolor; border-radius: 999px; font: 400 0.875rem Inter, system-ui, sans-serif; color: var(--ink, #f4f2ee); }"
+    },
+    {
+      "name": "Chapter Title",
+      "kind": "custom",
+      "refersTo": "display",
+      "description": "Uppercase League Gothic title with meta and summary.",
+      "html": "<div class=\"ds-chapter\"><h2 class=\"ds-title\">3 Bombas</h2><p class=\"ds-meta\">Hardware 2026</p><p class=\"ds-summary\">One-paragraph project summary.</p></div>",
+      "css": ".ds-chapter { display: grid; gap: 16px; color: var(--ink, #f4f2ee); } .ds-title { margin: 0; font: 400 clamp(3.5rem, 11vw, 9rem)/0.9 'League Gothic', 'Arial Narrow', sans-serif; text-transform: uppercase; text-wrap: balance; } .ds-meta { margin: 0; color: var(--accent-chapter, #d65c8f); font: 600 1rem Inter, system-ui, sans-serif; font-variant-numeric: tabular-nums; } .ds-summary { margin: 0; max-width: 62ch; font: 400 1.125rem/1.5 Inter, system-ui, sans-serif; }"
+    },
+    {
+      "name": "Timeline Bar",
+      "kind": "nav",
+      "refersTo": "timeline-marker",
+      "description": "Video-style progress track; 44px hit areas, 4px visible bars, active marker in accent.",
+      "html": "<div class=\"ds-timeline\"><p class=\"ds-readout\"><span>Reveste</span><span class=\"ds-counter\">2/12</span></p><div class=\"ds-track\"><button class=\"ds-marker\"></button><button class=\"ds-marker ds-on\"></button><button class=\"ds-marker\"></button></div></div>",
+      "css": ".ds-timeline { display: grid; gap: 4px; padding: 24px 24px 12px; color: var(--ink, #f4f2ee); background: linear-gradient(to top, color-mix(in srgb, var(--ground, #331521) 88%, transparent) 55%, transparent); } .ds-readout { display: flex; justify-content: space-between; margin: 0; font: 600 0.875rem Inter, system-ui, sans-serif; } .ds-counter { font-variant-numeric: tabular-nums; color: var(--accent-chapter, #d65c8f); } .ds-track { display: flex; } .ds-marker { position: relative; flex: 1 0 44px; height: 44px; background: none; border: 0; color: inherit; cursor: pointer; } .ds-marker::before { content: ''; position: absolute; inset: 50% 2px auto; height: 4px; margin-top: -2px; border-radius: 2px; background: currentcolor; opacity: 0.45; transition: opacity 0.2s, background-color 0.2s; } .ds-marker:hover::before { opacity: 0.8; } .ds-on::before { opacity: 1; background: var(--accent-chapter, #d65c8f); } .ds-marker:focus-visible { outline: 3px solid var(--accent-chapter, #d65c8f); outline-offset: -3px; }"
+    },
+    {
+      "name": "Index Panel",
+      "kind": "card",
+      "refersTo": "index-panel",
+      "description": "Dialog listing all projects over a dim backdrop.",
+      "html": "<div class=\"ds-index\"><div class=\"ds-index-head\"><h2 class=\"ds-index-title\">Projects</h2><button class=\"ds-index-close\">Close</button></div></div>",
+      "css": ".ds-index { padding: 20px 24px 28px; color: var(--ink, #f4f2ee); background: var(--ground, #331521); border: 1px solid #2a2f3d; border-radius: 20px; box-shadow: 0 30px 80px rgb(0 0 0 / 70%); } .ds-index-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; } .ds-index-title { margin: 0; font: 400 clamp(2rem, 5vw, 3.5rem)/0.95 'League Gothic', 'Arial Narrow', sans-serif; text-transform: uppercase; } .ds-index-close { min-height: 44px; padding: 0 20px; color: var(--ink, #f4f2ee); background: transparent; border: 1px solid currentcolor; border-radius: 999px; cursor: pointer; } .ds-index-close:hover { color: var(--accent-chapter, #d65c8f); } .ds-index-close:focus-visible { outline: 3px solid var(--accent-chapter, #d65c8f); outline-offset: 3px; }"
+    },
+    {
+      "name": "Letterbox and Grain",
+      "kind": "custom",
+      "refersTo": "letterbox",
+      "description": "7svh cinema bars from the chapter ground, plus static 7% film grain.",
+      "html": "<div class=\"ds-scene\"><div class=\"ds-bar ds-top\"></div><div class=\"ds-bar ds-bottom\"></div><div class=\"ds-grain\"></div></div>",
+      "css": ".ds-scene { position: relative; height: 200px; background: var(--ground, #331521); } .ds-bar { position: absolute; left: 0; right: 0; height: 7%; background: color-mix(in srgb, var(--ground, #331521) 35%, black); } .ds-top { top: 0; } .ds-bottom { bottom: 0; } .ds-grain { position: absolute; inset: 0; opacity: 0.07; mix-blend-mode: overlay; background-image: url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\"); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Projection Booth",
+    "overview": "Scrolling is the play button. The page is one fixed 100svh scene inside a tall block; each project is a chapter, and as the visitor scrolls the whole page takes the dominant hue of the current chapter while a 3D shelf of covers slides in an arc. It refuses the \"hero plus rows of equal cards\" pattern and the \"black with one neon accent\" pattern.\n\nThe mood is dark, cinematic and quiet: letterbox bars, a faint static film grain, a video-style timeline at the base, tall League Gothic capitals against Inter body text with tabular numerals.",
+    "keyCharacteristics": [
+      "One scroll value f drives colour, shelf, title, timeline and backdrops.",
+      "Every chapter has its own ground/accent pair; ink is a shared warm white.",
+      "League Gothic uppercase for titles, Inter for everything else.",
+      "Pill-shaped controls, 44px minimum hit area, 3px focus ring.",
+      "Flat surfaces; depth comes from the 3D shelf, scrim and letterbox, not from shadows.",
+      "A static, stacked-chapter page replaces the stage for reduced motion, weak devices and no WebGL."
+    ],
+    "rules": [
+      { "name": "The Chapter Hue Rule", "body": "Colour belongs to the chapter, not the component. Components take var(--ground), var(--ink), var(--accent-chapter); they never hard-code a project hue.", "section": "colors" },
+      { "name": "The Dark Ground Rule", "body": "Chapter grounds stay at about 12 to 16% lightness with warm white ink on top; the accent is the same hue lightened enough to read as text and as a filled button against the ground.", "section": "colors" },
+      { "name": "The Tabular Numerals Rule", "body": "Anything that counts uses font-variant-numeric: tabular-nums.", "section": "typography" },
+      { "name": "The Display Only For Titles Rule", "body": "League Gothic is for titles and the wordmark; summaries, buttons, tags and meta stay in Inter.", "section": "typography" },
+      { "name": "The Scrim Rule", "body": "Text over covers or backdrops always sits on the ground-coloured scrim; never raise text without it.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do drive every colour in the scene from --ground, --ink and --accent-chapter.",
+      "Do add a project by adding its palette entry (ground at 12 to 16% lightness, accent lightened from the same hue, ink #f4f2ee) via the palette script.",
+      "Do keep controls pill-shaped, at least 44px tall, with a 3px focus ring (accent, or ink on accent fills).",
+      "Do keep a single f as the source of truth for motion; derive new effects from it with useTransform.",
+      "Do keep a non-animated, non-3D equivalent for every chapter.",
+      "Do use tabular numerals for counts and write League Gothic in uppercase."
+    ],
+    "donts": [
+      "Don't return to rows of equal cards or a \"black with one neon accent\" page.",
+      "Don't hard-code a project hue inside a component.",
+      "Don't set body copy or buttons in League Gothic.",
+      "Don't put text over covers or backdrops without the scrim.",
+      "Don't animate the grain or add shadows for depth; the 3D shelf and tonal layers carry depth.",
+      "Don't use Netflix marks or branding.",
+      "Don't let motion decorate: it must reveal structure (chapters, projects)."
+    ]
+  }
+}

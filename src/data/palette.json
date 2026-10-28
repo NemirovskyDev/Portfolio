@@ -1,0 +1,62 @@
+{
+  "opening": {
+    "ground": "#08090c",
+    "ink": "#f4f2ee",
+    "accent": "#f5b83d"
+  },
+  "reveste": {
+    "ground": "#331521",
+    "accent": "#d65c8f",
+    "ink": "#f4f2ee"
+  },
+  "pkz": {
+    "ground": "#151a34",
+    "accent": "#6d80db",
+    "ink": "#f4f2ee"
+  },
+  "tabbit": {
+    "ground": "#143223",
+    "accent": "#2bab6b",
+    "ink": "#f4f2ee"
+  },
+  "orquestrador": {
+    "ground": "#142031",
+    "accent": "#5188d4",
+    "ink": "#f4f2ee"
+  },
+  "companion": {
+    "ground": "#211532",
+    "accent": "#9a6cda",
+    "ink": "#f4f2ee"
+  },
+  "ap2": {
+    "ground": "#321529",
+    "accent": "#d65cad",
+    "ink": "#f4f2ee"
+  },
+  "bombas": {
+    "ground": "#332615",
+    "accent": "#c48731",
+    "ink": "#f4f2ee"
+  },
+  "b3": {
+    "ground": "#14302b",
+    "accent": "#2aa893",
+    "ink": "#f4f2ee"
+  },
+  "jarvis": {
+    "ground": "#153134",
+    "accent": "#2ba2ac",
+    "ink": "#f4f2ee"
+  },
+  "chat-amigos": {
+    "ground": "#2c1431",
+    "accent": "#c15ad6",
+    "ink": "#f4f2ee"
+  },
+  "credits": {
+    "ground": "#08090c",
+    "ink": "#f4f2ee",
+    "accent": "#f5b83d"
+  }
+}

@@ -5,7 +5,12 @@ const PREFIX = '#/p/'
 
 const readId = (): string | null => {
   const h = window.location.hash
-  return h.startsWith(PREFIX) ? decodeURIComponent(h.slice(PREFIX.length)) || null : null
+  if (!h.startsWith(PREFIX)) return null
+  try {
+    return decodeURIComponent(h.slice(PREFIX.length)) || null
+  } catch {
+    return null // a malformed escape must not blank the page
+  }
 }
 
 /** The open project lives in the URL hash so a project can be linked directly. Unknown ids resolve to no project. */

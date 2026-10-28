@@ -1,100 +1,173 @@
-import { describe, it, expect, beforeEach } from 'vitest'
-import { fireEvent, render, screen, within } from '@testing-library/react'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import App from '../App'
-import { About } from '../components/About/About'
-import { ProfileGate } from '../components/ProfileGate/ProfileGate'
-import { mockReducedMotion, renderWithState } from '../test/utils'
+import { hasWebGL } from '../lib/hasWebGL'
+import { useSmoothScroll } from '../lib/useSmoothScroll'
+import { Home } from './Home'
+import { AppStateProvider } from '../state/AppState'
+import { mockReducedMotion, projects } from '../test/utils'
+
+vi.mock('../lib/hasWebGL', () => ({ hasWebGL: vi.fn(() => true) }))
+vi.mock('../lib/useSmoothScroll', () => ({ useSmoothScroll: vi.fn() }))
+// jsdom cannot run WebGL: the stage canvas is replaced by a marker.
+vi.mock('../components/Cinema/StageCanvas', () => ({
+  StageCanvas: () => <div data-testid="stage-canvas" />,
+}))
+
+const renderHome = () =>
+  render(
+    <AppStateProvider>
+      <Home projects={projects} />
+    </AppStateProvider>,
+  )
 
 beforeEach(() => {
   localStorage.clear()
   window.history.replaceState(null, '', '/')
-  mockReducedMotion(true)
+  vi.mocked(hasWebGL).mockReturnValue(true)
+  vi.mocked(useSmoothScroll).mockClear()
+  window.scrollTo = vi.fn() as unknown as typeof window.scrollTo
+  mockReducedMotion(false)
 })
 
-describe('profile gate', () => {
-  it('lists the three profiles and persists the choice', async () => {
-    const user = userEvent.setup()
-    render(<App />)
-    expect(screen.getByRole('heading', { level: 1, name: 'Quem está assistindo?' })).toBeInTheDocument()
-    expect(screen.getAllByRole('button', { name: /Recrutador|Dev|Curioso/ })).toHaveLength(3)
-    await user.click(screen.getByRole('button', { name: /^Curioso/ }))
-    expect(localStorage.getItem('profile')).toBe('curioso')
+describe('cinema mode', () => {
+  it('renders the header, the stage, the timeline and exactly one h1', () => {
+    renderHome()
+    expect(screen.getByTestId('stage-canvas')).toBeInTheDocument()
+    expect(screen.getByRole('navigation', { name: 'Linha do tempo dos projetos' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Índice' })).toBeInTheDocument()
+    expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1)
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Bernardo Nemirovsky')
   })
 
-  it('calls onChoose with the profile', () => {
-    const calls: string[] = []
-    renderWithState(<ProfileGate onChoose={(p) => calls.push(p)} />)
-    fireEvent.click(screen.getByRole('button', { name: /^Dev/ }))
-    expect(calls).toEqual(['dev'])
+  it('only the active chapter is reachable: the first project button is not focusable at the opening', () => {
+    renderHome()
+    expect(screen.queryByRole('button', { name: /^Ver detalhes/ })).toBeNull()
+  })
+
+  it('lays out one marker per chapter, ordered by category, with the opening active', () => {
+    renderHome()
+    const nav = screen.getByRole('navigation', { name: 'Linha do tempo dos projetos' })
+    const markers = within(nav).getAllByRole('button')
+    expect(markers).toHaveLength(projects.length + 2)
+    expect(markers[0]).toHaveAttribute('aria-current', 'step')
+    expect(markers[1]).toHaveAccessibleName('Orquestrador multiagente')
+  })
+
+  it('jumping from the timeline scrolls the page', async () => {
+    const user = userEvent.setup()
+    renderHome()
+    const nav = screen.getByRole('navigation', { name: 'Linha do tempo dos projetos' })
+    await user.click(within(nav).getAllByRole('button')[4])
+    expect(window.scrollTo).toHaveBeenCalledTimes(1)
+  })
+
+  it('pauses smooth scrolling while a project or the index is open', async () => {
+    const user = userEvent.setup()
+    renderHome()
+    expect(vi.mocked(useSmoothScroll).mock.lastCall?.[0]).toEqual({ enabled: true, paused: false })
+    await user.click(screen.getByRole('button', { name: 'Índice' }))
+    expect(vi.mocked(useSmoothScroll).mock.lastCall?.[0]).toEqual({ enabled: true, paused: true })
   })
 })
 
-describe('home', () => {
-  it('choosing "Dev" shows Reveste in the hero and the Sites row first', async () => {
+describe('index and modal', () => {
+  it('the Índice button opens the panel, and choosing a project opens its modal by hash', async () => {
     const user = userEvent.setup()
-    render(<App />)
-    await user.click(screen.getByRole('button', { name: /^Dev/ }))
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Reveste')
-    expect(screen.getAllByRole('heading', { level: 2 })[0]).toHaveTextContent('Sites')
+    renderHome()
+    await user.click(screen.getByRole('button', { name: 'Índice' }))
+    const panel = screen.getByRole('dialog', { name: 'Todos os projetos' })
+    await user.click(within(panel).getByRole('button', { name: 'Tabbit' }))
+    expect(window.location.hash).toBe('#/p/tabbit')
+    expect(screen.getByRole('dialog', { name: 'Tabbit' })).toBeInTheDocument()
+    expect(screen.queryByRole('dialog', { name: 'Todos os projetos' })).toBeNull()
   })
 
-  it('"Recrutador" features the orquestrador and starts with IA e Agentes', async () => {
+  it('Esc closes the index panel', async () => {
     const user = userEvent.setup()
-    render(<App />)
-    await user.click(screen.getByRole('button', { name: /^Recrutador/ }))
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Orquestrador multiagente')
-    expect(screen.getAllByRole('heading', { level: 2 })[0]).toHaveTextContent('IA e Agentes')
+    renderHome()
+    await user.click(screen.getByRole('button', { name: 'Índice' }))
+    await user.keyboard('{Escape}')
+    expect(screen.queryByRole('dialog', { name: 'Todos os projetos' })).toBeNull()
   })
 
-  it('the language toggle switches visible text to EN', async () => {
-    localStorage.setItem('profile', 'curioso')
-    const user = userEvent.setup()
-    render(<App />)
-    expect(screen.getByRole('button', { name: 'Ver detalhes' })).toBeInTheDocument()
-    await user.click(screen.getByRole('button', { name: 'Mudar idioma para inglês' }))
-    expect(screen.getByRole('button', { name: 'See details' })).toBeInTheDocument()
-    expect(document.documentElement.lang).toBe('en')
-  })
-
-  it('the hero button opens the featured project modal', async () => {
-    localStorage.setItem('profile', 'recrutador')
-    const user = userEvent.setup()
-    render(<App />)
-    await user.click(screen.getByRole('button', { name: 'Ver detalhes' }))
-    const dialog = screen.getByRole('dialog')
-    expect(within(dialog).getByRole('heading', { name: 'Orquestrador multiagente' })).toBeInTheDocument()
-    expect(window.location.hash).toBe('#/p/orquestrador')
-  })
-
-  it('a deep link opens the project, and an unknown one shows only the home', () => {
-    localStorage.setItem('profile', 'dev')
-    window.location.hash = '#/p/tabbit'
-    const { unmount } = render(<App />)
-    expect(screen.getByRole('dialog')).toHaveTextContent('Tabbit')
+  it('a deep link opens the project, and an unknown one shows only the page', () => {
+    window.location.hash = '#/p/jarvis'
+    const { unmount } = renderHome()
+    expect(screen.getByRole('dialog', { name: 'Jarvis' })).toBeInTheDocument()
     unmount()
     window.location.hash = '#/p/nao-existe'
-    render(<App />)
+    renderHome()
     expect(screen.queryByRole('dialog')).toBeNull()
   })
 
-  it('"Trocar perfil" goes back to the gate', async () => {
-    localStorage.setItem('profile', 'dev')
+  it('closing the modal keeps the page where it was (no scroll call)', async () => {
     const user = userEvent.setup()
-    render(<App />)
-    await user.click(screen.getByRole('button', { name: 'Trocar perfil' }))
-    expect(screen.getByRole('heading', { level: 1, name: 'Quem está assistindo?' })).toBeInTheDocument()
+    window.location.hash = '#/p/reveste'
+    renderHome()
+    await user.click(screen.getByRole('button', { name: 'Fechar' }))
+    expect(screen.queryByRole('dialog')).toBeNull()
+    expect(window.scrollTo).not.toHaveBeenCalled()
   })
 })
 
-describe('about', () => {
-  it('shows the GitHub and LinkedIn links (clean urls) and no contact form', () => {
-    renderWithState(<About />)
+describe('static mode', () => {
+  it('reduced motion renders every chapter and the credits, with no stage', () => {
+    mockReducedMotion(true)
+    renderHome()
+    expect(screen.queryByTestId('stage-canvas')).toBeNull()
+    expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1)
+    for (const p of projects) expect(screen.getByRole('heading', { level: 2, name: p.titulo.pt })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Sobre mim e contato' })).toBeInTheDocument()
+    expect(vi.mocked(useSmoothScroll).mock.lastCall?.[0]).toMatchObject({ enabled: false })
+  })
+
+  it('no WebGL gives the same static page', () => {
+    vi.mocked(hasWebGL).mockReturnValue(false)
+    renderHome()
+    expect(screen.queryByTestId('stage-canvas')).toBeNull()
+    expect(screen.getAllByRole('button', { name: /^Ver detalhes/ })).toHaveLength(projects.length)
+  })
+
+  it('the detail buttons open the modal', async () => {
+    mockReducedMotion(true)
+    const user = userEvent.setup()
+    renderHome()
+    await user.click(screen.getAllByRole('button', { name: /^Ver detalhes/ })[0])
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
+  })
+})
+
+describe('language', () => {
+  it('the toggle switches the visible texts to English', async () => {
+    const user = userEvent.setup()
+    renderHome()
+    await user.click(screen.getByRole('button', { name: /mudar idioma para inglês/ }))
+    expect(screen.getByRole('button', { name: 'Index' })).toBeInTheDocument()
+    expect(document.documentElement.lang).toBe('en')
+  })
+})
+
+describe('credits', () => {
+  it('shows GitHub and LinkedIn and sends the visitor back to the top', async () => {
+    mockReducedMotion(true)
+    const user = userEvent.setup()
+    renderHome()
     expect(screen.getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', 'https://github.com/NemirovskyDev')
-    expect(screen.getByRole('link', { name: 'LinkedIn' })).toHaveAttribute(
-      'href',
-      'https://www.linkedin.com/in/bernardo-nemirovsky-b21a4a3b2/',
-    )
+    expect(screen.getByRole('link', { name: 'LinkedIn' })).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: 'Voltar ao início' }))
+    expect(window.scrollTo).toHaveBeenCalledWith(expect.objectContaining({ top: 0 }))
     expect(document.querySelector('form, input, textarea, a[href^="mailto:"]')).toBeNull()
+  })
+})
+
+describe('keyboard', () => {
+  it('the index opener gets focus back when the panel closes', async () => {
+    const user = userEvent.setup()
+    renderHome()
+    const opener = screen.getByRole('button', { name: 'Índice' })
+    await user.click(opener)
+    await user.keyboard('{Escape}')
+    expect(opener).toHaveFocus()
   })
 })

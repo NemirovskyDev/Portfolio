@@ -1,8 +1,0 @@
-.static-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 16px;
-  margin: 0;
-  padding: 16px var(--gutter, 16px);
-  list-style: none;
-}

@@ -1,8 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { fireEvent, screen } from '@testing-library/react'
 import { ProjectCard } from './ProjectCard'
-import { Row } from '../Row/Row'
-import { StaticGrid } from '../StaticGrid'
 import { mockReducedMotion, projects, renderWithState } from '../../test/utils'
 
 const reveste = projects.find((p) => p.id === 'reveste')!
@@ -58,18 +56,5 @@ describe('ProjectCard', () => {
     renderWithState(<ProjectCard project={reveste} onOpen={() => {}} />)
     const btn = screen.getByRole('button')
     expect(() => fireEvent.pointerMove(btn, { clientX: 10, clientY: 10 })).not.toThrow()
-  })
-})
-
-describe('Row and StaticGrid', () => {
-  it('Row labels the list with the translated category', () => {
-    renderWithState(<Row categoria="IA e Agentes" projects={projects.slice(0, 2)} onOpen={() => {}} />)
-    expect(screen.getByRole('heading', { name: 'IA e Agentes' })).toBeInTheDocument()
-    expect(screen.getAllByRole('button')).toHaveLength(2)
-  })
-
-  it('StaticGrid renders every project', () => {
-    renderWithState(<StaticGrid projects={projects} onOpen={() => {}} />)
-    expect(screen.getAllByRole('button')).toHaveLength(projects.length)
   })
 })

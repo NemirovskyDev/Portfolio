@@ -2,17 +2,7 @@ import type { Lang, L10n, Status } from './types'
 
 const dict: Record<string, L10n> = {
   'site.name': { pt: 'Bernardo Nemirovsky', en: 'Bernardo Nemirovsky' },
-  'gate.title': { pt: 'Quem está assistindo?', en: "Who's watching?" },
-  'gate.hint': { pt: 'Escolha um perfil para ver os projetos do seu jeito.', en: 'Pick a profile to see the projects your way.' },
-  'profile.recrutador': { pt: 'Recrutador', en: 'Recruiter' },
-  'profile.recrutador.desc': { pt: 'IA e entregas primeiro', en: 'AI and deliveries first' },
-  'profile.dev': { pt: 'Dev', en: 'Dev' },
-  'profile.dev.desc': { pt: 'Stack e código em evidência', en: 'Stack and code up front' },
-  'profile.curioso': { pt: 'Curioso', en: 'Curious' },
-  'profile.curioso.desc': { pt: 'Tudo, sem ordem fixa', en: 'Everything, no fixed order' },
-  'profile.switch': { pt: 'Trocar perfil', en: 'Switch profile' },
-  'hero.featured': { pt: 'Em destaque', en: 'Featured' },
-  'hero.details': { pt: 'Ver detalhes', en: 'See details' },
+  'chapter.details': { pt: 'Ver detalhes', en: 'See details' },
   'modal.close': { pt: 'Fechar', en: 'Close' },
   'modal.purpose': { pt: 'Propósito', en: 'Purpose' },
   'modal.role': { pt: 'Meu papel', en: 'My role' },
@@ -32,8 +22,16 @@ const dict: Record<string, L10n> = {
   },
   'about.github': { pt: 'GitHub', en: 'GitHub' },
   'about.linkedin': { pt: 'LinkedIn', en: 'LinkedIn' },
-  'lang.switch': { pt: 'Mudar idioma para inglês', en: 'Switch language to Portuguese' },
+  'lang.switch': { pt: 'EN: mudar idioma para inglês', en: 'PT: switch language to Portuguese' },
   'lang.short': { pt: 'EN', en: 'PT' },
+  'opening.line': { pt: 'Engenharia de Computação, foco em IA e agentes', en: 'Computer Engineering, focused on AI and agents' },
+  'opening.count': { pt: '{n} projetos', en: '{n} projects' },
+  'opening.scroll': { pt: 'Role para começar', en: 'Scroll to start' },
+  'timeline.label': { pt: 'Linha do tempo dos projetos', en: 'Project timeline' },
+  'index.open': { pt: 'Índice', en: 'Index' },
+  'index.title': { pt: 'Todos os projetos', en: 'All projects' },
+  'index.close': { pt: 'Fechar índice', en: 'Close index' },
+  'credits.top': { pt: 'Voltar ao início', en: 'Back to the top' },
 }
 
 const categories: Record<string, L10n> = {

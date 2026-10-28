@@ -9,4 +9,9 @@
   --radius: 14px;
   --gutter: clamp(16px, 4vw, 48px);
   --font: 'Inter', system-ui, sans-serif;
+  --display: 'League Gothic', 'Arial Narrow', sans-serif;
+  /* chapter tokens: the stage overrides these as the scroll moves between chapters */
+  --ground: #08090c;
+  --ink: #f4f2ee;
+  --accent-chapter: #f5b83d;
 }

@@ -2,6 +2,7 @@
 @import '@fontsource/inter/400.css';
 @import '@fontsource/inter/600.css';
 @import '@fontsource/inter/700.css';
+@import '@fontsource/league-gothic/400.css';
 @import './tokens.css';
 
 *, *::before, *::after { box-sizing: border-box; }

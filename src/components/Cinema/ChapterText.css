@@ -1,0 +1,63 @@
+/* The stage sets --ink and --accent-chapter; --display is League Gothic. */
+.chapter-text {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-items: end;
+  padding: calc(7svh + 24px) var(--gutter) calc(7svh + 88px);
+  color: var(--ink);
+  pointer-events: none;
+}
+.chapter-text .chapter-open { pointer-events: auto; }
+.chapter-block { display: grid; gap: 16px; max-width: min(100%, 1200px); }
+
+.chapter-title {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: clamp(3.5rem, 11vw, 9rem);
+  line-height: 0.9;
+  letter-spacing: 0;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+.chapter-title--opening { font-size: clamp(4rem, 17vw, 13rem); }
+/* the mask clips the rise animation; the padding keeps accents on capitals (À, Ç) from being cut */
+.chapter-line { display: inline-block; overflow: hidden; vertical-align: top; padding-top: 0.14em; margin-top: -0.14em; }
+.chapter-word { display: inline-block; }
+
+.chapter-summary { margin: 0; max-width: 62ch; font-size: clamp(1rem, 1.4vw, 1.25rem); line-height: 1.5; }
+.chapter-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  margin: 0;
+  color: var(--accent-chapter);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.chapter-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.chapter-tags li {
+  padding: 4px 12px;
+  border: 1px solid currentcolor;
+  border-radius: 999px;
+  font-size: 0.875rem;
+}
+.chapter-open {
+  justify-self: start;
+  min-height: 44px;
+  padding: 0 24px;
+  color: var(--ground);
+  background: var(--accent-chapter);
+  border: 2px solid var(--accent-chapter);
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.chapter-open:hover { background: transparent; color: var(--accent-chapter); }
+.chapter-open:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .chapter-open { transition: none; }
+}

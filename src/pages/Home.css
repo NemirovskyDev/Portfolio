@@ -1,32 +1,42 @@
+/* Floats over the stage (or over the first static chapter) and follows the chapter colors. */
 .topbar {
-  position: sticky;
-  top: 0;
-  z-index: 10;
+  position: fixed;
+  top: 7svh;
+  left: 0;
+  right: 0;
+  z-index: 30;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 8px var(--gutter, 16px);
-  /* solid enough that the hero copy fading underneath never collides with the wordmark */
-  background: rgb(7 8 13 / 94%);
-  border-bottom: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
+  padding: 12px var(--gutter);
+  color: var(--ink);
+  pointer-events: none;
 }
+.topbar > * { pointer-events: auto; }
 .wordmark {
+  margin: 0;
+  font-weight: 400;
   min-width: 0;
   overflow: hidden;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  color: var(--accent);
+  font-family: var(--display);
+  font-size: 1.5rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 .topbar-actions { display: flex; flex: none; align-items: center; gap: 8px; }
 .topbar-btn {
   min-height: 44px;
+  padding: 0 16px;
+  font-weight: 600;
+  color: var(--ink);
   white-space: nowrap;
-  padding: 0 14px;
-  background: transparent;
-  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--ground) 70%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ink) 35%, transparent);
   border-radius: 999px;
 }
-.topbar-btn:hover { border-color: var(--accent); }
+.topbar-btn:hover { border-color: var(--accent-chapter); }
+
+.credits-static { padding: 96px var(--gutter) 128px; background: var(--ground); }

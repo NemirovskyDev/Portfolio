@@ -44,6 +44,8 @@ function parseGalleryItem(id: string, i: number, v: unknown) {
 function parseProject(raw: unknown): Project {
   if (!isObj(raw)) throw new ProjectError('?', 'item', 'is not an object')
   const id = text('?', 'id', raw.id)
+  // these ids belong to the opening and credits chapters
+  if (id === 'opening' || id === 'credits') throw new ProjectError(id, 'id', 'is reserved')
   const status = raw.status as Status
   if (!STATUS.includes(status)) throw new ProjectError(id, 'status', `must be one of ${STATUS.join(', ')}`)
   if (!Array.isArray(raw.stack) || raw.stack.some((s) => !str(s))) throw new ProjectError(id, 'stack', 'must be a list of strings')
