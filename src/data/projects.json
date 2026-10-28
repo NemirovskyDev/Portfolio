@@ -209,26 +209,34 @@
     "fundo": "projetos/bombas/backdrop.webp",
     "titulo": { "pt": "3 Bombas", "en": "3 Pumps" },
     "resumo": {
-      "pt": "Sistema com três bombas controlado por um Arduino Mega, com LEDs, potenciômetros, display de 7 segmentos e buzzer.",
-      "en": "A three-pump system driven by an Arduino Mega, with LEDs, potentiometers, a 7-segment display and a buzzer."
+      "pt": "Sistema programável que controla três bombas pelo nível de três reservatórios, com display, LEDs e alarme, montado num Arduino Mega e protegido por uma caixa impressa em 3D.",
+      "en": "A programmable system that controls three pumps from the level of three reservoirs, with a display, LEDs and an alarm, built on an Arduino Mega and protected by a 3D-printed enclosure."
     },
     "proposito": {
-      "pt": "Trabalho de Arquitetura de Computadores, que vale 30% da primeira nota, para praticar eletrônica, programação de microcontrolador e montagem.",
-      "en": "Computer Architecture project worth 30% of the first-term grade, to practice electronics, microcontroller programming and assembly."
+      "pt": "Trabalho de Arquitetura de Computadores, que vale 30% da primeira nota, para praticar eletrônica, programação de microcontrolador e montagem física simulando o controle de bombas.",
+      "en": "Computer Architecture project worth 30% of the first-term grade, to practice electronics, microcontroller programming and physical assembly by simulating pump control."
     },
     "papel": {
       "pt": "Montagem da placa, programação e projeto da caixa impressa em 3D.",
       "en": "Board assembly, programming and design of the 3D-printed enclosure."
     },
-    "stack": ["Arduino", "C/C++", "Eletrônica", "Impressão 3D"],
-    "status": "em-andamento",
+    "stack": ["Arduino Mega 2560", "C/C++", "Eletrônica", "Impressão 3D"],
+    "status": "concluido",
     "funcionalidades": [
-      {"pt":"Arduino Mega 2560 como base do projeto.","en":"Arduino Mega 2560 as the base of the project."},
-      {"pt":"LEDs, potenciômetros, display de 7 segmentos (D5611) e buzzer.","en":"LEDs, potentiometers, a 7-segment display (D5611) and a buzzer."},
-      {"pt":"Placa soldada à mão.","en":"Hand-soldered board."},
-      {"pt":"Caixa sob medida impressa em 3D numa Ultimaker 3.","en":"Custom enclosure 3D-printed on an Ultimaker 3."}
+      {"pt":"Três potenciômetros simulam o nível de três reservatórios, de 0 a 100%.","en":"Three potentiometers simulate the level of three reservoirs, from 0 to 100%."},
+      {"pt":"Cada bomba, representada por um LED, liga abaixo de 30%, desliga acima de 80% e mantém o estado entre os dois valores.","en":"Each pump, shown as an LED, turns on below 30%, off above 80% and keeps its state in between."},
+      {"pt":"O display de 7 segmentos mostra a faixa do nível de 1 a 9: quanto maior o nível, maior o dígito.","en":"The 7-segment display shows the level band from 1 to 9: the higher the level, the higher the digit."},
+      {"pt":"Alarme preventivo por LED e alarme corretivo com buzzer.","en":"Preventive alarm on an LED and corrective alarm with a buzzer."},
+      {"pt":"Caixa de PLA de 165 × 112 × 55 mm, impressa na Ultimaker 3 sem suporte, com LEDs visíveis e controles por fora.","en":"A 165 × 112 × 55 mm PLA enclosure printed on an Ultimaker 3 with no supports, LEDs visible and controls on the outside."},
+      {"pt":"Montagem em 6 passos: base, placa nos pilares, tampa, Arduino Mega sob a tampa, jumpers e fechamento.","en":"Six assembly steps: base, board on the pillars, lid, Arduino Mega under the lid, jumpers and closing."}
     ],
-    "desafios": {"pt":"Meu desafio foi soldar e planejar a ligação de vários componentes na mesma placa e projetar uma caixa que desse para imprimir. Ainda estou ligando potenciômetros, display e buzzer e descobrindo se o display é de ânodo comum ou cátodo comum.","en":"My challenge was soldering and planning the wiring of many components on one board, and designing an enclosure that could be printed. I am still wiring the potentiometers, display and buzzer, and finding out whether the display is common anode or common cathode."}
+    "desafios": {"pt":"Meu desafio foi fazer tudo caber e funcionar numa caixa só: soldar a placa com LEDs e resistores, ligar potenciômetros, display e buzzer ao Mega e projetar uma caixa que imprimisse sem suporte, com os LEDs visíveis e o Arduino preso de cabeça para baixo sob a tampa.","en":"My challenge was making everything fit and work in a single enclosure: soldering the board with LEDs and resistors, wiring the potentiometers, display and buzzer to the Mega, and designing a case that prints without supports, with the LEDs visible and the Arduino bolted upside down under the lid."},
+    "galeria": [
+      {"src":"projetos/bombas/shot-1.webp","alt":{"pt":"Caixa do sistema de 3 bombas em vista explodida, com tampa, placa e Arduino Mega","en":"The 3-pump system enclosure in an exploded view, with lid, board and Arduino Mega"}},
+      {"src":"projetos/bombas/shot-4.webp","alt":{"pt":"Diagrama de ligação no protoboard: Arduino Mega, três blocos com potenciômetro e LEDs, display de 7 segmentos e buzzer","en":"Breadboard wiring diagram: Arduino Mega, three blocks with a potentiometer and LEDs, a 7-segment display and a buzzer"}},
+      {"src":"projetos/bombas/shot-2.webp","alt":{"pt":"Display mostrando a faixa 6 e os três reservatórios com seus níveis","en":"Display showing band 6 and the three reservoirs with their levels"}},
+      {"src":"projetos/bombas/shot-3.webp","alt":{"pt":"Caixa pronta: PLA, Ultimaker 3, 165 × 112 × 55 mm e 14 parafusos M3","en":"Finished enclosure: PLA, Ultimaker 3, 165 × 112 × 55 mm and 14 M3 screws"}}
+    ]
   },
   {
     "id": "b3",

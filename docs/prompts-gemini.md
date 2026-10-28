@@ -79,7 +79,7 @@ Horizontal 16:9 panorama of a futuristic Prompt City sprawling across a giant bo
 
 Cover:
 ```text
-Vertical 2:3 cinematic poster. Extreme macro of an Arduino Mega board in the foreground with softly glowing LEDs and a 7-segment display lit amber (#F5B83D), three small water pumps blurred in the background, colorful jumper wires, near-black blue background (#07080D), 100mm macro lens, very shallow depth of field, film grain. Lower third dark and quiet. No text, no letters, no logos, no watermark.
+Vertical 2:3 cinematic poster. A translucent grey 3D-printed electronics enclosure seen from a three-quarter angle, its lid carrying three black potentiometer knobs, a small glowing amber 7-segment display and a few small LEDs, an Arduino Mega board and colorful jumper wires faintly visible through the plastic, three tiny water-level gauges as soft blurred shapes in the background, near-black blue background (#07080D), 100mm macro lens, very shallow depth of field, film grain. Lower third dark and quiet. No text, no letters, no logos, no watermark.
 ```
 Backdrop:
 ```text
