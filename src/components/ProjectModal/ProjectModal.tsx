@@ -5,6 +5,7 @@ import { asset } from '../../lib/assets'
 import { linkLabel, statusLabel, t } from '../../lib/i18n'
 import { useReducedMotion } from '../../lib/useReducedMotion'
 import { useAppState } from '../../state/AppState'
+import { Lightbox } from './Lightbox'
 import './ProjectModal.css'
 
 const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
@@ -25,16 +26,29 @@ function ExternalIcon() {
 /** Prints that fail to load disappear; when none is left, the whole section (heading included) goes too. */
 function Gallery({ items, lang }: { items: NonNullable<Project['galeria']>; lang: Lang }) {
   const [failed, setFailed] = useState<ReadonlySet<string>>(new Set())
+  const [open, setOpen] = useState<number | null>(null)
+  const opener = useRef<HTMLElement | null>(null)
   const visible = items.filter((g) => !failed.has(g.src))
   if (!visible.length) return null
+
+  const show = (i: number, from: HTMLElement) => {
+    opener.current = from
+    setOpen(i)
+  }
+  const close = () => {
+    setOpen(null)
+    // give focus back to the print that was opened, if it is still on the page
+    queueMicrotask(() => opener.current?.isConnected && opener.current.focus())
+  }
+
   return (
     <>
       <h3>{t('modal.gallery', lang)}</h3>
       {/* role="list" keeps list semantics in Safari, which drops them when list-style is none */}
       <ul className="gallery" role="list">
-        {visible.map((g) => (
+        {visible.map((g, i) => (
           <li key={g.src}>
-            <a href={asset(g.src)} target="_blank" rel="noopener noreferrer">
+            <button type="button" className="gallery-thumb" onClick={(e) => show(i, e.currentTarget)}>
               <img
                 src={asset(g.src)}
                 alt={g.alt[lang]}
@@ -43,11 +57,12 @@ function Gallery({ items, lang }: { items: NonNullable<Project['galeria']>; lang
                 loading="lazy"
                 onError={() => setFailed((prev) => new Set(prev).add(g.src))}
               />
-              <span className="sr-only"> ({t('link.newTab', lang)})</span>
-            </a>
+              <span className="sr-only"> ({t('lightbox.enlarge', lang)})</span>
+            </button>
           </li>
         ))}
       </ul>
+      {open !== null && <Lightbox items={visible} index={Math.min(open, visible.length - 1)} lang={lang} onIndex={setOpen} onClose={close} />}
     </>
   )
 }
@@ -131,6 +146,20 @@ export function ProjectModal({ project, onClose }: Props) {
           <p className="modal-status">{statusLabel(project.status, lang)}</p>
           <p>{project.resumo[lang]}</p>
 
+          {project.links?.length ? (
+            <ul className="actions" role="list">
+              {project.links.map((l) => (
+                <li key={l.url}>
+                  <a className={l.label === 'Site' ? 'action action--primary' : 'action'} href={l.url} target="_blank" rel="noopener noreferrer">
+                    {linkLabel(l.label, lang)}
+                    <span className="sr-only"> ({t('link.newTab', lang)})</span>
+                    <ExternalIcon />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+
           <h3>{t('modal.purpose', lang)}</h3>
           <p>{project.proposito[lang]}</p>
 
@@ -140,6 +169,42 @@ export function ProjectModal({ project, onClose }: Props) {
               <ul className="features">
                 {project.funcionalidades.map((f, i) => (
                   <li key={`${i}-${f.pt}`}>{f[lang]}</li>
+                ))}
+              </ul>
+            </>
+          ) : null}
+
+          {project.comoFunciona?.length ? (
+            <>
+              <h3>{t('modal.how', lang)}</h3>
+              <ol className="steps">
+                {project.comoFunciona.map((s, i) => (
+                  <li key={`${i}-${s.pt}`}>{s[lang]}</li>
+                ))}
+              </ol>
+            </>
+          ) : null}
+
+          {project.ferramentas?.length ? (
+            <>
+              <h3>{t('modal.tools', lang)}</h3>
+              <dl className="tool-groups">
+                {project.ferramentas.map((g) => (
+                  <div key={g.grupo.pt}>
+                    <dt>{g.grupo[lang]}</dt>
+                    <dd>{g.itens.join(', ')}</dd>
+                  </div>
+                ))}
+              </dl>
+            </>
+          ) : null}
+
+          {project.metodologia?.length ? (
+            <>
+              <h3>{t('modal.methods', lang)}</h3>
+              <ul className="features">
+                {project.metodologia.map((m, i) => (
+                  <li key={`${i}-${m.pt}`}>{m[lang]}</li>
                 ))}
               </ul>
             </>
@@ -163,23 +228,6 @@ export function ProjectModal({ project, onClose }: Props) {
               <li key={s}>{s}</li>
             ))}
           </ul>
-
-          {project.links?.length ? (
-            <>
-              <h3>{t('modal.links', lang)}</h3>
-              <ul className="links" role="list">
-                {project.links.map((l) => (
-                  <li key={l.url}>
-                    <a href={l.url} target="_blank" rel="noopener noreferrer">
-                      {linkLabel(l.label, lang)}
-                      <span className="sr-only"> ({t('link.newTab', lang)})</span>
-                      <ExternalIcon />
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </>
-          ) : null}
         </div>
       </motion.div>
     </div>

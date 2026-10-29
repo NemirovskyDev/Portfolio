@@ -1,11 +1,24 @@
 import { useEffect, useRef } from 'react'
+import { motion, useTransform, type MotionValue } from 'motion/react'
 import type { Chapter } from '../../lib/chapters'
 import { t } from '../../lib/i18n'
 import type { Lang } from '../../lib/types'
 import { useAppState } from '../../state/AppState'
 import './TimelineBar.css'
 
-type Props = { chapters: Chapter[]; activeIndex: number; onJump: (index: number) => void }
+type Props = {
+  chapters: Chapter[]
+  activeIndex: number
+  onJump: (index: number) => void
+  /** Scroll position `f`; when given, each marker fills like a loading bar as `f` reaches it. */
+  progress?: MotionValue<number>
+}
+
+/** Marker `index` is empty until `f` leaves the previous chapter and full once `f` reaches it. */
+function Fill({ index, progress }: { index: number; progress: MotionValue<number> }) {
+  const scaleX = useTransform(progress, (f) => Math.min(1, Math.max(0, f - index + 1)))
+  return <motion.span className="timeline-fill" style={{ scaleX }} aria-hidden="true" />
+}
 
 const pad = (n: number) => String(n).padStart(2, '0')
 
@@ -18,17 +31,29 @@ function chapterTitle(c: Chapter, lang: Lang): string {
 // Opening and credits are groups of their own; projects group by category.
 const groupKey = (c: Chapter): string => (c.kind === 'project' ? c.project.categoria : c.kind)
 
-export function TimelineBar({ chapters, activeIndex, onJump }: Props) {
+export function TimelineBar({ chapters, activeIndex, onJump, progress }: Props) {
   const { lang } = useAppState()
   if (!chapters.length) return null
   const current = Math.min(Math.max(activeIndex, 0), chapters.length - 1)
 
   return (
-    <TimelineView chapters={chapters} current={current} lang={lang} onJump={onJump} />
+    <TimelineView chapters={chapters} current={current} lang={lang} onJump={onJump} progress={progress} />
   )
 }
 
-function TimelineView({ chapters, current, lang, onJump }: { chapters: Chapter[]; current: number; lang: Lang; onJump: (i: number) => void }) {
+function TimelineView({
+  chapters,
+  current,
+  lang,
+  onJump,
+  progress,
+}: {
+  chapters: Chapter[]
+  current: number
+  lang: Lang
+  onJump: (i: number) => void
+  progress?: MotionValue<number>
+}) {
   const track = useRef<HTMLOListElement>(null)
   const projectTotal = chapters.filter((c) => c.kind === 'project').length
   const projectNumber = chapters.slice(0, current + 1).filter((c) => c.kind === 'project').length
@@ -42,7 +67,7 @@ function TimelineView({ chapters, current, lang, onJump }: { chapters: Chapter[]
   }, [current])
 
   return (
-    <nav className="timeline" aria-label={t('timeline.label', lang)}>
+    <nav className={progress ? 'timeline timeline--fill' : 'timeline'} aria-label={t('timeline.label', lang)}>
       <p className="timeline-readout">
         <span className="timeline-current" data-testid="timeline-current">
           {chapterTitle(chapters[current], lang)}
@@ -65,7 +90,9 @@ function TimelineView({ chapters, current, lang, onJump }: { chapters: Chapter[]
                 aria-label={chapterTitle(c, lang)}
                 aria-current={i === current ? 'step' : undefined}
                 onClick={() => onJump(i)}
-              />
+              >
+                {progress ? <Fill index={i} progress={progress} /> : null}
+              </button>
             </li>
           )
         })}

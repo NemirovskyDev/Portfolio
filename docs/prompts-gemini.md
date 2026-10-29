@@ -118,3 +118,16 @@ Backdrop:
 ```text
 Horizontal 16:9 cinematic wide shot of a dark living room at night where a laptop screen shows a grid of glowing video-call tiles with soft silhouettes, a headset on the desk, thin light lines rising from the screen toward the ceiling like signals connecting distant homes, near-black blue tones (#07080D) with amber (#F5B83D) and soft violet accents, volumetric haze, film grain. Open dark space on the left for text. No readable text, no logos, no watermark, no identifiable faces.
 ```
+
+## TradingBot: `public/projetos/tradingbot/`
+
+The site uses a cover and a backdrop built from the real dashboard until these exist. Replace both files when the Gemini images are ready.
+
+Cover:
+```text
+Vertical 2:3 cinematic poster. A glowing candlestick chart floating above a dark glass desk, rising green candles and a few red ones forming a staircase of light, thin luminous grid lines receding into the distance, a single amber rim light (#F5B83D) from the right, near-black green-blue background (#07080D), macro lens, shallow depth of field, fine film grain. Lower third dark and quiet. No text, no numbers, no letters, no logos, no watermark.
+```
+Backdrop:
+```text
+Horizontal 16:9 cinematic wide shot of an empty trading desk at night with a wall of out-of-focus monitors showing only abstract glowing line charts in green and amber (#F5B83D), reflections on a polished desk, near-black shadows (#07080D), open negative space on the left for text, film grain. No readable text or numbers on screens, no logos, no watermark.
+```

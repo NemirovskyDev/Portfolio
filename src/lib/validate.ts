@@ -41,6 +41,15 @@ function parseGalleryItem(id: string, i: number, v: unknown) {
   return { src, alt: l10n(id, `${field}.alt`, v.alt) }
 }
 
+function parseToolGroup(id: string, i: number, v: unknown) {
+  const field = `ferramentas[${i}]`
+  if (!isObj(v)) throw new ProjectError(id, field, 'must be an object')
+  if (!Array.isArray(v.itens) || !v.itens.length || v.itens.some((s) => !str(s))) {
+    throw new ProjectError(id, `${field}.itens`, 'must be a non-empty list of strings')
+  }
+  return { grupo: l10n(id, `${field}.grupo`, v.grupo), itens: (v.itens as string[]).map((s) => s.trim()) }
+}
+
 function parseProject(raw: unknown): Project {
   if (!isObj(raw)) throw new ProjectError('?', 'item', 'is not an object')
   const id = text('?', 'id', raw.id)
@@ -73,6 +82,13 @@ function parseProject(raw: unknown): Project {
     ...(links ? { links } : {}),
     ...(raw.funcionalidades !== undefined
       ? { funcionalidades: list(id, 'funcionalidades', raw.funcionalidades).map((f, i) => l10n(id, `funcionalidades[${i}]`, f)) }
+      : {}),
+    ...(raw.comoFunciona !== undefined
+      ? { comoFunciona: list(id, 'comoFunciona', raw.comoFunciona).map((s, i) => l10n(id, `comoFunciona[${i}]`, s)) }
+      : {}),
+    ...(raw.ferramentas !== undefined ? { ferramentas: list(id, 'ferramentas', raw.ferramentas).map((g, i) => parseToolGroup(id, i, g)) } : {}),
+    ...(raw.metodologia !== undefined
+      ? { metodologia: list(id, 'metodologia', raw.metodologia).map((m, i) => l10n(id, `metodologia[${i}]`, m)) }
       : {}),
     ...(raw.desafios !== undefined ? { desafios: l10n(id, 'desafios', raw.desafios) } : {}),
     ...(raw.galeria !== undefined ? { galeria: list(id, 'galeria', raw.galeria).map((g, i) => parseGalleryItem(id, i, g)) } : {}),

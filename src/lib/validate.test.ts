@@ -18,7 +18,7 @@ const valid = {
 describe('validateProjects', () => {
   it('accepts every seed project', () => {
     const ids = validateProjects(seed).map((p) => p.id)
-    expect(ids).toEqual(['reveste', 'pkz', 'tabbit', 'orquestrador', 'companion', 'ap2', 'bombas', 'b3', 'jarvis', 'chat-amigos'])
+    expect(ids).toEqual(['reveste', 'pkz', 'tabbit', 'orquestrador', 'companion', 'ap2', 'bombas', 'b3', 'tradingbot', 'jarvis', 'chat-amigos'])
   })
 
   it('throws naming id and field when titulo.pt is missing (strict)', () => {
@@ -77,6 +77,23 @@ describe('validateProjects: detail fields', () => {
   it('rejects funcionalidades that are not a list or have an empty pt', () => {
     expect(() => validateProjects([{ ...detailed, funcionalidades: 'x' }], { strict: true })).toThrow(/funcionalidades/)
     expect(() => validateProjects([{ ...detailed, funcionalidades: [{ pt: '', en: 'x' }] }], { strict: true })).toThrow(/funcionalidades/)
+  })
+
+  it('accepts tool groups and methodology and falls back to pt when en is empty', () => {
+    const p = validateProjects(
+      [{ ...detailed, ferramentas: [{ grupo: { pt: 'Testes', en: '' }, itens: ['vitest', ' Playwright '] }], metodologia: [{ pt: 'TDD', en: '' }] }],
+      { strict: true },
+    )[0]
+    expect(p.ferramentas).toEqual([{ grupo: { pt: 'Testes', en: 'Testes' }, itens: ['vitest', 'Playwright'] }])
+    expect(p.metodologia).toEqual([{ pt: 'TDD', en: 'TDD' }])
+  })
+
+  it('rejects tool groups without items, with blank items, or that are not a list', () => {
+    const grupo = { pt: 'Testes', en: 'Tests' }
+    expect(() => validateProjects([{ ...detailed, ferramentas: 'x' }], { strict: true })).toThrow(/ferramentas/)
+    expect(() => validateProjects([{ ...detailed, ferramentas: [{ grupo, itens: [] }] }], { strict: true })).toThrow(/ferramentas/)
+    expect(() => validateProjects([{ ...detailed, ferramentas: [{ grupo, itens: [' '] }] }], { strict: true })).toThrow(/ferramentas/)
+    expect(() => validateProjects([{ ...detailed, metodologia: [{ pt: '', en: 'x' }] }], { strict: true })).toThrow(/metodologia/)
   })
 
   it.each(['//cdn.example/x.png', '../secret.webp', '/abs.webp', 'projetos/x/shot.gif', 'https://x.dev/a.webp'])(

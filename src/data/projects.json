@@ -4,7 +4,10 @@
     "categoria": "Sites",
     "capa": "projetos/reveste/cover.webp",
     "fundo": "projetos/reveste/backdrop.webp",
-    "titulo": { "pt": "Reveste", "en": "Reveste" },
+    "titulo": {
+      "pt": "Reveste",
+      "en": "Reveste"
+    },
     "resumo": {
       "pt": "Site de aluguel de roupas de marca por assinatura, com compra avulsa, doação de peças, guia de medidas e looks.",
       "en": "Website for renting designer clothes by subscription, with one-off purchase, clothing donation, a size guide and curated looks."
@@ -17,22 +20,207 @@
       "pt": "Design e desenvolvimento completos do front-end, regras de negócio e publicação.",
       "en": "Full front-end design and development, business rules and deployment."
     },
-    "stack": ["Next.js", "React", "Tailwind CSS", "motion", "GSAP", "React Three Fiber", "zustand", "Zod", "vitest"],
-    "status": "no-ar",
-    "links": [{ "label": "Site", "url": "https://nemirovskydev.github.io/Reveste/" }],
-    "funcionalidades": [
-      {"pt":"Plano mensal de 4 peças, com 5% de desconto no Essencial e 10% no Premium.","en":"Monthly plan of 4 pieces, with 5% off the Essencial plan and 10% off the Premium plan."},
-      {"pt":"Aluguel avulso de 7, 14 ou 30 dias, por 15%, 25% ou 40% do valor da peça.","en":"One-off rental of 7, 14 or 30 days, for 15%, 25% or 40% of the piece value."},
-      {"pt":"Compra de qualquer peça por 70% do valor, menos o aluguel já pago.","en":"Buy any piece for 70% of its value, minus the rental already paid."},
-      {"pt":"Doação de roupas: a cada 3 peças, de 15% a 50% de desconto, conforme o tipo e a confirmação da equipe.","en":"Clothing donation: every 3 pieces earn a 15% to 50% discount depending on type, confirmed by the team."},
-      {"pt":"Guia de medidas com calculadora de tamanho.","en":"Size guide with a size calculator."},
-      {"pt":"Looks com 8 fotos de pessoas geradas por IA; as roupas são peças reais do catálogo e viram botões de compra.","en":"Styled looks with 8 AI-generated photos of people; the clothes are real catalog pieces and work as buy buttons."}
+    "stack": [
+      "Next.js",
+      "React",
+      "Tailwind CSS",
+      "motion",
+      "GSAP",
+      "React Three Fiber",
+      "zustand",
+      "Zod",
+      "vitest"
     ],
-    "desafios": {"pt":"Meu maior desafio foi modelar as regras de preço: o aluguel custa uma porcentagem do valor da peça e a compra desconta o que já foi pago. Como não há servidor, sacola, pedido, conta e login ficam no navegador, e eu precisei manter tudo consistente só no front-end, com os dados validados com Zod.","en":"My biggest challenge was modeling the pricing rules: a rental costs a percentage of the piece value and a purchase subtracts what was already paid. With no server, the bag, orders, account and login live in the browser, so I had to keep everything consistent on the front end alone, with data validated with Zod."},
+    "status": "no-ar",
+    "links": [
+      {
+        "label": "Site",
+        "url": "https://nemirovskydev.github.io/Reveste/"
+      },
+      {
+        "label": "GitHub",
+        "url": "https://github.com/NemirovskyDev/Reveste"
+      }
+    ],
+    "funcionalidades": [
+      {
+        "pt": "Plano mensal de 4 peças, com 5% de desconto no Essencial e 10% no Premium.",
+        "en": "Monthly plan of 4 pieces, with 5% off the Essencial plan and 10% off the Premium plan."
+      },
+      {
+        "pt": "Aluguel avulso de 7, 14 ou 30 dias, por 15%, 25% ou 40% do valor da peça.",
+        "en": "One-off rental of 7, 14 or 30 days, for 15%, 25% or 40% of the piece value."
+      },
+      {
+        "pt": "Compra de qualquer peça por 70% do valor, menos o aluguel já pago.",
+        "en": "Buy any piece for 70% of its value, minus the rental already paid."
+      },
+      {
+        "pt": "Doação de roupas: a cada 3 peças, de 15% a 50% de desconto, conforme o tipo e a confirmação da equipe.",
+        "en": "Clothing donation: every 3 pieces earn a 15% to 50% discount depending on type, confirmed by the team."
+      },
+      {
+        "pt": "Guia de medidas com calculadora de tamanho.",
+        "en": "Size guide with a size calculator."
+      },
+      {
+        "pt": "Looks com 8 fotos de pessoas geradas por IA; as roupas são peças reais do catálogo e viram botões de compra.",
+        "en": "Styled looks with 8 AI-generated photos of people; the clothes are real catalog pieces and work as buy buttons."
+      }
+    ],
+    "ferramentas": [
+      {
+        "grupo": {
+          "pt": "Linguagem e framework",
+          "en": "Language and framework"
+        },
+        "itens": [
+          "TypeScript",
+          "Next.js 16 (App Router, exportação estática)",
+          "React 19"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Interface e animação",
+          "en": "Interface and animation"
+        },
+        "itens": [
+          "Tailwind CSS 4",
+          "GSAP",
+          "motion",
+          "Lenis (rolagem com inércia)"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "3D",
+          "en": "3D"
+        },
+        "itens": [
+          "three.js",
+          "React Three Fiber",
+          "drei"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Estado, formulários e validação",
+          "en": "State, forms and validation"
+        },
+        "itens": [
+          "zustand",
+          "Zod 4",
+          "react-hook-form"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Pagamento e dados locais",
+          "en": "Payment and local data"
+        },
+        "itens": [
+          "qrcode (QR do Pix)",
+          "adaptadores locais de conta, pedidos, frete e armazenamento"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Qualidade",
+          "en": "Quality"
+        },
+        "itens": [
+          "Vitest",
+          "Testing Library",
+          "jsdom",
+          "ESLint",
+          "tsc (checagem de tipos)"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Publicação",
+          "en": "Deployment"
+        },
+        "itens": [
+          "GitHub Actions",
+          "GitHub Pages"
+        ]
+      }
+    ],
+    "metodologia": [
+      {
+        "pt": "Regras de preço em funções puras, com valores em centavos inteiros e formatação pt-BR por Intl, cobertas por 20 arquivos de testes unitários.",
+        "en": "Pricing rules as pure functions, with values in integer cents and pt-BR formatting through Intl, covered by 20 unit-test files."
+      },
+      {
+        "pt": "Camada de serviços com contratos (conta, pedidos, pagamento, frete) e adaptadores locais: um back-end real entra no lugar sem mexer nas telas. Um documento de handoff lista o que falta antes do lançamento: confirmação do Pix por webhook, recálculo de preço no servidor, tokenização de cartão e LGPD.",
+        "en": "A service layer with contracts (account, orders, payment, shipping) and local adapters: a real back end can replace them without touching the screens. A handoff document lists what is missing before launch: Pix confirmation by webhook, server-side price recalculation, card tokenization and LGPD."
+      },
+      {
+        "pt": "Todos os dados passam por validação com Zod, e o HTML só é injetado no JSON-LD de SEO.",
+        "en": "All data goes through Zod validation, and HTML is only injected for the SEO JSON-LD."
+      },
+      {
+        "pt": "Acessibilidade: foco visível, atributos ARIA e respeito a prefers-reduced-motion. O 3D roda só no cliente e tem alternativa para aparelhos fracos.",
+        "en": "Accessibility: visible focus, ARIA attributes and respect for prefers-reduced-motion. The 3D runs only on the client and has a fallback for weak devices."
+      },
+      {
+        "pt": "SEO e instalação: sitemap, robots, manifest e imagem Open Graph geradas pelo próprio Next.js.",
+        "en": "SEO and installability: sitemap, robots, manifest and an Open Graph image generated by Next.js itself."
+      },
+      {
+        "pt": "Especificação e plano escritos antes do código, e publicação automática a cada push na main.",
+        "en": "Specification and plan written before the code, and automatic deployment on every push to main."
+      }
+    ],
+    "desafios": {
+      "pt": "Meu maior desafio foi modelar as regras de preço: o aluguel custa uma porcentagem do valor da peça e a compra desconta o que já foi pago. Como não há servidor, sacola, pedido, conta e login ficam no navegador, e eu precisei manter tudo consistente só no front-end, com os dados validados com Zod.",
+      "en": "My biggest challenge was modeling the pricing rules: a rental costs a percentage of the piece value and a purchase subtracts what was already paid. With no server, the bag, orders, account and login live in the browser, so I had to keep everything consistent on the front end alone, with data validated with Zod."
+    },
     "galeria": [
-      {"src":"projetos/reveste/shot-1.webp","alt":{"pt":"Página inicial do Reveste com a arara 3D","en":"Reveste home page with the 3D clothing rack"}},
-      {"src":"projetos/reveste/shot-2.webp","alt":{"pt":"Catálogo com filtros de linha, marca, tipo e tamanho","en":"Catalog with line, brand, type and size filters"}},
-      {"src":"projetos/reveste/shot-3.webp","alt":{"pt":"Guia de medidas com instruções de como medir","en":"Size guide with measuring instructions"}}
+      {
+        "src": "projetos/reveste/shot-1.webp",
+        "alt": {
+          "pt": "Página inicial do Reveste com a arara 3D",
+          "en": "Reveste home page with the 3D clothing rack"
+        }
+      },
+      {
+        "src": "projetos/reveste/shot-2.webp",
+        "alt": {
+          "pt": "Catálogo com filtros de linha, marca, tipo e tamanho",
+          "en": "Catalog with line, brand, type and size filters"
+        }
+      },
+      {
+        "src": "projetos/reveste/shot-3.webp",
+        "alt": {
+          "pt": "Guia de medidas com instruções de como medir",
+          "en": "Size guide with measuring instructions"
+        }
+      },
+      {
+        "src": "projetos/reveste/shot-4.webp",
+        "alt": {
+          "pt": "Página de assinatura: monte seu plano de 4 peças",
+          "en": "Subscription page: build your plan of 4 pieces"
+        }
+      },
+      {
+        "src": "projetos/reveste/shot-5.webp",
+        "alt": {
+          "pt": "Doação de roupas, com os quatro passos",
+          "en": "Clothing donation, in four steps"
+        }
+      },
+      {
+        "src": "projetos/reveste/shot-6.webp",
+        "alt": {
+          "pt": "Página para marcas: consignação sem custo de entrada",
+          "en": "Page for brands: consignment with no entry cost"
+        }
+      }
     ]
   },
   {
@@ -40,7 +228,10 @@
     "categoria": "Sites",
     "capa": "projetos/pkz/cover.webp",
     "fundo": "projetos/pkz/backdrop.webp",
-    "titulo": { "pt": "PKZ Lab e One to One", "en": "PKZ Lab and One to One" },
+    "titulo": {
+      "pt": "PKZ Lab e One to One",
+      "en": "PKZ Lab and One to One"
+    },
     "resumo": {
       "pt": "Landing de entrada e dois sites para duas marcas, um em tema escuro e outro em tema claro.",
       "en": "A gateway landing page and two websites for two brands, one in a dark theme and one in a light theme."
@@ -53,24 +244,177 @@
       "pt": "Desenvolvimento em equipe de 7 pessoas.",
       "en": "Development as part of a team of 7."
     },
-    "stack": ["HTML", "CSS", "JavaScript"],
+    "stack": [
+      "HTML",
+      "CSS",
+      "JavaScript"
+    ],
     "status": "em-andamento",
     "links": [
-      { "label": "Site", "url": "https://enzotrotto-ibmec.github.io/PFE-2026-2-Grupo-1-vanila/" },
-      { "label": "GitHub", "url": "https://github.com/enzotrotto-ibmec/PFE-2026-2-AP1-Grupo1-terca" }
+      {
+        "label": "Site",
+        "url": "https://enzotrotto-ibmec.github.io/PFE-2026-2-Grupo-1-vanila/"
+      },
+      {
+        "label": "GitHub",
+        "url": "https://github.com/enzotrotto-ibmec/PFE-2026-2-AP1-Grupo1-terca"
+      }
     ],
     "funcionalidades": [
-      {"pt":"Landing de entrada que leva às duas marcas, PKZ Lab (tema escuro) e One to One (tema claro).","en":"A gateway landing page that leads to the two brands, PKZ Lab (dark theme) and One to One (light theme)."},
-      {"pt":"HTML, CSS e JavaScript puros, sem framework, por exigência da disciplina.","en":"Plain HTML, CSS and JavaScript with no framework, as the course required."},
-      {"pt":"Mobile-first, com menu hambúrguer no celular e menu completo no desktop.","en":"Mobile-first, with a hamburger menu on phones and the full menu on desktop."},
-      {"pt":"Sistema de agendamento integrado, com lógica em JavaScript fornecida pelo professor.","en":"Scheduling system integrated with JavaScript logic provided by the professor."},
-      {"pt":"Publicação no GitHub Pages, com documentação Scrum e protótipo.","en":"Published on GitHub Pages, with Scrum documentation and a prototype."}
+      {
+        "pt": "Landing de entrada que leva às duas marcas, PKZ Lab (tema escuro) e One to One (tema claro).",
+        "en": "A gateway landing page that leads to the two brands, PKZ Lab (dark theme) and One to One (light theme)."
+      },
+      {
+        "pt": "HTML, CSS e JavaScript puros, sem framework, por exigência da disciplina.",
+        "en": "Plain HTML, CSS and JavaScript with no framework, as the course required."
+      },
+      {
+        "pt": "Mobile-first, com menu hambúrguer no celular e menu completo no desktop.",
+        "en": "Mobile-first, with a hamburger menu on phones and the full menu on desktop."
+      },
+      {
+        "pt": "Sistema de agendamento integrado, com lógica em JavaScript fornecida pelo professor.",
+        "en": "Scheduling system integrated with JavaScript logic provided by the professor."
+      },
+      {
+        "pt": "Publicação no GitHub Pages, com documentação Scrum e protótipo.",
+        "en": "Published on GitHub Pages, with Scrum documentation and a prototype."
+      }
     ],
-    "desafios": {"pt":"Aprendi a integrar o sistema de agendamento usando a lógica em JavaScript que o professor forneceu, testando cada mudança para não quebrar o que já funcionava. Ainda tenho um bug aberto: uma pequena área de rolagem interna que prende a rolagem da página.","en":"I learned to integrate the scheduling system using the JavaScript logic the professor provided, testing every change so it would not break what already worked. One bug is still open: a small nested scroll area that traps page scrolling."},
+    "ferramentas": [
+      {
+        "grupo": {
+          "pt": "Linguagens",
+          "en": "Languages"
+        },
+        "itens": [
+          "HTML5",
+          "CSS3",
+          "JavaScript puro, sem framework e sem etapa de build"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Design",
+          "en": "Design"
+        },
+        "itens": [
+          "Figma (protótipo atualizado)"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Imagens",
+          "en": "Images"
+        },
+        "itens": [
+          "WebP em 3 larguras (480, 800 e 1280 px) com srcset"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Tipografia",
+          "en": "Typography"
+        },
+        "itens": [
+          "Google Fonts"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Agendamento",
+          "en": "Scheduling"
+        },
+        "itens": [
+          "lógica em JavaScript fornecida pelo professor e adaptada pelo time, que monta o link do WhatsApp"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Colaboração e publicação",
+          "en": "Collaboration and deployment"
+        },
+        "itens": [
+          "Git e GitHub",
+          "GitHub Pages",
+          "Discord (reuniões e dailies)"
+        ]
+      }
+    ],
+    "metodologia": [
+      {
+        "pt": "Scrum em time de 7 pessoas: sprints de 1 semana, backlog do produto priorizado com MoSCoW, backlog de cada sprint, planning, daily no Discord, review e retrospectiva, com Definition of Ready e Definition of Done.",
+        "en": "Scrum with a team of 7: 1-week sprints, a product backlog prioritized with MoSCoW, a backlog per sprint, planning, a daily on Discord, review and retrospective, with a Definition of Ready and a Definition of Done."
+      },
+      {
+        "pt": "Mobile first: tudo fora das media queries é o layout de celular, e o menu hambúrguer vira menu completo a partir de 769 px.",
+        "en": "Mobile first: everything outside the media queries is the phone layout, and the hamburger menu becomes a full menu from 769 px."
+      },
+      {
+        "pt": "Duas marcas no mesmo código: um tema escuro (PKZ) e um claro (One To One) por variáveis CSS, sobre uma base compartilhada de estrutura e componentes.",
+        "en": "Two brands in one codebase: a dark theme (PKZ) and a light one (One To One) through CSS variables, over a shared base of structure and components."
+      },
+      {
+        "pt": "Acessibilidade: link para pular ao conteúdo, aria-current no menu, anel de foco, tokens de contraste e respeito a prefers-reduced-motion.",
+        "en": "Accessibility: a skip link, aria-current in the menu, a focus ring, contrast tokens and respect for prefers-reduced-motion."
+      },
+      {
+        "pt": "SEO e privacidade: canonical, Open Graph, JSON-LD, página 404 própria e página de privacidade no modelo da LGPD.",
+        "en": "SEO and privacy: canonical, Open Graph, JSON-LD, its own 404 page and a privacy page based on the LGPD template."
+      },
+      {
+        "pt": "Combinados de Git: commits pequenos em português, git pull antes de começar e um responsável por arquivo. A Definition of Done pede conferência em celular e desktop, revisão por um colega e teste dos dois temas e do fluxo completo de agendamento.",
+        "en": "Git agreements: small commits in Portuguese, a git pull before starting and one owner per file. The Definition of Done requires checks on phone and desktop, a peer review and tests of both themes and the full scheduling flow."
+      }
+    ],
+    "desafios": {
+      "pt": "Aprendi a integrar o sistema de agendamento usando a lógica em JavaScript que o professor forneceu, testando cada mudança para não quebrar o que já funcionava. Ainda tenho um bug aberto: uma pequena área de rolagem interna que prende a rolagem da página.",
+      "en": "I learned to integrate the scheduling system using the JavaScript logic the professor provided, testing every change so it would not break what already worked. One bug is still open: a small nested scroll area that traps page scrolling."
+    },
     "galeria": [
-      {"src":"projetos/pkz/shot-1.webp","alt":{"pt":"Portal que apresenta as duas marcas","en":"Portal presenting both brands"}},
-      {"src":"projetos/pkz/shot-2.webp","alt":{"pt":"Site da PKZ Lab em tema escuro","en":"PKZ Lab site in a dark theme"}},
-      {"src":"projetos/pkz/shot-3.webp","alt":{"pt":"Site do Studio One To One em tema claro","en":"Studio One To One site in a light theme"}}
+      {
+        "src": "projetos/pkz/shot-1.webp",
+        "alt": {
+          "pt": "Portal que apresenta as duas marcas",
+          "en": "Portal presenting both brands"
+        }
+      },
+      {
+        "src": "projetos/pkz/shot-2.webp",
+        "alt": {
+          "pt": "Site da PKZ Lab em tema escuro",
+          "en": "PKZ Lab site in a dark theme"
+        }
+      },
+      {
+        "src": "projetos/pkz/shot-3.webp",
+        "alt": {
+          "pt": "Site do Studio One To One em tema claro",
+          "en": "Studio One To One site in a light theme"
+        }
+      },
+      {
+        "src": "projetos/pkz/shot-4.webp",
+        "alt": {
+          "pt": "Portal para escolher entre PKZ Lab e One To One, com o halter arrastável",
+          "en": "Portal to choose between PKZ Lab and One To One, with the draggable dumbbell"
+        }
+      },
+      {
+        "src": "projetos/pkz/shot-5.webp",
+        "alt": {
+          "pt": "Site claro do Studio One To One",
+          "en": "The light One To One Studio site"
+        }
+      },
+      {
+        "src": "projetos/pkz/shot-6.webp",
+        "alt": {
+          "pt": "Agendamento da aula experimental no tema escuro do PKZ Lab",
+          "en": "Trial class scheduling in PKZ Lab's dark theme"
+        }
+      }
     ]
   },
   {
@@ -78,7 +422,10 @@
     "categoria": "Hackathons",
     "capa": "projetos/tabbit/cover.webp",
     "fundo": "projetos/tabbit/backdrop.webp",
-    "titulo": { "pt": "Tabbit", "en": "Tabbit" },
+    "titulo": {
+      "pt": "Tabbit",
+      "en": "Tabbit"
+    },
     "resumo": {
       "pt": "Vale-refeição pago em USDC na rede Solana, criado no hackathon Colosseum Brasil.",
       "en": "A meal voucher paid in USDC on the Solana network, built at the Colosseum Brazil hackathon."
@@ -91,23 +438,200 @@
       "pt": "Dev B: desenvolvimento do app web.",
       "en": "Dev B: built the web app."
     },
-    "stack": ["Solana", "USDC", "Web"],
+    "stack": [
+      "Solana",
+      "USDC",
+      "Web"
+    ],
     "status": "no-ar",
     "links": [
-      { "label": "Site", "url": "https://tabbit-sol.vercel.app" },
-      { "label": "GitHub", "url": "https://github.com/eftrotto/Tabbit" }
+      {
+        "label": "Site",
+        "url": "https://tabbit-sol.vercel.app"
+      },
+      {
+        "label": "GitHub",
+        "url": "https://github.com/eftrotto/Tabbit"
+      }
     ],
     "funcionalidades": [
-      {"pt":"A empresa financia um cofre do programa e define o saldo e as regras de cada funcionário, com recarga mensal.","en":"The employer funds a program vault and sets each employee's balance and rules, with a monthly top-up."},
-      {"pt":"Importação de planilha com erro por linha.","en":"Spreadsheet import with per-line errors."},
-      {"pt":"O funcionário entra com e-mail ou Google e paga o restaurante por QR, sem app de carteira e sem SOL.","en":"Employees sign in with email or Google and pay a restaurant by QR, with no wallet app and no SOL."},
-      {"pt":"Pagamento gasless: quem paga a taxa só co-assina depois de uma validação rigorosa.","en":"Gasless payment: the fee payer co-signs only after strict validation."},
-      {"pt":"O restaurante recebe na mesma transação, em cerca de um segundo, com vendas e estornos ao vivo.","en":"The restaurant is paid in the same transaction, in about a second, with live sales and refunds."},
-      {"pt":"Página pública mostra os pagamentos ao vivo e prova que os cofres cobrem os benefícios.","en":"A public page shows payments live and proves the vaults cover the benefits."}
+      {
+        "pt": "A empresa financia um cofre do programa e define o saldo e as regras de cada funcionário, com recarga mensal.",
+        "en": "The employer funds a program vault and sets each employee's balance and rules, with a monthly top-up."
+      },
+      {
+        "pt": "Importação de planilha com erro por linha.",
+        "en": "Spreadsheet import with per-line errors."
+      },
+      {
+        "pt": "O funcionário entra com e-mail ou Google e paga o restaurante por QR, sem app de carteira e sem SOL.",
+        "en": "Employees sign in with email or Google and pay a restaurant by QR, with no wallet app and no SOL."
+      },
+      {
+        "pt": "Pagamento gasless: quem paga a taxa só co-assina depois de uma validação rigorosa.",
+        "en": "Gasless payment: the fee payer co-signs only after strict validation."
+      },
+      {
+        "pt": "O restaurante recebe na mesma transação, em cerca de um segundo, com vendas e estornos ao vivo.",
+        "en": "The restaurant is paid in the same transaction, in about a second, with live sales and refunds."
+      },
+      {
+        "pt": "Página pública mostra os pagamentos ao vivo e prova que os cofres cobrem os benefícios.",
+        "en": "A public page shows payments live and proves the vaults cover the benefits."
+      }
     ],
-    "desafios": {"pt":"Como Dev B, cuidei do app web. O mais difícil foi mostrar mensagens claras quando uma regra on-chain falha: o programa reverte o pagamento inteiro e a pessoa precisa entender o motivo, sem conhecer nada de blockchain.","en":"As Dev B, I built the web app. The hard part was showing clear messages when an on-chain rule fails: the program reverts the whole payment and the person needs to understand why, without knowing anything about blockchain."},
+    "ferramentas": [
+      {
+        "grupo": {
+          "pt": "Contrato on-chain",
+          "en": "On-chain program"
+        },
+        "itens": [
+          "Rust",
+          "Anchor 0.31"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "App web",
+          "en": "Web app"
+        },
+        "itens": [
+          "TypeScript",
+          "Next.js 16",
+          "React 19",
+          "Tailwind CSS 4",
+          "motion",
+          "PWA"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Login e carteira",
+          "en": "Login and wallet"
+        },
+        "itens": [
+          "Privy (carteira Solana embutida por e-mail, Google ou SMS)",
+          "Solana Wallet Adapter (Phantom)"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Blockchain",
+          "en": "Blockchain"
+        },
+        "itens": [
+          "@solana/web3.js",
+          "@solana/kit",
+          "SPL Token (USDC)",
+          "SDK próprio @tabbit/sdk"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "QR Code",
+          "en": "QR code"
+        },
+        "itens": [
+          "qrcode.react",
+          "react-qr-scanner"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Dados",
+          "en": "Data"
+        },
+        "itens": [
+          "Neon (Postgres serverless) para o diretório de funcionários",
+          "rotas de API do Next.js"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Testes",
+          "en": "Testing"
+        },
+        "itens": [
+          "Anchor com Mocha e Chai",
+          "cargo test",
+          "node --test"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "CI e publicação",
+          "en": "CI and deployment"
+        },
+        "itens": [
+          "GitHub Actions",
+          "Vercel"
+        ]
+      }
+    ],
+    "metodologia": [
+      {
+        "pt": "Time dividido em duas frentes: um dev no programa on-chain e outro no app. Um contrato de interface (os tipos do SDK) permitiu trabalhar em paralelo.",
+        "en": "Team split into two tracks: one dev on the on-chain program and one on the app. An interface contract (the SDK types) allowed parallel work."
+      },
+      {
+        "pt": "Branches por área, pull requests numerados (até o 18), CODEOWNERS por frente e commits no padrão convencional (feat, fix, docs).",
+        "en": "Branches per area, numbered pull requests (up to 18), CODEOWNERS per track and conventional commits (feat, fix, docs)."
+      },
+      {
+        "pt": "Regras aplicadas on-chain: limite por refeição e diário, horário de refeição no fuso da empresa e pausa. Os cofres são PDAs não custodiais, e só empresas aprovadas e o token oficial são aceitos.",
+        "en": "Rules enforced on-chain: per-meal and daily limits, meal hours in the company timezone and a pause switch. Vaults are non-custodial PDAs, and only approved companies and the official token are accepted."
+      },
+      {
+        "pt": "Segurança no app: o endpoint que paga a taxa valida que a transação tem exatamente um pagamento, há limite de requisições e a transação é simulada antes de ser assinada.",
+        "en": "App security: the fee-payer endpoint checks that the transaction is exactly one payment, requests are rate limited and the transaction is simulated before signing."
+      },
+      {
+        "pt": "Privacidade (LGPD): nenhum dado pessoal vai para a blockchain, e o diretório de funcionários só abre com a assinatura da carteira da empresa.",
+        "en": "Privacy (LGPD): no personal data goes on-chain, and the employee directory only opens with the company wallet's signature."
+      },
+      {
+        "pt": "CI com lint, checagem de tipos, testes, build e cargo test a cada PR. Os testes pesados do Anchor ficam fora do CI e isso está documentado.",
+        "en": "CI with lint, type checking, tests, build and cargo test on every PR. The heavy Anchor tests stay out of CI, and that is documented."
+      },
+      {
+        "pt": "Auditoria interna de custos, impostos e viabilidade legal, e um roadmap que declara os limites conhecidos (chave única da plataforma, multisig planejado).",
+        "en": "An internal audit of costs, taxes and legal viability, and a roadmap that states the known limits (single platform key, planned multisig)."
+      }
+    ],
+    "desafios": {
+      "pt": "Como Dev B, cuidei do app web. O mais difícil foi mostrar mensagens claras quando uma regra on-chain falha: o programa reverte o pagamento inteiro e a pessoa precisa entender o motivo, sem conhecer nada de blockchain.",
+      "en": "As Dev B, I built the web app. The hard part was showing clear messages when an on-chain rule fails: the program reverts the whole payment and the person needs to understand why, without knowing anything about blockchain."
+    },
     "galeria": [
-      {"src":"projetos/tabbit/shot-1.webp","alt":{"pt":"Página de transparência com os pagamentos da rede ao vivo","en":"Transparency page with live network payments"}}
+      {
+        "src": "projetos/tabbit/shot-1.webp",
+        "alt": {
+          "pt": "Página de transparência com os pagamentos da rede ao vivo",
+          "en": "Transparency page with live network payments"
+        }
+      },
+      {
+        "src": "projetos/tabbit/shot-2.webp",
+        "alt": {
+          "pt": "Página inicial do Tabbit com o pagamento verificado on-chain",
+          "en": "Tabbit home page with the on-chain verified payment"
+        }
+      },
+      {
+        "src": "projetos/tabbit/shot-3.webp",
+        "alt": {
+          "pt": "Os quatro passos do Tabbit, sem intermediário",
+          "en": "Tabbit's four steps, with no middleman"
+        }
+      },
+      {
+        "src": "projetos/tabbit/shot-4.webp",
+        "alt": {
+          "pt": "Simulador das regras: preço, horário e gasto do dia",
+          "en": "Rules simulator: price, time and the day's spending"
+        }
+      }
     ]
   },
   {
@@ -115,7 +639,10 @@
     "categoria": "IA e Agentes",
     "capa": "projetos/orquestrador/cover.webp",
     "fundo": "projetos/orquestrador/backdrop.webp",
-    "titulo": { "pt": "Orquestrador multiagente", "en": "Multi-agent orchestrator" },
+    "titulo": {
+      "pt": "Orquestrador multiagente",
+      "en": "Multi-agent orchestrator"
+    },
     "resumo": {
       "pt": "Prompt para o Claude Code que divide o trabalho entre três níveis de modelos: Opus orquestra e valida, Sonnet lidera e Haiku executa.",
       "en": "A Claude Code prompt that splits work across three model tiers: Opus orchestrates and validates, Sonnet leads and Haiku executes."
@@ -128,24 +655,82 @@
       "pt": "Autoria do desenho dos papéis e do prompt.",
       "en": "Author of the role design and the prompt."
     },
-    "stack": ["Claude Code", "Prompt engineering", "Agentes"],
+    "stack": [
+      "Claude Code",
+      "Prompt engineering",
+      "Agentes"
+    ],
     "status": "concluido",
     "funcionalidades": [
-      {"pt":"Só ativa em projetos de várias etapas; perguntas simples recebem resposta normal.","en":"Only activates for multi-step projects; simple questions get a normal answer."},
-      {"pt":"Antes de agir, escolhe o papel, roda uma skill de planejamento e define critérios de aceite objetivos.","en":"Before acting, it picks the role, runs a planning skill and sets objective acceptance criteria."},
-      {"pt":"Time de até 2 subagentes líderes (Sonnet), cada um com até 2 executores (Haiku).","en":"A team of up to 2 lead subagents (Sonnet), each with up to 2 executors (Haiku)."},
-      {"pt":"Cada subagente recebe uma skill específica, e os líderes repassam a saída completa dos executores.","en":"Each subagent gets a specific skill, and leads pass along the full output of their executors."},
-      {"pt":"O Opus valida toda entrega, diz exatamente o que corrigir e encerra após 3 rodadas.","en":"Opus validates every delivery, says exactly what to fix, and stops after 3 rounds."},
-      {"pt":"Se um subagente trava e outro está livre, o trabalho é redistribuído e os dois atuam em dupla.","en":"If one subagent gets stuck and another is free, the work is reassigned and the two work as a pair."}
+      {
+        "pt": "Só ativa em projetos de várias etapas; perguntas simples recebem resposta normal.",
+        "en": "Only activates for multi-step projects; simple questions get a normal answer."
+      },
+      {
+        "pt": "Antes de agir, escolhe o papel, roda uma skill de planejamento e define critérios de aceite objetivos.",
+        "en": "Before acting, it picks the role, runs a planning skill and sets objective acceptance criteria."
+      },
+      {
+        "pt": "Time de até 2 subagentes líderes (Sonnet), cada um com até 2 executores (Haiku).",
+        "en": "A team of up to 2 lead subagents (Sonnet), each with up to 2 executors (Haiku)."
+      },
+      {
+        "pt": "Cada subagente recebe uma skill específica, e os líderes repassam a saída completa dos executores.",
+        "en": "Each subagent gets a specific skill, and leads pass along the full output of their executors."
+      },
+      {
+        "pt": "O Opus valida toda entrega, diz exatamente o que corrigir e encerra após 3 rodadas.",
+        "en": "Opus validates every delivery, says exactly what to fix, and stops after 3 rounds."
+      },
+      {
+        "pt": "Se um subagente trava e outro está livre, o trabalho é redistribuído e os dois atuam em dupla.",
+        "en": "If one subagent gets stuck and another is free, the work is reassigned and the two work as a pair."
+      }
     ],
-    "desafios": {"pt":"O principal desafio foi ter qualidade sem gastar tokens à toa, dando a cada papel o modelo certo. O outro foi evitar ciclos de correção infinitos: a validação tem no máximo 3 rodadas e, se os critérios não forem atendidos, o prompt para e relata a falha exata em vez de insistir.","en":"My biggest challenge was getting quality without wasting tokens, by giving each role the right model. The other was avoiding endless correction loops: validation has at most 3 rounds and, if the criteria are still not met, the prompt stops and reports the exact failure instead of retrying."}
+    "comoFunciona": [
+      {
+        "pt": "O prompt só entra em ação em projetos de várias etapas. Uma pergunta simples recebe uma resposta normal.",
+        "en": "The prompt only kicks in for multi-step projects. A simple question gets a normal answer."
+      },
+      {
+        "pt": "Antes de agir, o Opus escolhe o papel, roda uma skill de planejamento e define critérios de aceite objetivos.",
+        "en": "Before acting, Opus picks the role, runs a planning skill and defines objective acceptance criteria."
+      },
+      {
+        "pt": "Ele monta um time de até 2 líderes (Sonnet), cada um com até 2 executores (Haiku), e entrega a cada subagente uma skill específica.",
+        "en": "It builds a team of up to 2 leads (Sonnet), each with up to 2 executors (Haiku), and gives each subagent a specific skill."
+      },
+      {
+        "pt": "Os executores fazem o trabalho e os líderes repassam o resultado completo deles, sem resumir.",
+        "en": "The executors do the work and the leads pass their full output along, without summarizing."
+      },
+      {
+        "pt": "O Opus valida cada entrega contra os critérios de aceite e diz exatamente o que corrigir.",
+        "en": "Opus validates every delivery against the acceptance criteria and says exactly what to fix."
+      },
+      {
+        "pt": "Se um subagente travar e outro estiver livre, o trabalho é remanejado e os dois atuam em dupla.",
+        "en": "If a subagent gets stuck and another is free, the work is reassigned and the two work as a pair."
+      },
+      {
+        "pt": "A validação para depois de 3 rodadas. Se os critérios não forem atendidos, o prompt relata a falha exata em vez de insistir.",
+        "en": "Validation stops after 3 rounds. If the criteria are still unmet, the prompt reports the exact failure instead of retrying."
+      }
+    ],
+    "desafios": {
+      "pt": "O principal desafio foi ter qualidade sem gastar tokens à toa, dando a cada papel o modelo certo. O outro foi evitar ciclos de correção infinitos: a validação tem no máximo 3 rodadas e, se os critérios não forem atendidos, o prompt para e relata a falha exata em vez de insistir.",
+      "en": "My biggest challenge was getting quality without wasting tokens, by giving each role the right model. The other was avoiding endless correction loops: validation has at most 3 rounds and, if the criteria are still not met, the prompt stops and reports the exact failure instead of retrying."
+    }
   },
   {
     "id": "companion",
     "categoria": "IA e Agentes",
     "capa": "projetos/companion/cover.webp",
     "fundo": "projetos/companion/backdrop.webp",
-    "titulo": { "pt": "Companion App e Validador", "en": "Companion App and Validator" },
+    "titulo": {
+      "pt": "Companion App e Validador",
+      "en": "Companion App and Validator"
+    },
     "resumo": {
       "pt": "App offline do jogo Foi isso que eu pedi? que detecta dados sensíveis em prompts e deixa o avaliador revisar antes de dar a nota.",
       "en": "Offline companion app for the board game Is this what I asked for? that detects sensitive data in prompts and lets the judge review before scoring."
@@ -158,19 +743,171 @@
       "pt": "Desenho e desenvolvimento do app e da lógica de detecção.",
       "en": "Design and development of the app and the detection logic."
     },
-    "stack": ["HTML", "CSS", "JavaScript"],
+    "stack": [
+      "HTML",
+      "CSS",
+      "JavaScript"
+    ],
     "status": "em-andamento",
     "funcionalidades": [
-      {"pt":"Funciona offline, em modo avião, num único arquivo HTML, com um aparelho por mesa.","en":"Works offline in airplane mode as a single HTML file, with one device per table."},
-      {"pt":"Cronometra cada turno pelo nível da casa do tabuleiro: 60, 120 ou 180 segundos.","en":"Times each turn by the board square level: 60, 120 or 180 seconds."},
-      {"pt":"Pontua até 4 jogadores ou grupos, no modo individual ou em grupo.","en":"Scores up to 4 players or groups, in individual or group mode."},
-      {"pt":"Avalia o prompt escrito pelo jogador, com detector de dados sensíveis.","en":"Evaluates the prompt a player wrote, with a sensitive-data detector."},
-      {"pt":"O avaliador humano revisa o prompt antes de a nota valer.","en":"The human evaluator reviews the prompt before the score counts."}
+      {
+        "pt": "Funciona offline, em modo avião, num único arquivo HTML, com um aparelho por mesa.",
+        "en": "Works offline in airplane mode as a single HTML file, with one device per table."
+      },
+      {
+        "pt": "Cronometra cada turno pelo nível da casa do tabuleiro: 60, 120 ou 180 segundos.",
+        "en": "Times each turn by the board square level: 60, 120 or 180 seconds."
+      },
+      {
+        "pt": "Pontua até 4 jogadores ou grupos, no modo individual ou em grupo.",
+        "en": "Scores up to 4 players or groups, in individual or group mode."
+      },
+      {
+        "pt": "Avalia o prompt escrito pelo jogador, com detector de dados sensíveis.",
+        "en": "Evaluates the prompt a player wrote, with a sensitive-data detector."
+      },
+      {
+        "pt": "O avaliador humano revisa o prompt antes de a nota valer.",
+        "en": "The human evaluator reviews the prompt before the score counts."
+      }
     ],
-    "desafios": {"pt":"Aprendi a fazer uma checagem confiável sem internet e sem IA. Reaproveitei o detector de dados sensíveis de um protótipo anterior, com 74 casos de teste, e documentei 3 limitações conhecidas em vez de fingir que ele acerta tudo.","en":"I learned to build a reliable check with no internet and no AI. I reused the sensitive-data detector from an earlier prototype, with 74 test cases, and documented 3 known limitations instead of pretending it catches everything."},
+    "comoFunciona": [
+      {
+        "pt": "Em cada mesa roda um único arquivo HTML, aberto direto no celular ou no navegador, sem internet.",
+        "en": "A single HTML file runs at each table, opened straight on a phone or browser, with no internet."
+      },
+      {
+        "pt": "O app cronometra a rodada pelo nível da casa: 60 segundos nas fáceis, 120 nas médias e 180 nas difíceis.",
+        "en": "The app times the turn by the square's level: 60 seconds on easy, 120 on medium and 180 on hard."
+      },
+      {
+        "pt": "O jogador escreve o prompt dentro do tempo. Colar e arrastar texto são bloqueados.",
+        "en": "The player writes the prompt within the time. Pasting and dropping text are blocked."
+      },
+      {
+        "pt": "Ao confirmar, o app procura dados sensíveis (CPF, e-mail, telefone, CEP, RG, endereço e nomes), viés e más práticas de LGPD, e mostra os achados mascarados.",
+        "en": "On confirmation, the app looks for sensitive data (CPF, e-mail, phone, ZIP, ID, address and names), bias and bad LGPD practice, and shows the findings masked."
+      },
+      {
+        "pt": "Os critérios da carta sorteada são marcados no texto, com peso por nível, e cada violação tira 30 pontos.",
+        "en": "The drawn card's criteria are highlighted in the text, weighted by level, and each violation takes off 30 points."
+      },
+      {
+        "pt": "Um avaliador humano revisa os destaques e confirma a nota. A aprovação é a partir de 70.",
+        "en": "A human evaluator reviews the highlights and confirms the grade. The pass mark is 70."
+      },
+      {
+        "pt": "O texto do prompt some depois da confirmação, e só a nota entra no placar da partida, que fica na memória.",
+        "en": "The prompt text disappears after confirmation, and only the grade enters the match scoreboard, which stays in memory."
+      }
+    ],
+    "ferramentas": [
+      {
+        "grupo": {
+          "pt": "Aplicação",
+          "en": "Application"
+        },
+        "itens": [
+          "HTML, CSS e JavaScript puro, sem dependências em execução"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Empacotamento",
+          "en": "Packaging"
+        },
+        "itens": [
+          "Node.js 18+",
+          "build.js que gera um único HTML com as fontes embutidas em base64"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Fontes",
+          "en": "Fonts"
+        },
+        "itens": [
+          "Chakra Petch",
+          "IBM Plex Sans (via Fontsource)"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Testes",
+          "en": "Testing"
+        },
+        "itens": [
+          "executor de testes nativo do Node (node --test)",
+          "Playwright (E2E em Chrome mobile 390×844)"
+        ]
+      }
+    ],
+    "metodologia": [
+      {
+        "pt": "Especificação como fonte da verdade e testes escritos antes do código: 12 arquivos de testes unitários e 34 testes E2E.",
+        "en": "The specification as the source of truth and tests written before the code: 12 unit-test files and 34 E2E tests."
+      },
+      {
+        "pt": "Só o arquivo da interface toca o DOM; o resto são funções puras, testáveis no Node.",
+        "en": "Only the interface file touches the DOM; everything else is pure functions, testable in Node."
+      },
+      {
+        "pt": "Funciona 100% offline: sem CDN, sem fetch e sem armazenamento persistente. Um teste E2E confirma zero requisições de rede e zero erros no console.",
+        "en": "Works 100% offline: no CDN, no fetch and no persistent storage. An E2E test confirms zero network requests and zero console errors."
+      },
+      {
+        "pt": "Detecção híbrida: regras gerais (CPF com dígito verificador, e-mail, telefone, CEP, RG, endereço, nomes) mais gabarito por carta, e um avaliador humano confirma antes da nota.",
+        "en": "Hybrid detection: general rules (CPF with check digits, e-mail, phone, ZIP, ID, address, names) plus a per-card answer key, and a human evaluator confirms before the grade."
+      },
+      {
+        "pt": "Privacidade desde o desenho: o texto do prompt só existe até a confirmação e nunca entra no placar. Os achados aparecem mascarados.",
+        "en": "Privacy by design: the prompt text only exists until confirmation and never enters the scoreboard. Findings are shown masked."
+      },
+      {
+        "pt": "Acessibilidade: alvos de toque de 48 a 52 px, foco visível, ARIA, tema escuro, respeito a movimento reduzido, e nível nunca indicado só por cor.",
+        "en": "Accessibility: 48 to 52 px touch targets, visible focus, ARIA, dark theme, respect for reduced motion, and level never shown by color alone."
+      }
+    ],
+    "desafios": {
+      "pt": "Aprendi a fazer uma checagem confiável sem internet e sem IA. Reaproveitei o detector de dados sensíveis de um protótipo anterior, com 74 casos de teste, e documentei 3 limitações conhecidas em vez de fingir que ele acerta tudo.",
+      "en": "I learned to build a reliable check with no internet and no AI. I reused the sensitive-data detector from an earlier prototype, with 74 test cases, and documented 3 known limitations instead of pretending it catches everything."
+    },
     "galeria": [
-      {"src":"projetos/companion/shot-1.webp","alt":{"pt":"Tela de início da partida: modo, jogadores e apelidos","en":"Match setup screen: mode, players and nicknames"}},
-      {"src":"projetos/companion/shot-2.webp","alt":{"pt":"Tela que pergunta quem joga e em que casa parou","en":"Screen asking who plays and which square they landed on"}}
+      {
+        "src": "projetos/companion/shot-1.webp",
+        "alt": {
+          "pt": "Tela de início da partida: modo, jogadores e apelidos",
+          "en": "Match setup screen: mode, players and nicknames"
+        }
+      },
+      {
+        "src": "projetos/companion/shot-2.webp",
+        "alt": {
+          "pt": "Tela que pergunta quem joga e em que casa parou",
+          "en": "Screen asking who plays and which square they landed on"
+        }
+      },
+      {
+        "src": "projetos/companion/shot-3.webp",
+        "alt": {
+          "pt": "Telas do app em celular: início da partida, superpoderes de tempo e cronômetro",
+          "en": "App screens on a phone: match start, time superpowers and timer"
+        }
+      },
+      {
+        "src": "projetos/companion/shot-4.webp",
+        "alt": {
+          "pt": "Escrita do prompt, revisão com destaques e critérios avaliados",
+          "en": "Prompt writing, review with highlights and evaluated criteria"
+        }
+      },
+      {
+        "src": "projetos/companion/shot-5.webp",
+        "alt": {
+          "pt": "Nota prévia, resultado da jogada com a resposta do robô e placar",
+          "en": "Preview grade, the turn result with the robot's reply and the scoreboard"
+        }
+      }
     ]
   },
   {
@@ -178,7 +915,10 @@
     "categoria": "Universidade",
     "capa": "projetos/ap2/cover.webp",
     "fundo": "projetos/ap2/backdrop.webp",
-    "titulo": { "pt": "Foi isso que eu pedi?", "en": "Is this what I asked for?" },
+    "titulo": {
+      "pt": "Foi isso que eu pedi?",
+      "en": "Is this what I asked for?"
+    },
     "resumo": {
       "pt": "Jogo de tabuleiro sobre engenharia de prompt, ambientado na Cidade-Prompt de 2050.",
       "en": "A board game about prompt engineering, set in Prompt City in the year 2050."
@@ -191,23 +931,139 @@
       "pt": "Scrum Master do time, com Kanban no Notion e roadmap no Miro.",
       "en": "Team Scrum Master, with a Kanban board in Notion and a roadmap in Miro."
     },
-    "stack": ["Scrum", "Notion", "Miro"],
+    "stack": [
+      "Scrum",
+      "Notion",
+      "Miro"
+    ],
     "status": "em-andamento",
     "funcionalidades": [
-      {"pt":"Tabuleiro de 40 casas em 3 níveis de dificuldade, mais 10 casas de desafio e uma torre final.","en":"A 40-square board in 3 difficulty levels, plus 10 challenge squares and a final tower."},
-      {"pt":"30 cartas de problema e cartas de superpoder.","en":"30 problem cards and superpower cards."},
-      {"pt":"Movimento com dois dados, para até 4 jogadores ou grupos.","en":"Movement with two dice, for up to 4 players or groups."},
-      {"pt":"Tema Cidade-Prompt, Ano 2050, que aborda vieses, dados sensíveis e LGPD.","en":"Theme \"Cidade-Prompt: Ano 2050\", on biases, sensitive data and LGPD."},
-      {"pt":"Feito para estudantes de escolas sem internet.","en":"Made for students in schools without internet."}
+      {
+        "pt": "Tabuleiro de 40 casas em 3 níveis de dificuldade, mais 10 casas de desafio e uma torre final.",
+        "en": "A 40-square board in 3 difficulty levels, plus 10 challenge squares and a final tower."
+      },
+      {
+        "pt": "30 cartas de problema e cartas de superpoder.",
+        "en": "30 problem cards and superpower cards."
+      },
+      {
+        "pt": "Movimento com dois dados, para até 4 jogadores ou grupos.",
+        "en": "Movement with two dice, for up to 4 players or groups."
+      },
+      {
+        "pt": "Tema Cidade-Prompt, Ano 2050, que aborda vieses, dados sensíveis e LGPD.",
+        "en": "Theme \"Cidade-Prompt: Ano 2050\", on biases, sensitive data and LGPD."
+      },
+      {
+        "pt": "Feito para estudantes de escolas sem internet.",
+        "en": "Made for students in schools without internet."
+      }
     ],
-    "desafios": {"pt":"Como Scrum Master de um time de 6, conduzi 5 sprints na disciplina de Métodos Ágeis, com Kanban no Notion e visão e roadmap no Miro. Ainda falta vincular as 85 tarefas do Notion às histórias de usuário.","en":"As Scrum Master of a team of 6, I ran 5 sprints in the Agile Methods course, with a Kanban board in Notion and the vision and roadmap in Miro. Still pending: linking the 85 Notion tasks to user stories."}
+    "comoFunciona": [
+      {
+        "pt": "Até 4 jogadores ou grupos, cada um um robô, andam por um tabuleiro de 40 casas: 15 fáceis, 15 médias e 10 difíceis.",
+        "en": "Up to 4 players or groups, each a robot, move around a 40-square board: 15 easy, 15 medium and 10 hard."
+      },
+      {
+        "pt": "Na vez, o jogador rola 2 dados, anda a soma e sorteia uma carta de problema do nível da casa.",
+        "en": "On their turn, the player rolls 2 dice, moves the sum and draws a problem card of the square's level."
+      },
+      {
+        "pt": "Antes de escrever, pode usar uma carta de superpoder: mais ou menos tempo, voltar casas ou repetir a carta com metade do tempo.",
+        "en": "Before writing, they may play a superpower card: more or less time, move back squares or repeat the card with half the time."
+      },
+      {
+        "pt": "O jogador escreve o prompt para resolver o problema dentro do tempo, usando o app de apoio como cronômetro.",
+        "en": "The player writes a prompt to solve the problem within the time, using the companion app as the timer."
+      },
+      {
+        "pt": "O app avalia o texto por critérios e por dados sensíveis, viés e LGPD, e um avaliador humano confirma a nota. A aprovação é a partir de 70.",
+        "en": "The app evaluates the text by criteria and for sensitive data, bias and LGPD, and a human evaluator confirms the grade. The pass mark is 70."
+      },
+      {
+        "pt": "O jogo termina na casa 40, a Torre Final. Há dois títulos: o vencedor do tabuleiro e o melhor escritor de prompts, pela média das notas.",
+        "en": "The game ends on square 40, the Final Tower. There are two titles: the board winner and the best prompt writer, by average grade."
+      }
+    ],
+    "ferramentas": [
+      {
+        "grupo": {
+          "pt": "Gestão ágil",
+          "en": "Agile management"
+        },
+        "itens": [
+          "Scrum",
+          "Notion (quadro Kanban e tarefas)",
+          "Miro (visão e roadmap)"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Produto",
+          "en": "Product"
+        },
+        "itens": [
+          "jogo de tabuleiro físico com 4 robôs",
+          "app de apoio offline para validar os prompts (Companion App)"
+        ]
+      }
+    ],
+    "metodologia": [
+      {
+        "pt": "Scrum com papéis definidos: eu como Scrum Master, um Product Owner e quatro desenvolvedores, em 5 sprints na disciplina de Métodos Ágeis e Desenvolvimento de Software.",
+        "en": "Scrum with defined roles: me as Scrum Master, a Product Owner and four developers, across 5 sprints in the Agile Methods and Software Development course."
+      },
+      {
+        "pt": "Quadro Kanban no Notion com as tarefas do time e visão e roadmap no Miro. Tarefas em aberto e pontos de decisão ficam listados em vez de decididos sozinho.",
+        "en": "A Kanban board in Notion with the team's tasks and the vision and roadmap in Miro. Open tasks and decision points are listed instead of being decided alone."
+      },
+      {
+        "pt": "Regras do jogo versionadas por data, com uma especificação como fonte da verdade quando algo diverge.",
+        "en": "Game rules versioned by date, with a specification as the source of truth when something diverges."
+      },
+      {
+        "pt": "Desenho do jogo: tabuleiro de 40 casas (15 fáceis, 15 médias e 10 difíceis), 30 cartas de problema com dados fictícios como isca, 20 cartas de superpoder e tempo de 60, 120 ou 180 segundos por nível.",
+        "en": "Game design: a 40-square board (15 easy, 15 medium and 10 hard), 30 problem cards with fictitious bait data, 20 superpower cards and 60, 120 or 180 seconds per level."
+      },
+      {
+        "pt": "Avaliação por critérios com peso por nível, aprovação a partir de 70 pontos e penalidade de 30 pontos por violação (viés, dado sensível ou má prática com a LGPD), sempre com confirmação de um avaliador humano.",
+        "en": "Evaluation by weighted criteria per level, a pass mark of 70 points and a 30-point penalty per violation (bias, sensitive data or bad LGPD practice), always confirmed by a human evaluator."
+      },
+      {
+        "pt": "Validação com jogadores: playtest interno na sprint 2, playtest com outro time e entregas marcadas para a avaliação e o pitch.",
+        "en": "Validation with players: an internal playtest in sprint 2, a playtest with another team and deliveries scheduled for the assessment and the pitch."
+      }
+    ],
+    "desafios": {
+      "pt": "Como Scrum Master de um time de 6, conduzi 5 sprints na disciplina de Métodos Ágeis, com Kanban no Notion e visão e roadmap no Miro. Ainda falta vincular as 85 tarefas do Notion às histórias de usuário.",
+      "en": "As Scrum Master of a team of 6, I ran 5 sprints in the Agile Methods course, with a Kanban board in Notion and the vision and roadmap in Miro. Still pending: linking the 85 Notion tasks to user stories."
+    },
+    "galeria": [
+      {
+        "src": "projetos/ap2/shot-1.webp",
+        "alt": {
+          "pt": "O app de apoio da mesa: cronômetro, revisão do prompt e resultado da jogada",
+          "en": "The table's companion app: timer, prompt review and the turn result"
+        }
+      },
+      {
+        "src": "projetos/ap2/shot-2.webp",
+        "alt": {
+          "pt": "Início da partida, nota prévia e placar do jogo",
+          "en": "Match start, preview grade and the game scoreboard"
+        }
+      }
+    ]
   },
   {
     "id": "bombas",
     "categoria": "Hardware",
     "capa": "projetos/bombas/cover.webp",
     "fundo": "projetos/bombas/backdrop.webp",
-    "titulo": { "pt": "3 Bombas", "en": "3 Pumps" },
+    "titulo": {
+      "pt": "3 Bombas",
+      "en": "3 Pumps"
+    },
     "resumo": {
       "pt": "Sistema programável que controla três bombas pelo nível de três reservatórios, com display, LEDs e alarme, montado num Arduino Mega e protegido por uma caixa impressa em 3D.",
       "en": "A programmable system that controls three pumps from the level of three reservoirs, with a display, LEDs and an alarm, built on an Arduino Mega and protected by a 3D-printed enclosure."
@@ -220,22 +1076,177 @@
       "pt": "Montagem da placa, programação e projeto da caixa impressa em 3D.",
       "en": "Board assembly, programming and design of the 3D-printed enclosure."
     },
-    "stack": ["Arduino Mega 2560", "C/C++", "Eletrônica", "Impressão 3D"],
+    "stack": [
+      "Arduino Mega 2560",
+      "C/C++",
+      "Eletrônica",
+      "Impressão 3D"
+    ],
     "status": "concluido",
     "funcionalidades": [
-      {"pt":"Três potenciômetros simulam o nível de três reservatórios, de 0 a 100%.","en":"Three potentiometers simulate the level of three reservoirs, from 0 to 100%."},
-      {"pt":"Cada bomba, representada por um LED, liga abaixo de 30%, desliga acima de 80% e mantém o estado entre os dois valores.","en":"Each pump, shown as an LED, turns on below 30%, off above 80% and keeps its state in between."},
-      {"pt":"O display de 7 segmentos mostra a faixa do nível de 1 a 9: quanto maior o nível, maior o dígito.","en":"The 7-segment display shows the level band from 1 to 9: the higher the level, the higher the digit."},
-      {"pt":"Alarme preventivo por LED e alarme corretivo com buzzer.","en":"Preventive alarm on an LED and corrective alarm with a buzzer."},
-      {"pt":"Caixa de PLA de 165 × 112 × 55 mm, impressa na Ultimaker 3 sem suporte, com LEDs visíveis e controles por fora.","en":"A 165 × 112 × 55 mm PLA enclosure printed on an Ultimaker 3 with no supports, LEDs visible and controls on the outside."},
-      {"pt":"Montagem em 6 passos: base, placa nos pilares, tampa, Arduino Mega sob a tampa, jumpers e fechamento.","en":"Six assembly steps: base, board on the pillars, lid, Arduino Mega under the lid, jumpers and closing."}
+      {
+        "pt": "Três potenciômetros simulam o nível de três reservatórios, de 0 a 100%.",
+        "en": "Three potentiometers simulate the level of three reservoirs, from 0 to 100%."
+      },
+      {
+        "pt": "Cada bomba, representada por um LED, liga abaixo de 30%, desliga acima de 80% e mantém o estado entre os dois valores.",
+        "en": "Each pump, shown as an LED, turns on below 30%, off above 80% and keeps its state in between."
+      },
+      {
+        "pt": "O display de 7 segmentos mostra a faixa do nível de 1 a 9: quanto maior o nível, maior o dígito.",
+        "en": "The 7-segment display shows the level band from 1 to 9: the higher the level, the higher the digit."
+      },
+      {
+        "pt": "Alarme preventivo por LED e alarme corretivo com buzzer.",
+        "en": "Preventive alarm on an LED and corrective alarm with a buzzer."
+      },
+      {
+        "pt": "Caixa de PLA de 165 × 112 × 55 mm, impressa na Ultimaker 3 sem suporte, com LEDs visíveis e controles por fora.",
+        "en": "A 165 × 112 × 55 mm PLA enclosure printed on an Ultimaker 3 with no supports, LEDs visible and controls on the outside."
+      },
+      {
+        "pt": "Montagem em 6 passos: base, placa nos pilares, tampa, Arduino Mega sob a tampa, jumpers e fechamento.",
+        "en": "Six assembly steps: base, board on the pillars, lid, Arduino Mega under the lid, jumpers and closing."
+      }
     ],
-    "desafios": {"pt":"Meu desafio foi fazer tudo caber e funcionar numa caixa só: soldar a placa com LEDs e resistores, ligar potenciômetros, display e buzzer ao Mega e projetar uma caixa que imprimisse sem suporte, com os LEDs visíveis e o Arduino preso de cabeça para baixo sob a tampa.","en":"My challenge was making everything fit and work in a single enclosure: soldering the board with LEDs and resistors, wiring the potentiometers, display and buzzer to the Mega, and designing a case that prints without supports, with the LEDs visible and the Arduino bolted upside down under the lid."},
+    "comoFunciona": [
+      {
+        "pt": "Três potenciômetros simulam o nível de três reservatórios, de 0 a 100%.",
+        "en": "Three potentiometers simulate the level of three reservoirs, from 0 to 100%."
+      },
+      {
+        "pt": "O Arduino Mega lê cada nível e decide sobre a bomba daquele reservatório, representada por um LED.",
+        "en": "The Arduino Mega reads each level and decides about that reservoir's pump, represented by an LED."
+      },
+      {
+        "pt": "A bomba liga abaixo de 30%, desliga acima de 80% e mantém o estado entre os dois valores, o que evita liga e desliga rápido.",
+        "en": "The pump turns on below 30%, off above 80% and holds its state between the two values, which avoids rapid on-off switching."
+      },
+      {
+        "pt": "O display de 7 segmentos mostra a faixa de nível, de 1 a 9.",
+        "en": "The 7-segment display shows the level band, from 1 to 9."
+      },
+      {
+        "pt": "O alarme preventivo acende um LED quando o nível está perto do limite, e o alarme corretivo toca o buzzer quando passa dele.",
+        "en": "The preventive alarm lights an LED when the level nears the limit, and the corrective alarm sounds the buzzer when it passes it."
+      },
+      {
+        "pt": "Tudo fica numa caixa impressa em 3D, com os LEDs visíveis e o Mega preso de cabeça para baixo sob a tampa.",
+        "en": "Everything sits in a 3D-printed case, with the LEDs visible and the Mega bolted upside down under the lid."
+      }
+    ],
+    "ferramentas": [
+      {
+        "grupo": {
+          "pt": "Microcontrolador",
+          "en": "Microcontroller"
+        },
+        "itens": [
+          "Arduino Mega 2560",
+          "C/C++"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Componentes",
+          "en": "Components"
+        },
+        "itens": [
+          "3 potenciômetros",
+          "LEDs e resistores",
+          "display de 7 segmentos D5611",
+          "buzzer",
+          "jumpers"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Impressão 3D",
+          "en": "3D printing"
+        },
+        "itens": [
+          "Ultimaker 3",
+          "PLA, camada de 0,2 mm, sem suportes",
+          "14 parafusos M3"
+        ]
+      }
+    ],
+    "metodologia": [
+      {
+        "pt": "As bombas são simuladas por LEDs e o nível de cada reservatório vem de um potenciômetro, de 0 a 100%.",
+        "en": "The pumps are simulated by LEDs and each reservoir level comes from a potentiometer, from 0 to 100%."
+      },
+      {
+        "pt": "Controle com histerese: a bomba liga abaixo de 30%, desliga acima de 80% e mantém o estado no meio, para não ficar ligando e desligando.",
+        "en": "Control with hysteresis: a pump turns on below 30%, off above 80% and holds its state in between, so it does not keep switching."
+      },
+      {
+        "pt": "Dois alarmes: um preventivo (LED) e um corretivo (buzzer). O display mostra a faixa de nível de 1 a 9.",
+        "en": "Two alarms: a preventive one (LED) and a corrective one (buzzer). The display shows the level band from 1 to 9."
+      },
+      {
+        "pt": "Diagrama de ligação no protoboard antes da montagem final, e montagem em etapas: base, placa nos pilares, tampa, Mega sob a tampa, jumpers e fechamento.",
+        "en": "A breadboard wiring diagram before the final assembly, and assembly in steps: base, board on the pillars, lid, Mega under the lid, jumpers and closing."
+      },
+      {
+        "pt": "Caixa projetada para imprimir sem suportes (165 × 112 × 55 mm), com os LEDs visíveis e o Arduino preso de cabeça para baixo sob a tampa.",
+        "en": "An enclosure designed to print without supports (165 × 112 × 55 mm), with the LEDs visible and the Arduino bolted upside down under the lid."
+      }
+    ],
+    "desafios": {
+      "pt": "Meu desafio foi fazer tudo caber e funcionar numa caixa só: soldar a placa com LEDs e resistores, ligar potenciômetros, display e buzzer ao Mega e projetar uma caixa que imprimisse sem suporte, com os LEDs visíveis e o Arduino preso de cabeça para baixo sob a tampa.",
+      "en": "My challenge was making everything fit and work in a single enclosure: soldering the board with LEDs and resistors, wiring the potentiometers, display and buzzer to the Mega, and designing a case that prints without supports, with the LEDs visible and the Arduino bolted upside down under the lid."
+    },
     "galeria": [
-      {"src":"projetos/bombas/shot-1.webp","alt":{"pt":"Caixa do sistema de 3 bombas em vista explodida, com tampa, placa e Arduino Mega","en":"The 3-pump system enclosure in an exploded view, with lid, board and Arduino Mega"}},
-      {"src":"projetos/bombas/shot-4.webp","alt":{"pt":"Diagrama de ligação no protoboard: Arduino Mega, três blocos com potenciômetro e LEDs, display de 7 segmentos e buzzer","en":"Breadboard wiring diagram: Arduino Mega, three blocks with a potentiometer and LEDs, a 7-segment display and a buzzer"}},
-      {"src":"projetos/bombas/shot-2.webp","alt":{"pt":"Display mostrando a faixa 6 e os três reservatórios com seus níveis","en":"Display showing band 6 and the three reservoirs with their levels"}},
-      {"src":"projetos/bombas/shot-3.webp","alt":{"pt":"Caixa pronta: PLA, Ultimaker 3, 165 × 112 × 55 mm e 14 parafusos M3","en":"Finished enclosure: PLA, Ultimaker 3, 165 × 112 × 55 mm and 14 M3 screws"}}
+      {
+        "src": "projetos/bombas/shot-1.webp",
+        "alt": {
+          "pt": "Caixa do sistema de 3 bombas em vista explodida, com tampa, placa e Arduino Mega",
+          "en": "The 3-pump system enclosure in an exploded view, with lid, board and Arduino Mega"
+        }
+      },
+      {
+        "src": "projetos/bombas/shot-4.webp",
+        "alt": {
+          "pt": "Diagrama de ligação no protoboard: Arduino Mega, três blocos com potenciômetro e LEDs, display de 7 segmentos e buzzer",
+          "en": "Breadboard wiring diagram: Arduino Mega, three blocks with a potentiometer and LEDs, a 7-segment display and a buzzer"
+        }
+      },
+      {
+        "src": "projetos/bombas/shot-2.webp",
+        "alt": {
+          "pt": "Display mostrando a faixa 6 e os três reservatórios com seus níveis",
+          "en": "Display showing band 6 and the three reservoirs with their levels"
+        }
+      },
+      {
+        "src": "projetos/bombas/shot-3.webp",
+        "alt": {
+          "pt": "Caixa pronta: PLA, Ultimaker 3, 165 × 112 × 55 mm e 14 parafusos M3",
+          "en": "Finished enclosure: PLA, Ultimaker 3, 165 × 112 × 55 mm and 14 M3 screws"
+        }
+      },
+      {
+        "src": "projetos/bombas/shot-5.webp",
+        "alt": {
+          "pt": "Passo 2 da montagem: placa soldada fixada nos pilares",
+          "en": "Assembly step 2: the soldered board fixed on the pillars"
+        }
+      },
+      {
+        "src": "projetos/bombas/shot-6.webp",
+        "alt": {
+          "pt": "Passo 5 da montagem: jumpers do protoboard aos pinos do Mega",
+          "en": "Assembly step 5: jumpers from the board to the Mega pins"
+        }
+      },
+      {
+        "src": "projetos/bombas/shot-7.webp",
+        "alt": {
+          "pt": "Funcionamento: a bomba 2 liga com o reservatório abaixo de 30%",
+          "en": "Operation: pump 2 turns on with the reservoir below 30%"
+        }
+      }
     ]
   },
   {
@@ -243,7 +1254,10 @@
     "categoria": "Ferramentas",
     "capa": "projetos/b3/cover.webp",
     "fundo": "projetos/b3/backdrop.webp",
-    "titulo": { "pt": "Consultas B3", "en": "B3 Lookup" },
+    "titulo": {
+      "pt": "Consultas B3",
+      "en": "B3 Lookup"
+    },
     "resumo": {
       "pt": "App em Python que consulta a bolsa brasileira e mostra preços, variações e indicadores dos ativos.",
       "en": "A Python app that queries the Brazilian stock exchange and shows prices, variations and indicators."
@@ -256,24 +1270,367 @@
       "pt": "Desenvolvimento completo.",
       "en": "Full development."
     },
-    "stack": ["Python", "yfinance", "Web scraping"],
+    "stack": [
+      "Python",
+      "yfinance",
+      "Web scraping"
+    ],
     "status": "em-andamento",
     "funcionalidades": [
-      {"pt":"Pede um ticker (PETR4, MXRF11) e mostra o preço atual.","en":"Asks for a ticker (PETR4, MXRF11) and shows the current price."},
-      {"pt":"Variação em R$ (não em %), com sinal explícito, no dia, em 1 mês, 6 meses e 1 ano.","en":"Change in R$ (not %), with explicit sign, for the day, 1 month, 6 months and 1 year."},
-      {"pt":"Máxima e mínima do dia só com o mercado fechado.","en":"Day high and low only when the market is closed."},
-      {"pt":"Indicadores do Fundamentus: P/L, P/VP e dividend yield; em FIIs, segmento e vacância média.","en":"Fundamentus indicators: P/E, P/B and dividend yield; for REITs, segment and average vacancy."},
-      {"pt":"Histórico opcional salvo em historico.xlsx.","en":"Optional history saved to historico.xlsx."},
-      {"pt":"coletores.py busca os dados e consultas.py cuida da interação, então a fonte pode mudar sem mexer no resto.","en":"coletores.py fetches the data and consultas.py handles interaction, so a source can change without touching the rest."}
+      {
+        "pt": "Pede um ticker (PETR4, MXRF11) e mostra o preço atual.",
+        "en": "Asks for a ticker (PETR4, MXRF11) and shows the current price."
+      },
+      {
+        "pt": "Variação em R$ (não em %), com sinal explícito, no dia, em 1 mês, 6 meses e 1 ano.",
+        "en": "Change in R$ (not %), with explicit sign, for the day, 1 month, 6 months and 1 year."
+      },
+      {
+        "pt": "Máxima e mínima do dia só com o mercado fechado.",
+        "en": "Day high and low only when the market is closed."
+      },
+      {
+        "pt": "Indicadores do Fundamentus: P/L, P/VP e dividend yield; em FIIs, segmento e vacância média.",
+        "en": "Fundamentus indicators: P/E, P/B and dividend yield; for REITs, segment and average vacancy."
+      },
+      {
+        "pt": "Histórico opcional salvo em historico.xlsx.",
+        "en": "Optional history saved to historico.xlsx."
+      },
+      {
+        "pt": "coletores.py busca os dados e consultas.py cuida da interação, então a fonte pode mudar sem mexer no resto.",
+        "en": "coletores.py fetches the data and consultas.py handles interaction, so a source can change without touching the rest."
+      }
     ],
-    "desafios": {"pt":"O Fundamentus não tem uma página fácil por ticker, então o app baixa a tabela inteira e filtra o ativo. Ainda tenho um bug aberto: a codificação ISO-8859-1 corrompe os nomes das colunas.","en":"Fundamentus has no easy per-ticker page, so the app downloads the whole table and filters it. One bug is still open: the ISO-8859-1 encoding garbles the column names."}
+    "comoFunciona": [
+      {
+        "pt": "O programa pede o código de um ativo, como PETR4 ou MXRF11, ou \"sair\".",
+        "en": "The program asks for an asset code, such as PETR4 or MXRF11, or \"sair\" (quit)."
+      },
+      {
+        "pt": "Ele busca o preço e o histórico de 1 ano na Yahoo Finance.",
+        "en": "It fetches the price and the 1-year history from Yahoo Finance."
+      },
+      {
+        "pt": "Os indicadores (P/L, P/VP, dividend yield, segmento e vacância média) vêm do Fundamentus: o app baixa a tabela inteira e filtra o ativo, tentando ações primeiro e FIIs depois.",
+        "en": "The indicators (P/E, P/B, dividend yield, segment and average vacancy) come from Fundamentus: the app downloads the whole table and filters the asset, trying stocks first and REITs after."
+      },
+      {
+        "pt": "Calcula a variação em reais do dia, de 1 mês, de 6 meses e de 1 ano, e mostra \"sem dado\" quando falta histórico.",
+        "en": "It computes the variation in reais for the day, 1 month, 6 months and 1 year, and shows \"no data\" when history is missing."
+      },
+      {
+        "pt": "A máxima e a mínima do dia aparecem só com o mercado fechado, pelo horário de Brasília.",
+        "en": "The day's high and low only appear when the market is closed, by Brasília time."
+      },
+      {
+        "pt": "No fim, o app pergunta se deve salvar a consulta e, se sim, acrescenta uma linha ao histórico em Excel.",
+        "en": "At the end, the app asks whether to save the query and, if so, appends a row to the Excel history."
+      }
+    ],
+    "ferramentas": [
+      {
+        "grupo": {
+          "pt": "Linguagem",
+          "en": "Language"
+        },
+        "itens": [
+          "Python",
+          "zoneinfo e datetime (horário do pregão)"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Dados de mercado",
+          "en": "Market data"
+        },
+        "itens": [
+          "yfinance (preço, histórico de 1 ano, máxima e mínima do dia)",
+          "Fundamentus (indicadores, lido por scraping)"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Coleta e tratamento",
+          "en": "Collection and processing"
+        },
+        "itens": [
+          "requests",
+          "pandas (read_html)",
+          "beautifulsoup4 e html5lib"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Saída",
+          "en": "Output"
+        },
+        "itens": [
+          "openpyxl (histórico em Excel)",
+          "terminal"
+        ]
+      }
+    ],
+    "metodologia": [
+      {
+        "pt": "Separação em duas camadas: um módulo só para buscar dados externos e outro só para a interação com o usuário. Trocar uma fonte de dados não mexe no resto.",
+        "en": "Split into two layers: one module only for fetching external data and another only for user interaction. Swapping a data source does not touch the rest."
+      },
+      {
+        "pt": "Preço pela Yahoo Finance e indicadores pelo Fundamentus, porque as cotações do Fundamentus têm atraso.",
+        "en": "Prices from Yahoo Finance and indicators from Fundamentus, because Fundamentus quotes are delayed."
+      },
+      {
+        "pt": "Requisições com User-Agent, timeout e checagem de status. Nomes de colunas são normalizados sem acentos, e dado ausente aparece como \"sem dado\".",
+        "en": "Requests with a User-Agent, a timeout and a status check. Column names are normalized without accents, and missing data shows as \"no data\"."
+      },
+      {
+        "pt": "Variações em reais para o dia, 1 mês, 6 meses e 1 ano, e máxima e mínima do dia só quando o mercado está fechado.",
+        "en": "Variations in reais for the day, 1 month, 6 months and 1 year, and the day's high and low only when the market is closed."
+      },
+      {
+        "pt": "Funções com docstrings e type hints, ambiente virtual e uma documentação com limitações conhecidas e um roadmap (execução agendada, SQLite no lugar do Excel, várias ações de uma vez).",
+        "en": "Functions with docstrings and type hints, a virtual environment and documentation with known limitations and a roadmap (scheduled runs, SQLite instead of Excel, several tickers at once)."
+      }
+    ],
+    "desafios": {
+      "pt": "O Fundamentus não tem uma página fácil por ticker, então o app baixa a tabela inteira e filtra o ativo. Ainda tenho um bug aberto: a codificação ISO-8859-1 corrompe os nomes das colunas.",
+      "en": "Fundamentus has no easy per-ticker page, so the app downloads the whole table and filters it. One bug is still open: the ISO-8859-1 encoding garbles the column names."
+    },
+    "galeria": [
+      {
+        "src": "projetos/b3/shot-1.webp",
+        "alt": {
+          "pt": "Consulta de uma ação no terminal: preço, variações, máxima e mínima e indicadores",
+          "en": "A stock query in the terminal: price, variations, high and low and indicators"
+        }
+      },
+      {
+        "src": "projetos/b3/shot-2.webp",
+        "alt": {
+          "pt": "Outra consulta, com a pergunta para salvar no histórico em Excel",
+          "en": "Another query, with the prompt to save to the Excel history"
+        }
+      }
+    ]
+  },
+  {
+    "id": "tradingbot",
+    "categoria": "Ferramentas",
+    "capa": "projetos/tradingbot/cover.webp",
+    "fundo": "projetos/tradingbot/backdrop.webp",
+    "titulo": {
+      "pt": "TradingBot",
+      "en": "TradingBot"
+    },
+    "resumo": {
+      "pt": "Assistente de investimentos que testa estratégias de swing e carteiras clássicas em dados históricos de cerca de 200 ativos e mostra, em linguagem simples, o que o bot teria feito em cada operação.",
+      "en": "An investment assistant that tests swing strategies and classic portfolios on historical data for about 200 assets and shows, in plain language, what the bot would have done in each trade."
+    },
+    "proposito": {
+      "pt": "Tornar um backtest compreensível para quem não é do mercado: cada compra e venda vem com o motivo, o risco e uma comparação honesta com simplesmente comprar e segurar. É uma simulação, não envia ordens e não é recomendação de investimento.",
+      "en": "Make a backtest understandable to people outside the market: each buy and sell comes with its reason, its risk and an honest comparison with simply buying and holding. It is a simulation, it sends no orders and it is not investment advice."
+    },
+    "papel": {
+      "pt": "Desenvolvimento completo: motor de backtest, portão de risco, exportação dos dados e dashboard.",
+      "en": "Full development: backtest engine, risk gate, data export and dashboard."
+    },
+    "stack": [
+      "Python",
+      "yfinance",
+      "React",
+      "Vite",
+      "Lightweight Charts",
+      "pytest"
+    ],
+    "status": "no-ar",
+    "links": [
+      {
+        "label": "Site",
+        "url": "https://nemirovskydev.github.io/TradingBot/"
+      },
+      {
+        "label": "GitHub",
+        "url": "https://github.com/NemirovskyDev/TradingBot"
+      }
+    ],
+    "funcionalidades": [
+      {
+        "pt": "Três estratégias por ativo: cruzamento de médias 50/200, rompimento Donchian e momentum de 12 meses.",
+        "en": "Three strategies per asset: a 50/200 moving-average cross, a Donchian breakout and 12-month momentum."
+      },
+      {
+        "pt": "Sete métodos clássicos de alocação e quatro exemplos por objetivo, em reais, contra CDI, Ibovespa e S&P 500.",
+        "en": "Seven classic allocation methods and four goal-based examples, in reais, against CDI, Ibovespa and S&P 500."
+      },
+      {
+        "pt": "Cerca de 200 ativos: ações dos EUA e da B3, ETFs, FIIs e criptomoedas, 78 deles validados à mão.",
+        "en": "About 200 assets: US and B3 stocks, ETFs, REITs and crypto, 78 of them hand-validated."
+      },
+      {
+        "pt": "Gráfico de velas com as entradas e saídas do bot e uma tabela que explica o motivo de cada operação.",
+        "en": "A candlestick chart with the bot's entries and exits and a table explaining the reason for each trade."
+      },
+      {
+        "pt": "Portão de risco automático, separado da IA: 1% por operação, 5 posições, 20% por ativo e pausa se a semana perder 5%.",
+        "en": "An automatic risk gate, separate from the AI: 1% per trade, 5 positions, 20% per asset and a pause if the week loses 5%."
+      },
+      {
+        "pt": "Veredito claro por estratégia, glossário dos termos e o aviso de que o passado não garante o futuro.",
+        "en": "A clear verdict per strategy, a glossary of terms and the warning that the past does not guarantee the future."
+      }
+    ],
+    "comoFunciona": [
+      {
+        "pt": "Um script em Python baixa os preços históricos (Yahoo Finance) e a lista dos ativos (S&P 500, Ibovespa e FIIs mais negociados).",
+        "en": "A Python script downloads historical prices (Yahoo Finance) and the asset lists (S&P 500, Ibovespa and the most traded REITs)."
+      },
+      {
+        "pt": "Para cada ativo, o motor roda as três estratégias sem olhar o futuro (sem look-ahead) e avalia só o trecho de teste.",
+        "en": "For each asset, the engine runs the three strategies without peeking at the future (no look-ahead) and evaluates only the test segment."
+      },
+      {
+        "pt": "O portão de risco barra qualquer compra que desrespeite os limites, e os custos de operação e o deslizamento de preço são descontados.",
+        "en": "The risk gate blocks any buy that breaks the limits, and trading costs and price slippage are deducted."
+      },
+      {
+        "pt": "Os resultados saem em arquivos JSON. Se mais de 25% dos ativos falharem, a exportação para e não sobrescreve os dados já publicados.",
+        "en": "Results go out as JSON files. If more than 25% of the assets fail, the export stops and does not overwrite the already published data."
+      },
+      {
+        "pt": "O dashboard em React lê esses JSON, sem servidor, e mostra carteiras, visão geral, gráfico, operações, risco e glossário.",
+        "en": "The React dashboard reads those JSON files with no server and shows portfolios, overview, chart, trades, risk and glossary."
+      }
+    ],
+    "ferramentas": [
+      {
+        "grupo": {
+          "pt": "Backend",
+          "en": "Backend"
+        },
+        "itens": [
+          "Python 3.11+",
+          "yfinance",
+          "pandas",
+          "configuração em TOML"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Dashboard",
+          "en": "Dashboard"
+        },
+        "itens": [
+          "React",
+          "Vite",
+          "Lightweight Charts (TradingView)"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Dados",
+          "en": "Data"
+        },
+        "itens": [
+          "Yahoo Finance",
+          "brapi.dev (ações da B3 e FIIs)",
+          "API do Banco Central (CDI)",
+          "Wikipedia (lista do S&P 500)"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Testes",
+          "en": "Testing"
+        },
+        "itens": [
+          "pytest",
+          "npm test"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Publicação",
+          "en": "Deployment"
+        },
+        "itens": [
+          "GitHub Pages"
+        ]
+      }
+    ],
+    "metodologia": [
+      {
+        "pt": "Backtest sem look-ahead, com avaliação apenas no trecho de teste, para não premiar uma estratégia que já conhecia a resposta.",
+        "en": "Backtests without look-ahead, with evaluation only on the test segment, so a strategy that already knew the answer is not rewarded."
+      },
+      {
+        "pt": "Parâmetros publicados e não otimizados, com custos de operação incluídos. Impostos não entram, e isso está declarado.",
+        "en": "Published, non-optimized parameters, with trading costs included. Taxes are not included, and that is stated."
+      },
+      {
+        "pt": "Transparência sobre os limites: dados não são em tempo real, há viés de sobrevivência nas cestas de FIIs e os resultados por ativo raramente superam comprar e segurar, e o projeto mostra isso como achado.",
+        "en": "Transparency about the limits: data is not real time, there is survivorship bias in the REIT baskets, and per-asset results rarely beat buy-and-hold, which the project shows as a finding."
+      },
+      {
+        "pt": "Falha segura na exportação, com limite de 25% de ativos com erro para não publicar dados quebrados.",
+        "en": "Safe failure on export, with a 25% cap on assets with errors so broken data is never published."
+      },
+      {
+        "pt": "Testes automatizados no backend (pytest) e no dashboard (npm test), documentação de produto e de design no repositório.",
+        "en": "Automated tests on the backend (pytest) and the dashboard (npm test), with product and design documentation in the repository."
+      }
+    ],
+    "desafios": {
+      "pt": "O difícil foi ser honesto com os números. Um backtest bonito é fácil de fabricar, então evitei olhar o futuro, avaliei só o trecho de teste e mostrei também o que não funcionou: por ativo, a estratégia quase nunca vence simplesmente comprar e segurar. Transformar isso em explicações que qualquer pessoa entenda foi a outra metade do trabalho.",
+      "en": "The hard part was being honest with the numbers. A pretty backtest is easy to fabricate, so I avoided peeking at the future, evaluated only the test segment and also showed what did not work: per asset, the strategy almost never beats simply buying and holding. Turning that into explanations anyone can follow was the other half of the work."
+    },
+    "galeria": [
+      {
+        "src": "projetos/tradingbot/shot-1.webp",
+        "alt": {
+          "pt": "Aba de carteiras: comparativo de métodos de alocação contra CDI, Ibovespa e S&P 500",
+          "en": "Portfolios tab: comparison of allocation methods against CDI, Ibovespa and S&P 500"
+        }
+      },
+      {
+        "src": "projetos/tradingbot/shot-2.webp",
+        "alt": {
+          "pt": "Visão geral de um ativo: retorno, maior queda, Sharpe, curva de capital e veredito",
+          "en": "Overview of an asset: return, max drawdown, Sharpe, equity curve and verdict"
+        }
+      },
+      {
+        "src": "projetos/tradingbot/shot-3.webp",
+        "alt": {
+          "pt": "Gráfico de velas com as entradas e saídas do bot e a lista de operações",
+          "en": "Candlestick chart with the bot's entries and exits and the list of trades"
+        }
+      },
+      {
+        "src": "projetos/tradingbot/shot-4.webp",
+        "alt": {
+          "pt": "Tabela de operações com o motivo de cada compra e saída",
+          "en": "Trades table with the reason for each buy and exit"
+        }
+      },
+      {
+        "src": "projetos/tradingbot/shot-5.webp",
+        "alt": {
+          "pt": "Portão de risco com os limites que barram compras",
+          "en": "Risk gate with the limits that block buys"
+        }
+      }
+    ]
   },
   {
     "id": "jarvis",
     "categoria": "IA e Agentes",
     "capa": "projetos/jarvis/cover.webp",
     "fundo": "projetos/jarvis/backdrop.webp",
-    "titulo": { "pt": "Jarvis", "en": "Jarvis" },
+    "titulo": {
+      "pt": "Jarvis",
+      "en": "Jarvis"
+    },
     "resumo": {
       "pt": "Assistente de voz pessoal para Windows, inspirado no JARVIS do Homem de Ferro, que entende português e responde em inglês britânico.",
       "en": "Personal voice assistant for Windows, inspired by Iron Man's JARVIS, that understands Portuguese and answers in British English."
@@ -286,20 +1643,153 @@
       "pt": "Desenvolvimento completo.",
       "en": "Full development."
     },
-    "stack": ["Python", "Claude Code", "faster-whisper", "Kokoro", "openWakeWord", "pywebview", "Obsidian"],
-    "status": "concluido",
-    "links": [{ "label": "GitHub", "url": "https://github.com/NemirovskyDev/Jarvis" }],
-    "funcionalidades": [
-      {"pt":"Chamado por \"Hey Jarvis\", duas palmas, clique na esfera ou texto.","en":"Called by saying \"Hey Jarvis\", clapping twice, clicking the sphere or typing."},
-      {"pt":"Entende português e responde em inglês britânico, com voz formal de mordomo (Kokoro).","en":"Understands Portuguese and answers in British English, in a formal butler voice (Kokoro)."},
-      {"pt":"Reconhecimento e síntese de voz rodam no PC; o raciocínio vem do Claude Code, com a conta do Claude e sem chave de API.","en":"Speech recognition and synthesis run on the PC; the reasoning comes from Claude Code, using the Claude account with no API key."},
-      {"pt":"Painel azul em tela cheia com clima, agenda, e-mails (só leitura), cotações, notícias e uso do plano Claude.","en":"Full-screen blue panel with weather, calendar, e-mails (read-only), market quotes, news and Claude plan usage."},
-      {"pt":"Second Brain em notas Markdown no Obsidian, lido antes de cada resposta; edições aparecem em cerca de 3 segundos.","en":"A Second Brain of Markdown notes in Obsidian, read before every answer; edits show up in about 3 seconds."},
-      {"pt":"Morning Digest falado todo dia: agenda, e-mails de ação, notícias, cotações e prazos.","en":"A daily spoken Morning Digest: agenda, action e-mails, news, quotes and deadlines."}
+    "stack": [
+      "Python",
+      "Claude Code",
+      "faster-whisper",
+      "Kokoro",
+      "openWakeWord",
+      "pywebview",
+      "Obsidian"
     ],
-    "desafios": {"pt":"Meu desafio foi juntar uma voz totalmente local (palavra de ativação, palmas, Whisper e Kokoro) com o raciocínio do Claude Code, sem chave de API, e deixar a privacidade clara: o áudio fica no PC, os conectores de e-mail e agenda são só de leitura e o README documenta o que sai do computador.","en":"My challenge was combining a fully local voice pipeline (wake word, claps, Whisper and Kokoro) with Claude Code reasoning, with no API key, and keeping privacy clear: audio stays on the PC, the e-mail and calendar connectors are read-only, and the README documents what leaves the computer."},
+    "status": "concluido",
+    "links": [
+      {
+        "label": "GitHub",
+        "url": "https://github.com/NemirovskyDev/Jarvis"
+      }
+    ],
+    "funcionalidades": [
+      {
+        "pt": "Chamado por \"Hey Jarvis\", duas palmas, clique na esfera ou texto.",
+        "en": "Called by saying \"Hey Jarvis\", clapping twice, clicking the sphere or typing."
+      },
+      {
+        "pt": "Entende português e responde em inglês britânico, com voz formal de mordomo (Kokoro).",
+        "en": "Understands Portuguese and answers in British English, in a formal butler voice (Kokoro)."
+      },
+      {
+        "pt": "Reconhecimento e síntese de voz rodam no PC; o raciocínio vem do Claude Code, com a conta do Claude e sem chave de API.",
+        "en": "Speech recognition and synthesis run on the PC; the reasoning comes from Claude Code, using the Claude account with no API key."
+      },
+      {
+        "pt": "Painel azul em tela cheia com clima, agenda, e-mails (só leitura), cotações, notícias e uso do plano Claude.",
+        "en": "Full-screen blue panel with weather, calendar, e-mails (read-only), market quotes, news and Claude plan usage."
+      },
+      {
+        "pt": "Second Brain em notas Markdown no Obsidian, lido antes de cada resposta; edições aparecem em cerca de 3 segundos.",
+        "en": "A Second Brain of Markdown notes in Obsidian, read before every answer; edits show up in about 3 seconds."
+      },
+      {
+        "pt": "Morning Digest falado todo dia: agenda, e-mails de ação, notícias, cotações e prazos.",
+        "en": "A daily spoken Morning Digest: agenda, action e-mails, news, quotes and deadlines."
+      }
+    ],
+    "ferramentas": [
+      {
+        "grupo": {
+          "pt": "Linguagem e interface",
+          "en": "Language and interface"
+        },
+        "itens": [
+          "Python 3.13",
+          "pywebview (janela em tela cheia)",
+          "HTML, CSS e JavaScript puro com canvas (esfera holográfica)"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Voz",
+          "en": "Voice"
+        },
+        "itens": [
+          "faster-whisper (reconhecimento de fala local)",
+          "openWakeWord (palavra de ativação \"hey_jarvis\")",
+          "Kokoro ONNX (voz em inglês britânico)",
+          "sounddevice, numpy e scipy (áudio)"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Raciocínio",
+          "en": "Reasoning"
+        },
+        "itens": [
+          "Claude Code (claude -p), sem chave de API"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Dados do painel",
+          "en": "Dashboard data"
+        },
+        "itens": [
+          "Open-Meteo (clima)",
+          "Yahoo Finance (cotações)",
+          "Google News RSS (notícias)",
+          "conectores do claude.ai para Gmail e Google Agenda (somente leitura)",
+          "psutil (CPU, memória e rede)"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Memória",
+          "en": "Memory"
+        },
+        "itens": [
+          "Obsidian (Second Brain em notas Markdown com links)"
+        ]
+      }
+    ],
+    "metodologia": [
+      {
+        "pt": "Fluxo em estados: ativação (palavra de ativação ou duas palmas), comando, raciocínio, fala e conversa de acompanhamento. A voz fica 100% no computador.",
+        "en": "A state flow: wake (wake word or double clap), command, thinking, speaking and follow-up. Voice stays 100% on the computer."
+      },
+      {
+        "pt": "Concorrência com threads, filas e travas: os modelos carregam em segundo plano para a janela abrir logo, a fala é gerada em pedaços enquanto o anterior toca, e o Kokoro é protegido por trava porque não é thread-safe.",
+        "en": "Concurrency with threads, queues and locks: models load in the background so the window opens fast, speech is synthesized in chunks while the previous one plays, and Kokoro is guarded by a lock because it is not thread-safe."
+      },
+      {
+        "pt": "Segurança por privilégio mínimo: os conectores de e-mail e agenda só leem, as ferramentas de escrita estão numa lista de bloqueio explícita, e o README documenta o que sai do computador.",
+        "en": "Least-privilege security: the e-mail and calendar connectors are read-only, write tools are on an explicit deny list, and the README documents what leaves the computer."
+      },
+      {
+        "pt": "Memória durável: o modelo pode gravar notas no Second Brain por uma etiqueta no fim da resposta. Escritas são atômicas, notas apagadas vão para a lixeira do cofre e a pasta .obsidian nunca é alterada.",
+        "en": "Durable memory: the model can save notes to the Second Brain through a tag at the end of its reply. Writes are atomic, deleted notes go to the vault trash and the .obsidian folder is never touched."
+      },
+      {
+        "pt": "Instalação confiável: os modelos (cerca de 480 MB) baixam com verificação de SHA-256, tamanho mínimo e gravação atômica, e há um modo de checagem sem baixar.",
+        "en": "Reliable setup: models (about 480 MB) download with SHA-256 verification, a minimum size and atomic writes, plus a check mode that does not download."
+      },
+      {
+        "pt": "Configuração tolerante: valores inválidos voltam ao padrão com um aviso no log, sem derrubar o app. Dados pessoais ficam em arquivos fora do Git, com exemplos genéricos versionados.",
+        "en": "Tolerant configuration: invalid values fall back to defaults with a log warning instead of crashing the app. Personal data lives in git-ignored files, with generic examples versioned."
+      },
+      {
+        "pt": "Autotestes embutidos em cada módulo, com dados de exemplo e pasta temporária, sem tocar no cofre real. Dependências com versão fixa.",
+        "en": "Self-tests built into each module, with sample data and a temp folder, never touching the real vault. Dependencies pinned to exact versions."
+      }
+    ],
+    "desafios": {
+      "pt": "Meu desafio foi juntar uma voz totalmente local (palavra de ativação, palmas, Whisper e Kokoro) com o raciocínio do Claude Code, sem chave de API, e deixar a privacidade clara: o áudio fica no PC, os conectores de e-mail e agenda são só de leitura e o README documenta o que sai do computador.",
+      "en": "My challenge was combining a fully local voice pipeline (wake word, claps, Whisper and Kokoro) with Claude Code reasoning, with no API key, and keeping privacy clear: audio stays on the PC, the e-mail and calendar connectors are read-only, and the README documents what leaves the computer."
+    },
     "galeria": [
-      {"src":"projetos/jarvis/shot-1.webp","alt":{"pt":"Painel do Jarvis com a esfera do Second Brain, clima, uso do sistema e uso do Claude","en":"Jarvis panel with the Second Brain sphere, weather, system usage and Claude usage"}}
+      {
+        "src": "projetos/jarvis/shot-1.webp",
+        "alt": {
+          "pt": "Painel do Jarvis com a esfera do Second Brain, clima, uso do sistema e uso do Claude",
+          "en": "Jarvis panel with the Second Brain sphere, weather, system usage and Claude usage"
+        }
+      },
+      {
+        "src": "projetos/jarvis/shot-2.webp",
+        "alt": {
+          "pt": "Agenda e e-mails no painel, com o resumo da manhã (dados de exemplo)",
+          "en": "Calendar and e-mails on the panel, with the morning digest (sample data)"
+        }
+      }
     ]
   },
   {
@@ -307,7 +1797,10 @@
     "categoria": "Sites",
     "capa": "projetos/chat-amigos/cover.webp",
     "fundo": "projetos/chat-amigos/backdrop.webp",
-    "titulo": { "pt": "Chat Amigos", "en": "Chat Amigos" },
+    "titulo": {
+      "pt": "Chat Amigos",
+      "en": "Chat Amigos"
+    },
     "resumo": {
       "pt": "App leve de vídeo, áudio, compartilhamento de tela e chat para um grupo de amigos.",
       "en": "A lightweight video, audio, screen-sharing and chat app for a group of friends."
@@ -320,22 +1813,186 @@
       "pt": "Desenvolvimento completo.",
       "en": "Full development."
     },
-    "stack": ["Node.js", "Express", "Socket.io", "WebRTC", "JavaScript"],
-    "status": "concluido",
-    "links": [{ "label": "GitHub", "url": "https://github.com/NemirovskyDev/chat-amigos" }],
-    "funcionalidades": [
-      {"pt":"Salas em que se entra com um nome, escolhendo se câmera e microfone começam ligados.","en":"Rooms you join with a name, choosing whether the camera and mic start on."},
-      {"pt":"Vídeo e áudio ponto a ponto por WebRTC; o Socket.io (servidor Express) só cuida de sinalização, presença e chat.","en":"Peer-to-peer video and audio over WebRTC; Socket.io (Express server) only handles signaling, presence and chat."},
-      {"pt":"Compartilhamento de tela que troca a faixa de vídeo ao vivo.","en":"Screen sharing that swaps the video track live."},
-      {"pt":"Chat de texto e mensagens de voz curtas gravadas no navegador.","en":"Text chat and short voice messages recorded in the browser."},
-      {"pt":"Grade de vídeo que sempre cabe na tela, layout para celular e botão de tela cheia em cada vídeo, inspirados no Discord.","en":"A video grid that always fits the screen, a phone layout and a fullscreen button on every tile, inspired by Discord."},
-      {"pt":"Avisos de entrada e saída no chat.","en":"Join and leave notices in the chat."}
+    "stack": [
+      "Node.js",
+      "Express",
+      "Socket.io",
+      "WebRTC",
+      "JavaScript"
     ],
-    "desafios": {"pt":"Meu desafio foi fazer as chamadas funcionarem entre redes diferentes, onde a conexão direta do WebRTC falha por causa do NAT. Usei um relay TURN, com credenciais buscadas na Metered por variáveis de ambiente, e tentei gastar o mínimo da cota paga: STUN do Google primeiro, limite de bitrate e correção de vazamentos de recursos.","en":"My challenge was making calls work across different networks, where direct WebRTC fails because of NAT. I used a TURN relay, with credentials fetched from Metered through environment variables, and tried to spend as little of the paid quota as possible: Google STUN first, a bitrate cap and fixes for resource leaks."},
+    "status": "concluido",
+    "links": [
+      {
+        "label": "GitHub",
+        "url": "https://github.com/NemirovskyDev/chat-amigos"
+      }
+    ],
+    "funcionalidades": [
+      {
+        "pt": "Salas em que se entra com um nome, escolhendo se câmera e microfone começam ligados.",
+        "en": "Rooms you join with a name, choosing whether the camera and mic start on."
+      },
+      {
+        "pt": "Vídeo e áudio ponto a ponto por WebRTC; o Socket.io (servidor Express) só cuida de sinalização, presença e chat.",
+        "en": "Peer-to-peer video and audio over WebRTC; Socket.io (Express server) only handles signaling, presence and chat."
+      },
+      {
+        "pt": "Compartilhamento de tela que troca a faixa de vídeo ao vivo.",
+        "en": "Screen sharing that swaps the video track live."
+      },
+      {
+        "pt": "Chat de texto e mensagens de voz curtas gravadas no navegador.",
+        "en": "Text chat and short voice messages recorded in the browser."
+      },
+      {
+        "pt": "Grade de vídeo que sempre cabe na tela, layout para celular e botão de tela cheia em cada vídeo, inspirados no Discord.",
+        "en": "A video grid that always fits the screen, a phone layout and a fullscreen button on every tile, inspired by Discord."
+      },
+      {
+        "pt": "Avisos de entrada e saída no chat.",
+        "en": "Join and leave notices in the chat."
+      }
+    ],
+    "ferramentas": [
+      {
+        "grupo": {
+          "pt": "Servidor",
+          "en": "Server"
+        },
+        "itens": [
+          "Node.js 18+",
+          "Express",
+          "Socket.io (sinalização e chat)"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Tempo real no navegador",
+          "en": "Real time in the browser"
+        },
+        "itens": [
+          "WebRTC (RTCPeerConnection)",
+          "getUserMedia e getDisplayMedia",
+          "MediaRecorder (mensagens de voz)",
+          "getStats (diagnóstico da conexão)"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Rede",
+          "en": "Network"
+        },
+        "itens": [
+          "STUN do Google",
+          "TURN da Metered.ca"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Interface",
+          "en": "Interface"
+        },
+        "itens": [
+          "HTML, CSS e JavaScript puro, sem framework nem bundler"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Publicação",
+          "en": "Deployment"
+        },
+        "itens": [
+          "Render (desativado hoje)",
+          "variáveis de ambiente para as credenciais"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Desenvolvimento",
+          "en": "Development"
+        },
+        "itens": [
+          "Claude Code (apoio na programação)"
+        ]
+      }
+    ],
+    "metodologia": [
+      {
+        "pt": "Malha completa (mesh): cada participante abre uma conexão direta com todos os outros, sem servidor de mídia. O servidor só faz a sinalização das salas, que ficam na memória.",
+        "en": "Full mesh: each participant opens a direct connection to every other, with no media server. The server only handles room signalling, kept in memory."
+      },
+      {
+        "pt": "Quem entra cria as ofertas e quem já estava na sala responde, o que evita negociações simultâneas. Os eventos da sala ficam num protocolo pequeno e explícito.",
+        "en": "The newcomer creates the offers and the people already in the room answer, which avoids simultaneous negotiations. Room events follow a small, explicit protocol."
+      },
+      {
+        "pt": "Decisão guiada por custo: a cota gratuita do TURN é pequena, então há limite de bitrate do vídeo, tela compartilhada a 10 fps, STUN primeiro e correção de vazamentos de recursos.",
+        "en": "Cost-driven design: the free TURN quota is small, so there is a video bitrate cap, screen sharing at 10 fps, STUN first and fixes for resource leaks."
+      },
+      {
+        "pt": "As credenciais do TURN são buscadas no servidor por variáveis de ambiente, então a chave nunca chega ao navegador nem ao repositório.",
+        "en": "TURN credentials are fetched on the server through environment variables, so the key never reaches the browser or the repository."
+      },
+      {
+        "pt": "Diagnóstico embutido: cada vídeo mostra o estado da conexão e se ela passa por relay (TURN) ou é direta.",
+        "en": "Built-in diagnostics: each video tile shows the connection state and whether it goes through a relay (TURN) or is direct."
+      },
+      {
+        "pt": "Interface no estilo do Discord, com grade de vídeo que sempre cabe na tela e layout próprio para celular. Verificado de 1 a 10 participantes.",
+        "en": "A Discord-style interface, with a video grid that always fits the screen and its own phone layout. Verified from 1 to 10 participants."
+      },
+      {
+        "pt": "Commits pequenos e descritivos. Ainda faltam validação de entradas no servidor, senha de sala e limite de requisições, e isso está claro para mim como próximo passo.",
+        "en": "Small, descriptive commits. Server-side input validation, room passwords and rate limiting are still missing, and I know they are the next step."
+      }
+    ],
+    "desafios": {
+      "pt": "Meu desafio foi fazer as chamadas funcionarem entre redes diferentes, onde a conexão direta do WebRTC falha por causa do NAT. Usei um relay TURN, com credenciais buscadas na Metered por variáveis de ambiente, e tentei gastar o mínimo da cota paga: STUN do Google primeiro, limite de bitrate e correção de vazamentos de recursos.",
+      "en": "My challenge was making calls work across different networks, where direct WebRTC fails because of NAT. I used a TURN relay, with credentials fetched from Metered through environment variables, and tried to spend as little of the paid quota as possible: Google STUN first, a bitrate cap and fixes for resource leaks."
+    },
     "galeria": [
-      {"src":"projetos/chat-amigos/shot-3.webp","alt":{"pt":"Chamada de vídeo com três participantes de exemplo na sala de voz","en":"Video call with three sample participants in the voice room"}},
-      {"src":"projetos/chat-amigos/shot-1.webp","alt":{"pt":"Tela de entrada com nome e sala","en":"Entry screen with name and room"}},
-      {"src":"projetos/chat-amigos/shot-2.webp","alt":{"pt":"Sala com canal de texto, canal de voz e uma mensagem no chat","en":"Room with a text channel, a voice channel and a chat message"}}
+      {
+        "src": "projetos/chat-amigos/shot-3.webp",
+        "alt": {
+          "pt": "Chamada de vídeo com três participantes de exemplo na sala de voz",
+          "en": "Video call with three sample participants in the voice room"
+        }
+      },
+      {
+        "src": "projetos/chat-amigos/shot-1.webp",
+        "alt": {
+          "pt": "Tela de entrada com nome e sala",
+          "en": "Entry screen with name and room"
+        }
+      },
+      {
+        "src": "projetos/chat-amigos/shot-2.webp",
+        "alt": {
+          "pt": "Sala com canal de texto, canal de voz e uma mensagem no chat",
+          "en": "Room with a text channel, a voice channel and a chat message"
+        }
+      },
+      {
+        "src": "projetos/chat-amigos/shot-4.webp",
+        "alt": {
+          "pt": "Tela de entrada com nome e sala",
+          "en": "Join screen with name and room"
+        }
+      },
+      {
+        "src": "projetos/chat-amigos/shot-5.webp",
+        "alt": {
+          "pt": "Sala com canal de texto, canal de voz e barra de controles",
+          "en": "Room with a text channel, a voice channel and the controls bar"
+        }
+      },
+      {
+        "src": "projetos/chat-amigos/shot-6.webp",
+        "alt": {
+          "pt": "A mesma sala no celular, com o menu e os botões embaixo",
+          "en": "The same room on a phone, with the menu and the buttons at the bottom"
+        }
+      }
     ]
   }
 ]

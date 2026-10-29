@@ -58,6 +58,19 @@
 .timeline-marker[aria-current='step']::before { opacity: 1; background: var(--accent-chapter); }
 .timeline-marker:focus-visible { outline: 3px solid var(--accent-chapter); outline-offset: -3px; border-radius: 4px; }
 
+/* Loading-bar mode: the bar behind stays dim, and an accent fill grows with the scroll. */
+.timeline-fill {
+  position: absolute;
+  inset: 50% 2px auto;
+  height: 4px;
+  margin-top: -2px;
+  border-radius: 2px;
+  background: var(--accent-chapter);
+  transform-origin: left center;
+  pointer-events: none;
+}
+.timeline--fill .timeline-marker[aria-current='step']::before { opacity: 0.7; background: currentcolor; }
+
 @media (prefers-reduced-motion: reduce) {
   .timeline-marker::before { transition: none; }
 }

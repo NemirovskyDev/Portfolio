@@ -8,6 +8,12 @@ const dict: Record<string, L10n> = {
   'modal.purpose': { pt: 'Propósito', en: 'Purpose' },
   'modal.role': { pt: 'Meu papel', en: 'My role' },
   'modal.features': { pt: 'Funcionalidades', en: 'Key features' },
+  'lightbox.enlarge': { pt: 'ampliar imagem', en: 'enlarge image' },
+  'lightbox.prev': { pt: 'Imagem anterior', en: 'Previous image' },
+  'lightbox.next': { pt: 'Próxima imagem', en: 'Next image' },
+  'modal.how': { pt: 'Como funciona', en: 'How it works' },
+  'modal.tools': { pt: 'Ferramentas utilizadas', en: 'Tools used' },
+  'modal.methods': { pt: 'Metodologia e práticas', en: 'Methodology and practices' },
   'modal.challenges': { pt: 'Desafios e aprendizados', en: 'Challenges and lessons learned' },
   'modal.gallery': { pt: 'Capturas de tela', en: 'Screenshots' },
   'link.newTab': { pt: 'abre em nova aba', en: 'opens in a new tab' },
@@ -53,7 +59,8 @@ export function categoryLabel(categoria: string, lang: Lang): string {
 }
 
 const linkLabels: Record<string, L10n> = {
-  Site: { pt: 'Site', en: 'Website' },
+  Site: { pt: 'Ver site', en: 'View site' },
+  GitHub: { pt: 'Ver código', en: 'View code' },
 }
 
 /** Link labels live in the data as plain strings; known ones are translated, others shown as written. */

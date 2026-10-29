@@ -15,6 +15,12 @@ export type Project = {
   status: Status
   links?: { label: string; url: string }[]
   funcionalidades?: L10n[]
+  /** Short step-by-step of how the project works, in order. */
+  comoFunciona?: L10n[]
+  /** Tools grouped by purpose, e.g. "Testes": ["vitest", "Playwright"]. */
+  ferramentas?: { grupo: L10n; itens: string[] }[]
+  /** Methods and engineering practices actually used in the project. */
+  metodologia?: L10n[]
   desafios?: L10n
   galeria?: { src: string; alt: L10n }[]
 }

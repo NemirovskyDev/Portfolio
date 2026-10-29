@@ -91,7 +91,7 @@ export function CinemaStage({ chapters, projectCount, header, onOpen }: Props) {
         <p className="sr-only" role="status" aria-live="polite">
           {announce}
         </p>
-        <TimelineBar chapters={chapters} activeIndex={active} onJump={jumpTo} />
+        <TimelineBar chapters={chapters} activeIndex={active} onJump={jumpTo} progress={progress} />
         <div className="cinema-grain" aria-hidden="true" />
       </motion.div>
     </div>

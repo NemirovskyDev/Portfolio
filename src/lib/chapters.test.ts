@@ -22,7 +22,7 @@ describe('buildChapters', () => {
     const order = ids(buildChapters(projects))
     expect(order).toEqual([
       'opening', 'orquestrador', 'companion', 'jarvis', 'reveste', 'pkz', 'chat-amigos',
-      'tabbit', 'bombas', 'ap2', 'b3', 'credits',
+      'tabbit', 'bombas', 'ap2', 'b3', 'tradingbot', 'credits',
     ])
     expect(order.indexOf('reveste')).toBeLessThan(order.indexOf('tabbit'))
     expect(order.indexOf('pkz')).toBeLessThan(order.indexOf('tabbit'))

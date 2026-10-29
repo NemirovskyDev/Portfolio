@@ -44,6 +44,11 @@
     "accent": "#2aa893",
     "ink": "#f4f2ee"
   },
+  "tradingbot": {
+    "ground": "#1e2e13",
+    "accent": "#5da629",
+    "ink": "#f4f2ee"
+  },
   "jarvis": {
     "ground": "#153134",
     "accent": "#2ba2ac",

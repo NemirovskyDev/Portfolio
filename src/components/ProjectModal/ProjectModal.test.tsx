@@ -66,8 +66,9 @@ describe('ProjectModal', () => {
     expect(dialog).toHaveTextContent('Next.js')
     expect(dialog).toHaveTextContent(reveste.papel.pt)
     expect(dialog).toHaveTextContent(reveste.proposito.pt)
-    const link = screen.getByRole('link', { name: /Site/ })
+    const link = screen.getByRole('link', { name: /Ver site/ })
     expect(link).toHaveAttribute('href', 'https://nemirovskydev.github.io/Reveste/')
+    expect(screen.getByRole('link', { name: /Ver código/ })).toHaveAttribute('href', 'https://github.com/NemirovskyDev/Reveste')
     expect(link).toHaveAttribute('rel', expect.stringContaining('noopener'))
   })
 
@@ -89,28 +90,80 @@ describe('ProjectModal', () => {
     expect(within(dialog).getByRole('img', { name: 'Página inicial do Reveste' })).toHaveAttribute('loading', 'lazy')
   })
 
-  it('each gallery print opens the full image in a new tab and says so', () => {
-    const rich = { ...reveste, galeria: [{ src: 'projetos/reveste/shot-1.webp', alt: { pt: 'Página inicial do Reveste', en: 'Home' } }] }
+  it('a gallery print enlarges in place, with arrows, a caption, and Esc closes only the print', async () => {
+    const user = userEvent.setup()
+    const onClose = vi.fn()
+    const rich = {
+      ...reveste,
+      galeria: [
+        { src: 'projetos/reveste/shot-1.webp', alt: { pt: 'Página inicial do Reveste', en: 'Home' } },
+        { src: 'projetos/reveste/shot-2.webp', alt: { pt: 'Catálogo com filtros', en: 'Catalog' } },
+      ],
+    }
+    renderWithState(<ProjectModal project={rich} onClose={onClose} />)
+    expect(screen.queryByRole('link', { name: /Página inicial/ })).toBeNull() // prints are buttons, no new page
+    const thumb = screen.getByRole('button', { name: /Página inicial do Reveste.*ampliar imagem/ })
+    await user.click(thumb)
+
+    const box = screen.getByRole('dialog', { name: 'Página inicial do Reveste' })
+    expect(within(box).getByRole('img')).toHaveAttribute('src', expect.stringMatching(/shot-1\.webp$/))
+    expect(box).toHaveTextContent('1 / 2')
+
+    await user.click(within(box).getByRole('button', { name: 'Próxima imagem' }))
+    expect(screen.getByRole('dialog', { name: 'Catálogo com filtros' })).toHaveTextContent('2 / 2')
+    await user.keyboard('{ArrowRight}')
+    expect(screen.getByRole('dialog', { name: 'Página inicial do Reveste' })).toBeInTheDocument() // wraps around
+
+    await user.keyboard('{Escape}')
+    expect(screen.queryByRole('dialog', { name: 'Página inicial do Reveste' })).toBeNull()
+    expect(onClose).not.toHaveBeenCalled() // the project dialog stays open
+    expect(thumb).toHaveFocus()
+  })
+
+  it('clicking outside the enlarged print closes it', async () => {
+    const user = userEvent.setup()
+    const rich = { ...reveste, galeria: [{ src: 'projetos/reveste/shot-1.webp', alt: { pt: 'Uma tela', en: 'A screen' } }] }
     renderWithState(<ProjectModal project={rich} onClose={() => {}} />)
-    const link = screen.getByRole('link', { name: /Página inicial do Reveste.*abre em nova aba/ })
-    expect(link.getAttribute('href')).toMatch(/projetos\/reveste\/shot-1\.webp$/)
-    expect(link).toHaveAttribute('target', '_blank')
-    expect(link).toHaveAttribute('rel', expect.stringContaining('noopener'))
+    await user.click(screen.getByRole('button', { name: /Uma tela/ }))
+    expect(screen.queryByRole('button', { name: 'Próxima imagem' })).toBeNull() // a single print has no arrows
+    await user.click(screen.getByTestId('lightbox-backdrop'))
+    expect(screen.queryByRole('dialog', { name: 'Uma tela' })).toBeNull()
   })
 
   it('external links announce the new tab and use a drawn icon instead of a glyph', () => {
     renderWithState(<ProjectModal project={reveste} onClose={() => {}} />)
-    const link = screen.getByRole('link', { name: /Site.*abre em nova aba/ })
+    const link = screen.getByRole('link', { name: /Ver site.*abre em nova aba/ })
     expect(link.querySelector('svg[aria-hidden="true"]')).not.toBeNull()
     expect(screen.getByRole('dialog')).not.toHaveTextContent('↗')
   })
 
   it('omits the new sections when the project has no detail fields', () => {
-    const plain = { ...reveste, funcionalidades: undefined, desafios: undefined, galeria: undefined }
+    const plain = { ...reveste, funcionalidades: undefined, ferramentas: undefined, metodologia: undefined, desafios: undefined, galeria: undefined }
     renderWithState(<ProjectModal project={plain} onClose={() => {}} />)
     expect(screen.queryByRole('heading', { name: 'Funcionalidades' })).toBeNull()
+    expect(screen.queryByRole('heading', { name: 'Ferramentas utilizadas' })).toBeNull()
+    expect(screen.queryByRole('heading', { name: 'Metodologia e práticas' })).toBeNull()
     expect(screen.queryByRole('heading', { name: 'Desafios e aprendizados' })).toBeNull()
     expect(screen.queryByRole('heading', { name: 'Capturas de tela' })).toBeNull()
+  })
+
+  it('shows grouped tools and the methodology list, in English too', () => {
+    const rich = {
+      ...reveste,
+      ferramentas: [{ grupo: { pt: 'Testes', en: 'Testing' }, itens: ['vitest', 'Playwright'] }],
+      metodologia: [{ pt: 'Testes primeiro', en: 'Test-first' }],
+    }
+    const { unmount } = renderWithState(<ProjectModal project={rich} onClose={() => {}} />)
+    expect(screen.getByRole('heading', { name: 'Ferramentas utilizadas' })).toBeInTheDocument()
+    expect(screen.getByText('Testes')).toBeInTheDocument()
+    expect(screen.getByText('vitest, Playwright')).toBeInTheDocument()
+    expect(screen.getByText('Testes primeiro')).toBeInTheDocument()
+    unmount()
+    localStorage.setItem('lang', 'en')
+    renderWithState(<ProjectModal project={rich} onClose={() => {}} />)
+    expect(screen.getByRole('heading', { name: 'Tools used' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Methodology and practices' })).toBeInTheDocument()
+    expect(screen.getByText('Test-first')).toBeInTheDocument()
   })
 
   it('shows the detail labels in English', () => {
@@ -152,7 +205,7 @@ describe('ProjectModal', () => {
     const user = userEvent.setup()
     renderWithState(<ProjectModal project={reveste} onClose={() => {}} />)
     const close = screen.getByRole('button', { name: 'Fechar' })
-    const links = screen.getAllByRole('link')
+    const links = [...screen.getByRole('dialog').querySelectorAll<HTMLElement>('a[href], button')].filter((el) => el !== close)
     const last = links[links.length - 1]
     expect(close).toHaveFocus()
     await user.tab({ shift: true })
@@ -200,8 +253,8 @@ describe('ProjectModal', () => {
   it('localizes the "Site" link label and keeps list semantics on styled lists', () => {
     localStorage.setItem('lang', 'en')
     renderWithState(<ProjectModal project={reveste} onClose={() => {}} />)
-    expect(screen.getByRole('link', { name: /^Website/ })).toBeInTheDocument()
-    for (const ul of screen.getByRole('dialog').querySelectorAll('ul.tags, ul.links, ul.gallery')) {
+    expect(screen.getByRole('link', { name: /^View site/ })).toBeInTheDocument()
+    for (const ul of screen.getByRole('dialog').querySelectorAll('ul.tags, ul.actions, ul.gallery')) {
       expect(ul).toHaveAttribute('role', 'list')
     }
   })

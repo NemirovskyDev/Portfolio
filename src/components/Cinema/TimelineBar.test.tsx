@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
+import { motionValue } from 'motion/react'
 import { screen, fireEvent, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { TimelineBar } from './TimelineBar'
@@ -48,6 +49,16 @@ describe('TimelineBar', () => {
     const total = chapters.filter((c) => c.kind === 'project').length
     expect(screen.getByText(`02 / ${String(total).padStart(2, '0')}`)).toBeInTheDocument()
     expect(screen.getByTestId('timeline-current')).toHaveTextContent(projects[1].titulo.pt)
+  })
+
+  it('fills each marker like a loading bar as the scroll position advances', () => {
+    const f = motionValue(2.5)
+    renderWithState(<TimelineBar chapters={chapters} activeIndex={3} onJump={() => {}} progress={f} />)
+    const scale = (i: number) => (document.querySelectorAll('.timeline-fill')[i] as HTMLElement).style.transform
+    expect(scale(1)).toBe('none') // fully filled is the identity transform
+    expect(scale(2)).toBe('none')
+    expect(scale(3)).toContain('scaleX(0.5)')
+    expect(scale(4)).toContain('scaleX(0)')
   })
 
   it('does not number the opening or the credits', () => {
