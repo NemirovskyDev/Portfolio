@@ -249,7 +249,7 @@
       "CSS",
       "JavaScript"
     ],
-    "status": "em-andamento",
+    "status": "concluido",
     "links": [
       {
         "label": "Site",
@@ -748,7 +748,7 @@
       "CSS",
       "JavaScript"
     ],
-    "status": "em-andamento",
+    "status": "concluido",
     "funcionalidades": [
       {
         "pt": "Funciona offline, em modo avião, num único arquivo HTML, com um aparelho por mesa.",
@@ -1275,7 +1275,7 @@
       "yfinance",
       "Web scraping"
     ],
-    "status": "em-andamento",
+    "status": "concluido",
     "funcionalidades": [
       {
         "pt": "Pede um ticker (PETR4, MXRF11) e mostra o preço atual.",
