@@ -1,9 +1,7 @@
 import type { Project } from './types'
 
-export type Chapter =
-  | { id: 'opening'; kind: 'opening' }
-  | { id: string; kind: 'project'; project: Project }
-  | { id: 'credits'; kind: 'credits' }
+// The stage holds the projects only: the hero opens the page before it and the contact section closes it after.
+export type Chapter = { id: string; kind: 'project'; project: Project }
 
 export const CATEGORY_ORDER: readonly string[] = [
   'IA e Agentes',
@@ -21,12 +19,9 @@ const rank = (categoria: string): number => {
 }
 
 export function buildChapters(projects: Project[]): Chapter[] {
-  const ordered = [...projects].sort((a, b) => rank(a.categoria) - rank(b.categoria))
-  return [
-    { id: 'opening', kind: 'opening' },
-    ...ordered.map((project): Chapter => ({ id: project.id, kind: 'project', project })),
-    { id: 'credits', kind: 'credits' },
-  ]
+  return [...projects]
+    .sort((a, b) => rank(a.categoria) - rank(b.categoria))
+    .map((project): Chapter => ({ id: project.id, kind: 'project', project }))
 }
 
 /** Chapter nearest to the continuous progress `f`; NaN and +-Infinity cannot leave the range. */

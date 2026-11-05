@@ -2,30 +2,54 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { renderHook } from '@testing-library/react'
 import { StrictMode } from 'react'
 
-const instances: { opts: unknown; stop: ReturnType<typeof vi.fn>; start: ReturnType<typeof vi.fn>; destroy: ReturnType<typeof vi.fn> }[] = []
+type Fn = ReturnType<typeof vi.fn>
+const instances: { opts: unknown; stop: Fn; start: Fn; destroy: Fn; on: Fn; raf: Fn; scrollTo: Fn }[] = []
 
 vi.mock('lenis', () => ({
   default: class {
     stop = vi.fn()
     start = vi.fn()
     destroy = vi.fn()
+    on = vi.fn()
+    raf = vi.fn()
+    scrollTo = vi.fn()
     constructor(public opts: unknown) {
       instances.push(this)
     }
   },
 }))
 
-import { useSmoothScroll } from './useSmoothScroll'
+import { gsap, ScrollTrigger } from './gsap'
+import { scrollToTarget, useSmoothScroll } from './useSmoothScroll'
 
 beforeEach(() => {
   instances.length = 0
 })
 
 describe('useSmoothScroll', () => {
-  it('creates one Lenis with its own RAF loop when enabled', () => {
-    renderHook(() => useSmoothScroll({ enabled: true, paused: false }))
+  it('creates one Lenis driven by the GSAP ticker that reports each scroll to ScrollTrigger', () => {
+    const add = vi.spyOn(gsap.ticker, 'add')
+    const remove = vi.spyOn(gsap.ticker, 'remove')
+    const { unmount } = renderHook(() => useSmoothScroll({ enabled: true, paused: false }))
     expect(instances).toHaveLength(1)
-    expect(instances[0].opts).toMatchObject({ autoRaf: true })
+    expect(instances[0].opts).toMatchObject({ autoRaf: false })
+    expect(instances[0].on).toHaveBeenCalledWith('scroll', ScrollTrigger.update)
+    const tick = add.mock.calls.at(-1)?.[0] as (t: number) => void
+    tick(2) // the ticker speaks seconds, Lenis milliseconds
+    expect(instances[0].raf).toHaveBeenCalledWith(2000)
+    unmount()
+    expect(remove).toHaveBeenCalledWith(tick)
+  })
+
+  it('scrollToTarget glides through the live Lenis and falls back to a native jump without it', () => {
+    const native = vi.spyOn(window, 'scrollTo').mockImplementation(() => {})
+    const { unmount } = renderHook(() => useSmoothScroll({ enabled: true, paused: false }))
+    scrollToTarget(300)
+    expect(instances[0].scrollTo).toHaveBeenCalledWith(300)
+    unmount()
+    scrollToTarget(120)
+    expect(native).toHaveBeenCalledWith({ top: 120, behavior: 'auto' })
+    native.mockRestore()
   })
 
   it('creates nothing when disabled', () => {

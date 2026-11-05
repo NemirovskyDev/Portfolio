@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import seed from '../data/projects.json'
 import palette from '../data/palette.json'
-import { paletteFor } from './palette'
+import { fluidColors, mixHex, paletteFor } from './palette'
 
 // WCAG relative luminance, same formula as src/styles/contrast.test.ts.
 const lum = (hex: string): number => {
@@ -83,5 +83,41 @@ describe('paletteFor', () => {
 
   it('does not resolve inherited object keys such as "constructor"', () => {
     expect(paletteFor('constructor')).toEqual(entries.opening)
+  })
+})
+
+describe('mixHex', () => {
+  it('returns the ends at 0 and 1 and the midpoint at 0.5', () => {
+    expect(mixHex('#000000', '#ffffff', 0)).toBe('#000000')
+    expect(mixHex('#000000', '#ffffff', 1)).toBe('#ffffff')
+    expect(mixHex('#000000', '#ffffff', 0.5)).toBe('#808080')
+  })
+
+  it('clamps t and treats NaN as 0', () => {
+    expect(mixHex('#102030', '#ffffff', 2)).toBe('#ffffff')
+    expect(mixHex('#102030', '#ffffff', Number.NaN)).toBe('#102030')
+  })
+
+  it('rejects a colour that is not #rrggbb', () => {
+    expect(() => mixHex('red', '#ffffff', 0.5)).toThrow(/rrggbb/)
+  })
+})
+
+describe('fluidColors', () => {
+  const ids = seed.map((p) => p.id)
+
+  it('keeps the warm white ink at 4.5:1 or more over every colour of the field', () => {
+    const c = fluidColors(ids)
+    for (const hex of [c.base, c.c1, c.c2, c.c3]) expect(ratio('#f4f2ee', hex)).toBeGreaterThanOrEqual(4.5)
+  })
+
+  it('picks the first, middle and last chapter accents', () => {
+    const c = fluidColors(ids, 1)
+    expect(c.c1).toBe(paletteFor(ids[0]).accent)
+    expect(c.c3).toBe(paletteFor(ids[ids.length - 1]).accent)
+  })
+
+  it('falls back to the neutral accent when there are no chapters', () => {
+    expect(fluidColors([], 1).c1).toBe(entries.opening.accent)
   })
 })

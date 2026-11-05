@@ -18,3 +18,15 @@ class NoopObserver {
 }
 window.ResizeObserver ??= NoopObserver as unknown as typeof ResizeObserver
 window.IntersectionObserver ??= NoopObserver as unknown as typeof IntersectionObserver
+
+// GSAP's ScrollTrigger queries media at import time; tests that care about reduced motion replace this
+window.matchMedia ??= ((query: string) => ({
+  matches: false,
+  media: query,
+  addEventListener: () => {},
+  removeEventListener: () => {},
+  addListener: () => {},
+  removeListener: () => {},
+  dispatchEvent: () => false,
+  onchange: null,
+})) as typeof window.matchMedia

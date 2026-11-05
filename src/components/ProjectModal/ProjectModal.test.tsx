@@ -4,6 +4,7 @@ import { act, fireEvent, renderHook, screen, within } from '@testing-library/rea
 import userEvent from '@testing-library/user-event'
 import { ProjectModal } from './ProjectModal'
 import { useHashProject } from '../../lib/useHashProject'
+import { AppStateProvider } from '../../state/AppState'
 import { mockReducedMotion, projects, renderWithState } from '../../test/utils'
 
 const reveste = projects.find((p) => p.id === 'reveste')!
@@ -135,6 +136,84 @@ describe('ProjectModal', () => {
     const link = screen.getByRole('link', { name: /Ver site.*abre em nova aba/ })
     expect(link.querySelector('svg[aria-hidden="true"]')).not.toBeNull()
     expect(screen.getByRole('dialog')).not.toHaveTextContent('↗')
+  })
+
+  it('a downloadable file is a download link in place, not a new tab', () => {
+    const app = { ...reveste, links: [{ label: 'Baixar', url: 'downloads/validador.html' }] }
+    renderWithState(<ProjectModal project={app} onClose={() => {}} />)
+    const link = screen.getByRole('link', { name: /Baixar o app/ })
+    expect(link.getAttribute('href')).toMatch(/downloads\/validador\.html$/)
+    expect(link).toHaveAttribute('download')
+    expect(link).not.toHaveAttribute('target')
+  })
+
+  describe('demo', () => {
+    const site = { ...reveste, demo: { tipo: 'site' as const, url: 'https://example.com/app/' } }
+    const wide = (matches: boolean) => {
+      window.matchMedia = ((q: string) => ({
+        matches: matches || q.includes('reduce'),
+        media: q,
+        addEventListener: () => {},
+        removeEventListener: () => {},
+        addListener: () => {},
+        removeListener: () => {},
+        dispatchEvent: () => false,
+        onchange: null,
+      })) as typeof window.matchMedia
+    }
+
+    it('shows nothing when the project has no demo', () => {
+      renderWithState(<ProjectModal project={{ ...reveste, demo: undefined }} onClose={() => {}} />)
+      expect(screen.queryByRole('heading', { name: 'Demonstração' })).toBeNull()
+    })
+
+    it('loads nothing until the visitor asks, then mounts a titled, sandboxed frame', async () => {
+      wide(true)
+      const user = userEvent.setup()
+      renderWithState(<ProjectModal project={site} onClose={() => {}} />)
+      expect(document.querySelector('iframe')).toBeNull()
+      await user.click(screen.getByRole('button', { name: 'Testar o site aqui' }))
+      const frame = document.querySelector('iframe')!
+      expect(frame).toHaveAttribute('src', 'https://example.com/app/')
+      expect(frame).toHaveAttribute('title', `Demonstração de ${reveste.titulo.pt}`)
+      expect(frame.getAttribute('sandbox')).toContain('allow-scripts')
+      expect(frame.getAttribute('sandbox')).not.toContain('allow-top-navigation')
+      expect(screen.getByRole('link', { name: 'Abrir em nova aba' })).toHaveAttribute('target', '_blank')
+    })
+
+    it('switching to another project resets the demo: it is not started for the new one', async () => {
+      wide(true)
+      const user = userEvent.setup()
+      const other = { ...projects.find((p) => p.id === 'tabbit')!, demo: { tipo: 'site' as const, url: 'https://example.org/' } }
+      const { rerender } = renderWithState(<ProjectModal project={site} onClose={() => {}} />)
+      await user.click(screen.getByRole('button', { name: 'Testar o site aqui' }))
+      expect(document.querySelector('iframe')).not.toBeNull()
+      rerender(
+        <AppStateProvider>
+          <ProjectModal project={other} onClose={() => {}} />
+        </AppStateProvider>,
+      )
+      expect(document.querySelector('iframe')).toBeNull()
+    })
+
+    it('on a narrow screen offers only a link to open it', () => {
+      wide(false)
+      renderWithState(<ProjectModal project={site} onClose={() => {}} />)
+      expect(screen.queryByRole('button', { name: 'Testar o site aqui' })).toBeNull()
+      expect(document.querySelector('iframe')).toBeNull()
+      expect(screen.getByRole('link', { name: 'Abrir em nova aba' })).toHaveAttribute('href', 'https://example.com/app/')
+    })
+
+    it('a video waits for play: no autoplay, nothing preloaded, caption shown', () => {
+      const video = { ...reveste, demo: { tipo: 'video' as const, src: 'projetos/x/demo.mp4', poster: 'projetos/x/demo.webp', legenda: { pt: 'O que o vídeo mostra', en: 'What it shows' } } }
+      renderWithState(<ProjectModal project={video} onClose={() => {}} />)
+      const el = document.querySelector('video')!
+      expect(el).toHaveAttribute('preload', 'none')
+      expect(el).not.toHaveAttribute('autoplay')
+      expect(el).toHaveProperty('muted', true)
+      expect(el).toHaveAttribute('controls')
+      expect(screen.getByText('O que o vídeo mostra')).toBeInTheDocument()
+    })
   })
 
   it('omits the new sections when the project has no detail fields', () => {

@@ -23,7 +23,8 @@ Static site on GitHub Pages (https://nemirovskydev.github.io/Portfolio/), built 
 - Content, galleries and links of those 10 projects stay as they are; only the way they are presented may change.
 - PT-BR and EN must keep working from any screen; every project keeps a direct link (`#/p/<id>`).
 - Open product decision: the profile gate (Recrutador, Dev, Curioso) was not listed as a commitment; it may be kept, reshaped or dropped by the redesign.
-- No backend, no contact form: contact is links only (GitHub and LinkedIn).
+- No backend, no contact form: contact is the email (with copy button), LinkedIn and GitHub.
+- Animation engine is GSAP + ScrollTrigger across the whole site (Lenis rides on the GSAP ticker); `motion` was removed in 2026-11-05.
 - Imagery is generated with Gemini (covers and backdrops) plus real screenshots; Chat Amigos has no live link because its Render service was turned off.
 
 ## Brand Commitments
@@ -33,7 +34,7 @@ Name: Bernardo Nemirovsky. Bilingual PT-BR and EN. Do not use Netflix's name, lo
 Screenshots and galleries for Reveste, Tabbit, Companion, PKZ, Jarvis, Chat Amigos and 3 Bombas (including the wiring diagram); Gemini cover and backdrop for all 10 projects; GitHub and LinkedIn links; live sites for Reveste, Tabbit and PKZ. No testimonials, metrics or client logos exist; none may be invented.
 
 ## Product Principles
-1. Show the work before talking about the person: a visitor should see real projects within the first screen.
+1. Hero, then a short About, then the work: the first screen carries the name and one line of focus, the skills section is kept brief, and the projects follow on the same scroll.
 2. Motion must carry meaning: scroll and 3D explain structure or reveal the projects, never decorate.
 3. Every effect has a plain fallback: reduced motion, no WebGL and slow phones still get a complete, fast site.
 4. One strong idea beats many effects: the site should be remembered for a single signature interaction.

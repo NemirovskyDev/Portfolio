@@ -1,16 +1,12 @@
 import { describe, expect, it, vi } from 'vitest'
-import { motionValue } from 'motion/react'
+import { createProgress } from '../../lib/progress'
 import { screen, fireEvent, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { TimelineBar } from './TimelineBar'
 import type { Chapter } from '../../lib/chapters'
 import { projects, renderWithState } from '../../test/utils'
 
-const chapters: Chapter[] = [
-  { id: 'opening', kind: 'opening' },
-  ...projects.map((p): Chapter => ({ id: p.id, kind: 'project', project: p })),
-  { id: 'credits', kind: 'credits' },
-]
+const chapters: Chapter[] = projects.map((p): Chapter => ({ id: p.id, kind: 'project', project: p }))
 
 describe('TimelineBar', () => {
   it('is a named nav with one button per chapter named by its title', () => {
@@ -18,9 +14,7 @@ describe('TimelineBar', () => {
     const nav = screen.getByRole('navigation', { name: 'Linha do tempo dos projetos' })
     const buttons = within(nav).getAllByRole('button')
     expect(buttons).toHaveLength(chapters.length)
-    expect(within(nav).getByRole('button', { name: 'Bernardo Paes Nemirovsky Borges' })).toBeInTheDocument()
     expect(within(nav).getByRole('button', { name: projects[0].titulo.pt })).toBeInTheDocument()
-    expect(within(nav).getByRole('button', { name: 'Sobre mim e contato' })).toBeInTheDocument()
     expect(buttons.every((b) => b.getAttribute('type') === 'button')).toBe(true)
   })
 
@@ -28,31 +22,30 @@ describe('TimelineBar', () => {
     renderWithState(<TimelineBar chapters={chapters} activeIndex={2} onJump={() => {}} />)
     const current = document.querySelectorAll('[aria-current="step"]')
     expect(current).toHaveLength(1)
-    expect(current[0]).toHaveAccessibleName(projects[1].titulo.pt)
+    expect(current[0]).toHaveAccessibleName(projects[2].titulo.pt)
   })
 
   it('calls onJump with the index on click and on Enter', async () => {
     const onJump = vi.fn()
     renderWithState(<TimelineBar chapters={chapters} activeIndex={0} onJump={onJump} />)
     fireEvent.click(screen.getByRole('button', { name: projects[2].titulo.pt }))
-    expect(onJump).toHaveBeenLastCalledWith(3)
+    expect(onJump).toHaveBeenLastCalledWith(2)
     const user = userEvent.setup()
     screen.getByRole('button', { name: projects[4].titulo.pt }).focus()
     await user.keyboard('{Enter}')
-    expect(onJump).toHaveBeenLastCalledWith(5)
+    expect(onJump).toHaveBeenLastCalledWith(4)
     await user.keyboard(' ')
     expect(onJump).toHaveBeenCalledTimes(3)
   })
 
   it('shows the current title and a zero-padded counter', () => {
     renderWithState(<TimelineBar chapters={chapters} activeIndex={2} onJump={() => {}} />)
-    const total = chapters.filter((c) => c.kind === 'project').length
-    expect(screen.getByText(`02 / ${String(total).padStart(2, '0')}`)).toBeInTheDocument()
-    expect(screen.getByTestId('timeline-current')).toHaveTextContent(projects[1].titulo.pt)
+    expect(screen.getByText(`03 / ${String(chapters.length).padStart(2, '0')}`)).toBeInTheDocument()
+    expect(screen.getByTestId('timeline-current')).toHaveTextContent(projects[2].titulo.pt)
   })
 
   it('fills each marker like a loading bar as the scroll position advances', () => {
-    const f = motionValue(2.5)
+    const f = createProgress(2.5)
     renderWithState(<TimelineBar chapters={chapters} activeIndex={3} onJump={() => {}} progress={f} />)
     const scale = (i: number) => (document.querySelectorAll('.timeline-fill')[i] as HTMLElement).style.transform
     expect(scale(1)).toBe('none') // fully filled is the identity transform
@@ -61,12 +54,9 @@ describe('TimelineBar', () => {
     expect(scale(4)).toContain('scaleX(0)')
   })
 
-  it('does not number the opening or the credits', () => {
-    for (const index of [0, chapters.length - 1]) {
-      const { container, unmount } = renderWithState(<TimelineBar chapters={chapters} activeIndex={index} onJump={() => {}} />)
-      expect(container.querySelector('.timeline-counter')).toBeEmptyDOMElement()
-      unmount()
-    }
+  it('numbers every chapter, since each one is a project', () => {
+    const { container } = renderWithState(<TimelineBar chapters={chapters} activeIndex={0} onJump={() => {}} />)
+    expect(container.querySelector('.timeline-counter')).toHaveTextContent(`01 / ${String(chapters.length).padStart(2, '0')}`)
   })
 
   it('separates category groups', () => {
@@ -75,7 +65,7 @@ describe('TimelineBar', () => {
     const expected = chapters.filter((c, i) => {
       if (i === 0) return false
       const prev = chapters[i - 1]
-      const key = (x: Chapter) => (x.kind === 'project' ? x.project.categoria : x.kind)
+      const key = (x: Chapter) => x.project.categoria
       return key(c) !== key(prev)
     }).length
     expect(items.filter((li) => li.classList.contains('timeline-item--group-start'))).toHaveLength(expected)

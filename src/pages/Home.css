@@ -1,7 +1,7 @@
 /* Floats over the stage (or over the first static chapter) and follows the chapter colors. */
 .topbar {
   position: fixed;
-  top: 7svh;
+  top: 12px;
   left: 0;
   right: 0;
   z-index: 30;
@@ -16,6 +16,11 @@
 .topbar > * { pointer-events: auto; }
 .wordmark {
   margin: 0;
+  padding: 0;
+  text-align: left;
+  color: inherit;
+  background: none;
+  border: 0;
   font-weight: 400;
   min-width: 0;
   overflow: hidden;
@@ -38,5 +43,4 @@
   border-radius: 999px;
 }
 .topbar-btn:hover { border-color: var(--accent-chapter); }
-
-.credits-static { padding: 96px var(--gutter) 128px; background: var(--ground); }
+html { scroll-padding-top: 0; }

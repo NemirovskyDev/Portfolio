@@ -47,6 +47,40 @@ describe('validateProjects', () => {
     expect(() => validateProjects([bad], { strict: true })).toThrow(/links/)
   })
 
+  it('accepts a download path and rejects paths that escape downloads/', () => {
+    const ok = { ...valid, links: [{ label: 'Baixar', url: 'downloads/validador.html' }] }
+    expect(validateProjects([ok], { strict: true })[0].links).toEqual([{ label: 'Baixar', url: 'downloads/validador.html' }])
+    for (const url of ['/downloads/a.html', 'downloads/../a.html', 'other/a.html', 'downloads/a.exe']) {
+      expect(() => validateProjects([{ ...valid, links: [{ label: 'Baixar', url }] }], { strict: true })).toThrow(/links/)
+    }
+  })
+
+  describe('demo', () => {
+    const video = { tipo: 'video', src: 'projetos/x/demo.mp4', poster: 'projetos/x/demo.webp', legenda: { pt: 'Legenda', en: '' } }
+    const parse = (demo: unknown) => validateProjects([{ ...valid, demo }], { strict: true })[0].demo
+
+    it('accepts a live https site, the bundled app and a video with a caption (English falls back to Portuguese)', () => {
+      expect(parse({ tipo: 'site', url: 'https://example.com/app/' })).toEqual({ tipo: 'site', url: 'https://example.com/app/' })
+      expect(parse({ tipo: 'site', url: 'downloads/validador.html' })).toEqual({ tipo: 'site', url: 'downloads/validador.html' })
+      expect(parse(video)).toMatchObject({ tipo: 'video', legenda: { pt: 'Legenda', en: 'Legenda' } })
+    })
+
+    it.each([
+      ['an http site (a frame on an https page would be blocked)', { tipo: 'site', url: 'http://example.com' }],
+      ['a script url', { tipo: 'site', url: 'javascript:alert(1)' }],
+      ['a download that is not html', { tipo: 'site', url: 'downloads/a.zip' }],
+      ['a path that escapes the folder', { tipo: 'site', url: 'downloads/../x.html' }],
+      ['an unknown type', { tipo: 'iframe', url: 'https://example.com' }],
+      ['a video outside projetos/', { ...video, src: '/etc/x.mp4' }],
+      ['a video with .. in the path', { ...video, src: 'projetos/../x.mp4' }],
+      ['a video without a poster', { ...video, poster: '' }],
+      ['a video without a caption', { ...video, legenda: undefined }],
+      ['a demo that is not an object', 'https://example.com'],
+    ])('rejects %s', (_, demo) => {
+      expect(() => parse(demo)).toThrow(/demo/)
+    })
+  })
+
   it('rejects input that is not an array', () => {
     expect(() => validateProjects({}, { strict: true })).toThrow(/array/)
   })

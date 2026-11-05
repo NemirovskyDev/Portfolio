@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import { motionValue } from 'motion/react'
+import { createProgress } from '../../lib/progress'
 import { hasWebGL } from '../../lib/hasWebGL'
 import { StageCanvas } from './StageCanvas'
 import { mockReducedMotion } from '../../test/utils'
@@ -24,7 +24,7 @@ beforeEach(() => {
 
 const covers = ['', 'a.webp', 'b.webp', '']
 const backdrops = ['', 'a-bg.webp', 'b-bg.webp', '']
-const progress = motionValue(0)
+const progress = createProgress(0)
 const fallback = <div data-testid="fb" />
 const ui = (c = covers) => <StageCanvas covers={c} backdrops={backdrops} progress={progress} fallback={fallback} />
 

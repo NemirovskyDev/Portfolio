@@ -1,0 +1,79 @@
+.demo { margin-top: 8px; }
+.demo-actions { display: flex; }
+
+.demo-btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 16px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--fg);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+.demo-btn:hover { border-color: var(--accent); }
+
+.demo-frame {
+  overflow: hidden;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+/* in full screen the frame fills the display and the page keeps its aspect */
+.demo-frame:fullscreen { display: flex; flex-direction: column; border-radius: 0; }
+.demo-frame:fullscreen .demo-screen { flex: 1; aspect-ratio: auto; }
+
+.demo-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 8px 4px 14px;
+  border-bottom: 1px solid var(--border);
+}
+.demo-dots { display: flex; gap: 6px; }
+.demo-dots i { width: 10px; height: 10px; background: var(--border); border-radius: 50%; }
+.demo-url { flex: 1; min-width: 0; overflow: hidden; font-size: 0.8125rem; color: var(--muted); text-overflow: ellipsis; white-space: nowrap; }
+.demo-tools { display: flex; gap: 8px; }
+
+.demo-screen { position: relative; aspect-ratio: 16 / 10; background: var(--bg); }
+.demo-iframe { display: block; width: 100%; height: 100%; border: 0; background: #fff; }
+.demo-note {
+  position: absolute;
+  inset: auto 12px 12px;
+  margin: 0;
+  padding: 8px 12px;
+  font-size: 0.875rem;
+  color: var(--fg);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  border-radius: 8px;
+}
+
+.demo-start {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  color: #07080d;
+  background: none;
+  border: 0;
+}
+.demo-start img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.55); }
+.demo-start span {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 24px;
+  font-weight: 600;
+  background: var(--accent);
+  border-radius: 999px;
+}
+.demo-start:hover span { background: var(--fg); }
+
+.demo-video { margin: 0; }
+.demo-video video { display: block; width: 100%; height: auto; max-height: min(70vh, 640px); background: #000; border: 1px solid var(--border); border-radius: var(--radius); }
+.demo-video figcaption { margin-top: 8px; font-size: 0.875rem; color: var(--muted); }

@@ -35,14 +35,6 @@
 .cinema-bar--top { top: 0; height: 7svh; }
 .cinema-bar--bottom { bottom: 0; height: 7svh; }
 
-.cinema-credits {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  align-content: center;
-  padding: calc(7svh + 24px) var(--gutter) calc(7svh + 88px);
-}
-
 /* Film grain: a static noise tile, no animation, removed with reduced motion by the mode switch. */
 .cinema-grain {
   position: absolute;

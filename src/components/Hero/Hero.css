@@ -1,0 +1,60 @@
+.hero {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 100svh;
+  overflow: hidden;
+  color: var(--ink);
+  background: var(--ground);
+}
+.hero-body {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+  padding: calc(7svh + 80px) var(--gutter) calc(7svh + 24px);
+}
+.hero-title {
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(4rem, 17vw, 13rem);
+  font-weight: 400;
+  line-height: 0.9;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+.hero-title:focus { outline: none; }
+/* each word sits in an overflow-hidden line; the top padding keeps accents on capitals from being clipped */
+.hero-line { display: inline-block; overflow: hidden; padding-top: 0.14em; vertical-align: top; }
+.hero-word { display: inline-block; }
+.hero-sub {
+  max-width: 62ch;
+  margin: 20px 0 0;
+  font-size: clamp(1rem, 1.4vw, 1.25rem);
+  line-height: 1.5;
+  opacity: 0.9;
+}
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.hero-cta,
+.hero-ghost {
+  min-height: 44px;
+  padding: 0 24px;
+  font-weight: 600;
+  border-radius: 999px;
+  border: 2px solid var(--accent-chapter);
+}
+.hero-cta { color: var(--ground); background: var(--accent-chapter); }
+.hero-cta:hover { color: var(--accent-chapter); background: transparent; }
+.hero-ghost { color: var(--ink); background: transparent; border-color: color-mix(in srgb, var(--ink) 40%, transparent); }
+.hero-ghost:hover { border-color: var(--accent-chapter); }
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  margin: 28px 0 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent-chapter);
+}
+.hero-scroll { color: var(--ink); opacity: 0.7; font-weight: 400; }

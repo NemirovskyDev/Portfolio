@@ -1,6 +1,6 @@
-/* Video-style bar fixed at the bottom; colors follow the active chapter through --ink / --accent-chapter. */
+/* Video-style bar pinned to the bottom of the stage; colors follow the active chapter through --ink / --accent-chapter. */
 .timeline {
-  position: fixed;
+  position: absolute;
   inset: auto 0 0;
   z-index: 20;
   display: grid;

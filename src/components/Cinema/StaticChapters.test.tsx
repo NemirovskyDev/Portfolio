@@ -5,25 +5,20 @@ import type { Chapter } from '../../lib/chapters'
 import { projects, renderWithState } from '../../test/utils'
 
 vi.mock('../../lib/palette', () => ({
-  paletteFor: (id: string) => ({ ground: id === 'opening' ? '#08090c' : '#101a14', accent: '#7fd6a0', ink: '#f4f2ee' }),
+  paletteFor: () => ({ ground: '#101a14', accent: '#7fd6a0', ink: '#f4f2ee' }),
 }))
 
-const chapters: Chapter[] = [
-  { id: 'opening', kind: 'opening' },
-  ...projects.slice(0, 3).map((p): Chapter => ({ id: p.id, kind: 'project', project: p })),
-  { id: 'credits', kind: 'credits' },
-]
+const chapters: Chapter[] = projects.slice(0, 3).map((p): Chapter => ({ id: p.id, kind: 'project', project: p }))
 
 describe('StaticChapters', () => {
-  it('renders every chapter except credits, without an h1 of its own and with visible content', () => {
+  it('renders every chapter, without an h1 of its own and with visible content', () => {
     renderWithState(<StaticChapters chapters={chapters} onOpen={() => {}} />)
-    expect(document.querySelectorAll('section')).toHaveLength(4)
+    expect(document.querySelectorAll('section')).toHaveLength(3)
     expect(screen.queryAllByRole('heading', { level: 1 })).toHaveLength(0)
     for (const p of projects.slice(0, 3)) {
       expect(screen.getByRole('heading', { level: 2, name: p.titulo.pt })).toBeVisible()
       expect(screen.getByText(p.resumo.pt)).toBeVisible()
     }
-    expect(screen.getByText('3 projetos')).toBeVisible()
   })
 
   it('applies the chapter palette as CSS variables and the ground as background', () => {

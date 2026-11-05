@@ -1,0 +1,71 @@
+[
+  {
+    "id": "ia",
+    "grupo": { "pt": "IA e agentes", "en": "AI and agents" },
+    "itens": [
+      { "pt": "Orquestração multiagente", "en": "Multi-agent orchestration" },
+      "Prompt engineering",
+      "Claude Code",
+      { "pt": "Reconhecimento de fala local (faster-whisper)", "en": "Local speech recognition (faster-whisper)" },
+      { "pt": "Síntese de voz (Kokoro)", "en": "Text to speech (Kokoro)" },
+      { "pt": "Palavra de ativação (openWakeWord)", "en": "Wake word (openWakeWord)" },
+      { "pt": "Memória em notas (Obsidian)", "en": "Note-based memory (Obsidian)" }
+    ]
+  },
+  {
+    "id": "front",
+    "grupo": { "pt": "Front-end e 3D", "en": "Front-end and 3D" },
+    "itens": [
+      "React",
+      "TypeScript",
+      "Next.js",
+      "Vite",
+      "Tailwind CSS",
+      "three.js e React Three Fiber",
+      "GSAP",
+      "Lenis",
+      { "pt": "HTML, CSS e JavaScript puro", "en": "Plain HTML, CSS and JavaScript" },
+      "PWA",
+      "Figma"
+    ]
+  },
+  {
+    "id": "back",
+    "grupo": { "pt": "Back-end e dados", "en": "Back-end and data" },
+    "itens": [
+      "Node.js",
+      "Express",
+      "Socket.io",
+      "WebRTC",
+      "Python",
+      "pandas",
+      { "pt": "Web scraping", "en": "Web scraping" },
+      { "pt": "APIs de mercado (yfinance, brapi.dev, Banco Central)", "en": "Market APIs (yfinance, brapi.dev, Central Bank of Brazil)" },
+      "Postgres (Neon)",
+      { "pt": "Rust e Anchor (Solana)", "en": "Rust and Anchor (Solana)" }
+    ]
+  },
+  {
+    "id": "hardware",
+    "grupo": { "pt": "Hardware", "en": "Hardware" },
+    "itens": [
+      "Arduino (C/C++)",
+      { "pt": "Eletrônica: LEDs, display de 7 segmentos, buzzer", "en": "Electronics: LEDs, 7-segment display, buzzer" },
+      { "pt": "Impressão 3D (Ultimaker, PLA)", "en": "3D printing (Ultimaker, PLA)" }
+    ]
+  },
+  {
+    "id": "entrega",
+    "grupo": { "pt": "Qualidade e entrega", "en": "Quality and delivery" },
+    "itens": [
+      "Vitest e Testing Library",
+      { "pt": "Playwright (testes E2E)", "en": "Playwright (E2E tests)" },
+      "pytest",
+      { "pt": "GitHub Actions (CI)", "en": "GitHub Actions (CI)" },
+      "GitHub Pages e Vercel",
+      "Git e GitHub",
+      "Scrum",
+      "Notion e Miro"
+    ]
+  }
+]

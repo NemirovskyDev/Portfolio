@@ -1,0 +1,31 @@
+.sitenav { position: relative; }
+.sitenav-toggle { display: none; }
+.sitenav-list { display: flex; gap: 4px; margin: 0; padding: 0; list-style: none; }
+.sitenav-link {
+  min-height: 44px;
+  padding: 0 14px;
+  font-weight: 600;
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+}
+.sitenav-link:hover { color: var(--accent-chapter); }
+
+@media (max-width: 760px) {
+  .sitenav-toggle { display: inline-flex; align-items: center; }
+  .sitenav-list {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    flex-direction: column;
+    min-width: 180px;
+    padding: 8px;
+    background: color-mix(in srgb, var(--ground) 94%, black);
+    border: 1px solid color-mix(in srgb, var(--ink) 30%, transparent);
+    border-radius: 16px;
+  }
+  .sitenav-list--open { display: flex; }
+  .sitenav-link { width: 100%; text-align: left; }
+}

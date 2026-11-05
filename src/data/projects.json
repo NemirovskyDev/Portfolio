@@ -221,7 +221,11 @@
           "en": "Page for brands: consignment with no entry cost"
         }
       }
-    ]
+    ],
+    "demo": {
+      "tipo": "site",
+      "url": "https://nemirovskydev.github.io/Reveste/"
+    }
   },
   {
     "id": "pkz",
@@ -415,7 +419,11 @@
           "en": "Trial class scheduling in PKZ Lab's dark theme"
         }
       }
-    ]
+    ],
+    "demo": {
+      "tipo": "site",
+      "url": "https://enzotrotto-ibmec.github.io/PFE-2026-2-Grupo-1-vanila/"
+    }
   },
   {
     "id": "tabbit",
@@ -632,7 +640,11 @@
           "en": "Rules simulator: price, time and the day's spending"
         }
       }
-    ]
+    ],
+    "demo": {
+      "tipo": "site",
+      "url": "https://tabbit-sol.vercel.app"
+    }
   },
   {
     "id": "orquestrador",
@@ -908,7 +920,17 @@
           "en": "Preview grade, the turn result with the robot's reply and the scoreboard"
         }
       }
-    ]
+    ],
+    "links": [
+      {
+        "label": "Baixar",
+        "url": "downloads/validador.html"
+      }
+    ],
+    "demo": {
+      "tipo": "site",
+      "url": "downloads/validador.html"
+    }
   },
   {
     "id": "ap2",
@@ -1053,7 +1075,16 @@
           "en": "Match start, preview grade and the game scoreboard"
         }
       }
-    ]
+    ],
+    "demo": {
+      "tipo": "video",
+      "src": "projetos/ap2/demo.mp4",
+      "poster": "projetos/ap2/demo.webp",
+      "legenda": {
+        "pt": "O app Companion rodando no celular: escolha do robô, da carta de problema, cronômetro, prompt escrito pelo jogador, revisão dos critérios e a nota da jogada.",
+        "en": "The Companion app running on a phone: choosing the robot and the problem card, the timer, the prompt the player writes, the criteria review and the score for the turn."
+      }
+    }
   },
   {
     "id": "bombas",
@@ -1247,7 +1278,16 @@
           "en": "Operation: pump 2 turns on with the reservoir below 30%"
         }
       }
-    ]
+    ],
+    "demo": {
+      "tipo": "video",
+      "src": "projetos/bombas/demo.mp4",
+      "poster": "projetos/bombas/demo.webp",
+      "legenda": {
+        "pt": "Guia animado da caixa do sistema, em 7 passos: base impressa, placa nos pilares, tampa com potenciômetros, display e buzzer, Arduino Mega, jumpers e fechamento.",
+        "en": "Animated guide to the system enclosure in 7 steps: printed base, board on the pillars, lid with potentiometers, display and buzzer, Arduino Mega, jumpers and closing."
+      }
+    }
   },
   {
     "id": "b3",
@@ -1412,7 +1452,16 @@
           "en": "Another query, with the prompt to save to the Excel history"
         }
       }
-    ]
+    ],
+    "demo": {
+      "tipo": "video",
+      "src": "projetos/b3/demo.mp4",
+      "poster": "projetos/b3/demo.webp",
+      "legenda": {
+        "pt": "O app no terminal consultando uma ação (PETR4) e um fundo imobiliário (HGLG11). A saída é a do programa, capturada numa execução real em 2026-11-05, e reproduzida na gravação.",
+        "en": "The app in the terminal looking up a stock (PETR4) and a real estate fund (HGLG11). The output is the program's own, captured in a real run on 2026-11-05 and replayed in the recording."
+      }
+    }
   },
   {
     "id": "tradingbot",
@@ -1620,7 +1669,11 @@
           "en": "Risk gate with the limits that block buys"
         }
       }
-    ]
+    ],
+    "demo": {
+      "tipo": "site",
+      "url": "https://nemirovskydev.github.io/TradingBot/"
+    }
   },
   {
     "id": "jarvis",
@@ -1790,7 +1843,16 @@
           "en": "Calendar and e-mails on the panel, with the morning digest (sample data)"
         }
       }
-    ]
+    ],
+    "demo": {
+      "tipo": "video",
+      "src": "projetos/jarvis/demo.mp4",
+      "poster": "projetos/jarvis/demo.webp",
+      "legenda": {
+        "pt": "A interface do Jarvis em modo demonstração, com dados de exemplo: esfera do Second Brain, clima, uso do computador, uso do Claude e agenda do dia.",
+        "en": "The Jarvis interface in demo mode, with sample data: the Second Brain sphere, weather, system usage, Claude usage and today's agenda."
+      }
+    }
   },
   {
     "id": "chat-amigos",
@@ -1993,6 +2055,15 @@
           "en": "The same room on a phone, with the menu and the buttons at the bottom"
         }
       }
-    ]
+    ],
+    "demo": {
+      "tipo": "video",
+      "src": "projetos/chat-amigos/demo.mp4",
+      "poster": "projetos/chat-amigos/demo.webp",
+      "legenda": {
+        "pt": "Três pessoas na mesma sala: conversa por texto e a sala de voz com vídeo. A chamada é real (WebRTC); as câmeras são as de teste do navegador.",
+        "en": "Three people in the same room: text chat and the voice room with video. The call is real (WebRTC); the cameras are the browser's test cameras."
+      }
+    }
   }
 ]

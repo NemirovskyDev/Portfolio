@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { motion, useTransform, type MotionValue } from 'motion/react'
+import { useProgressEffect, type Progress } from '../../lib/progress'
 import type { Chapter } from '../../lib/chapters'
 import { t } from '../../lib/i18n'
 import type { Lang } from '../../lib/types'
@@ -11,25 +11,26 @@ type Props = {
   activeIndex: number
   onJump: (index: number) => void
   /** Scroll position `f`; when given, each marker fills like a loading bar as `f` reaches it. */
-  progress?: MotionValue<number>
+  progress?: Progress
 }
 
 /** Marker `index` is empty until `f` leaves the previous chapter and full once `f` reaches it. */
-function Fill({ index, progress }: { index: number; progress: MotionValue<number> }) {
-  const scaleX = useTransform(progress, (f) => Math.min(1, Math.max(0, f - index + 1)))
-  return <motion.span className="timeline-fill" style={{ scaleX }} aria-hidden="true" />
+function Fill({ index, progress }: { index: number; progress: Progress }) {
+  const el = useRef<HTMLSpanElement>(null)
+  useProgressEffect(progress, (f) => {
+    if (!el.current) return
+    const s = Math.min(1, Math.max(0, f - index + 1))
+    el.current.style.transform = s >= 1 ? 'none' : `scaleX(${s})` // full is the identity transform
+  })
+  return <span ref={el} className="timeline-fill" aria-hidden="true" />
 }
 
 const pad = (n: number) => String(n).padStart(2, '0')
 
-function chapterTitle(c: Chapter, lang: Lang): string {
-  if (c.kind === 'opening') return t('site.fullName', lang)
-  if (c.kind === 'credits') return t('about.title', lang)
-  return c.project.titulo[lang]
-}
+const chapterTitle = (c: Chapter, lang: Lang): string => c.project.titulo[lang]
 
-// Opening and credits are groups of their own; projects group by category.
-const groupKey = (c: Chapter): string => (c.kind === 'project' ? c.project.categoria : c.kind)
+// Markers group by category, with a gap before each new one.
+const groupKey = (c: Chapter): string => c.project.categoria
 
 export function TimelineBar({ chapters, activeIndex, onJump, progress }: Props) {
   const { lang } = useAppState()
@@ -52,11 +53,9 @@ function TimelineView({
   current: number
   lang: Lang
   onJump: (i: number) => void
-  progress?: MotionValue<number>
+  progress?: Progress
 }) {
   const track = useRef<HTMLOListElement>(null)
-  const projectTotal = chapters.filter((c) => c.kind === 'project').length
-  const projectNumber = chapters.slice(0, current + 1).filter((c) => c.kind === 'project').length
 
   // On narrow screens the track scrolls sideways: keep the active marker centered. Scrolls only the track, never the page.
   useEffect(() => {
@@ -72,10 +71,7 @@ function TimelineView({
         <span className="timeline-current" data-testid="timeline-current">
           {chapterTitle(chapters[current], lang)}
         </span>
-        {/* counts projects only: the opening and the credits are not numbered */}
-        <span className="timeline-counter">
-          {chapters[current].kind === 'project' ? `${pad(projectNumber)} / ${pad(projectTotal)}` : null}
-        </span>
+        <span className="timeline-counter">{`${pad(current + 1)} / ${pad(chapters.length)}`}</span>
       </p>
       {/* role="list" keeps list semantics in Safari, which drops them when list-style is none */}
       {/* eslint-disable-next-line jsx-a11y/no-redundant-roles */}

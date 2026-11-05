@@ -1,4 +1,4 @@
-import type { L10n, Project, Status } from './types'
+import type { Demo, L10n, Project, Status } from './types'
 
 const STATUS: readonly Status[] = ['concluido', 'no-ar', 'em-andamento']
 
@@ -28,6 +28,33 @@ function l10n(id: string, field: string, v: unknown): L10n {
 function list(id: string, field: string, v: unknown): unknown[] {
   if (!Array.isArray(v)) throw new ProjectError(id, field, 'must be a list')
   return v
+}
+
+// relative paths only, to a file shipped in public/downloads: a leading slash or '..' would escape the deploy base
+const isDownloadPath = (u: string) => /^downloads\/[\w\-.]+\.(html|pdf|zip)$/i.test(u)
+
+// a recorded demo lives next to the project's other images; relative paths only, so it cannot escape the deploy base
+const VIDEO_PATH = /^projetos\/[\w-]+\/[\w\-.]+\.(mp4|webm)$/i
+const POSTER_PATH = /^projetos\/[\w-]+\/[\w\-.]+\.(webp|png|jpe?g|avif)$/i
+
+function parseDemo(id: string, v: unknown): Demo {
+  if (!isObj(v)) throw new ProjectError(id, 'demo', 'must be an object')
+  if (v.tipo === 'site') {
+    const url = str(v.url)
+    // a live site (https) or the app published with this portfolio (downloads/*.html)
+    if (!/^https:\/\//i.test(url) && !(isDownloadPath(url) && url.endsWith('.html'))) {
+      throw new ProjectError(id, 'demo.url', 'must be an https url or a downloads/*.html path')
+    }
+    return { tipo: 'site', url }
+  }
+  if (v.tipo === 'video') {
+    const src = str(v.src)
+    const poster = str(v.poster)
+    if (!VIDEO_PATH.test(src)) throw new ProjectError(id, 'demo.src', 'must be projetos/<id>/<file>.mp4 or .webm')
+    if (!POSTER_PATH.test(poster)) throw new ProjectError(id, 'demo.poster', 'must be a projetos/<id>/ image')
+    return { tipo: 'video', src, poster, legenda: l10n(id, 'demo.legenda', v.legenda) }
+  }
+  throw new ProjectError(id, 'demo.tipo', "must be 'site' or 'video'")
 }
 
 function parseGalleryItem(id: string, i: number, v: unknown) {
@@ -63,8 +90,8 @@ function parseProject(raw: unknown): Project {
   if (raw.links !== undefined) {
     const ok =
       Array.isArray(raw.links) &&
-      raw.links.every((l) => isObj(l) && str(l.label) && /^https?:\/\//i.test(str(l.url)))
-    if (!ok) throw new ProjectError(id, 'links', 'must have label and an http(s) url')
+      raw.links.every((l) => isObj(l) && str(l.label) && (/^https?:\/\//i.test(str(l.url)) || isDownloadPath(str(l.url))))
+    if (!ok) throw new ProjectError(id, 'links', 'must have a label and an http(s) url or a downloads/ file path')
     links = (raw.links as { label: string; url: string }[]).map((l) => ({ label: l.label.trim(), url: l.url.trim() }))
   }
 
@@ -92,6 +119,7 @@ function parseProject(raw: unknown): Project {
       : {}),
     ...(raw.desafios !== undefined ? { desafios: l10n(id, 'desafios', raw.desafios) } : {}),
     ...(raw.galeria !== undefined ? { galeria: list(id, 'galeria', raw.galeria).map((g, i) => parseGalleryItem(id, i, g)) } : {}),
+    ...(raw.demo !== undefined ? { demo: parseDemo(id, raw.demo) } : {}),
   }
 }
 

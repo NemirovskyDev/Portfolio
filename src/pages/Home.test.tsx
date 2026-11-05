@@ -2,13 +2,15 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { hasWebGL } from '../lib/hasWebGL'
-import { useSmoothScroll } from '../lib/useSmoothScroll'
+import { scrollToTarget, useSmoothScroll } from '../lib/useSmoothScroll'
 import { Home } from './Home'
 import { AppStateProvider } from '../state/AppState'
 import { mockReducedMotion, projects } from '../test/utils'
 
 vi.mock('../lib/hasWebGL', () => ({ hasWebGL: vi.fn(() => true) }))
-vi.mock('../lib/useSmoothScroll', () => ({ useSmoothScroll: vi.fn() }))
+vi.mock('../lib/useSmoothScroll', () => ({ useSmoothScroll: vi.fn(), scrollToTarget: vi.fn() }))
+// the hero and contact backdrops load three.js lazily; jsdom has no WebGL
+vi.mock('../components/Fluid/FluidBackdrop', () => ({ FluidBackdrop: () => <div data-testid="fluid" /> }))
 // jsdom cannot run WebGL: the stage canvas is replaced by a marker.
 vi.mock('../components/Cinema/StageCanvas', () => ({
   StageCanvas: () => <div data-testid="stage-canvas" />,
@@ -26,6 +28,7 @@ beforeEach(() => {
   window.history.replaceState(null, '', '/')
   vi.mocked(hasWebGL).mockReturnValue(true)
   vi.mocked(useSmoothScroll).mockClear()
+  vi.mocked(scrollToTarget).mockClear()
   window.scrollTo = vi.fn() as unknown as typeof window.scrollTo
   mockReducedMotion(false)
 })
@@ -37,21 +40,23 @@ describe('cinema mode', () => {
     expect(screen.getByRole('navigation', { name: 'Linha do tempo dos projetos' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Índice' })).toBeInTheDocument()
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1)
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Bernardo Paes Nemirovsky Borges')
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Bernardo Nemirovsky')
+    expect(screen.getByRole('heading', { level: 2, name: 'Sobre mim' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 2, name: 'Vamos conversar' })).toBeInTheDocument()
   })
 
-  it('only the active chapter is reachable: the first project button is not focusable at the opening', () => {
+  it('only the active chapter is reachable: one details button at a time', () => {
     renderHome()
-    expect(screen.queryByRole('button', { name: /^Ver detalhes/ })).toBeNull()
+    expect(screen.getAllByRole('button', { name: /^Ver detalhes/ })).toHaveLength(1)
   })
 
-  it('lays out one marker per chapter, ordered by category, with the opening active', () => {
+  it('lays out one marker per project, ordered by category, with the first active', () => {
     renderHome()
     const nav = screen.getByRole('navigation', { name: 'Linha do tempo dos projetos' })
     const markers = within(nav).getAllByRole('button')
-    expect(markers).toHaveLength(projects.length + 2)
+    expect(markers).toHaveLength(projects.length)
     expect(markers[0]).toHaveAttribute('aria-current', 'step')
-    expect(markers[1]).toHaveAccessibleName('Orquestrador multiagente')
+    expect(markers[0]).toHaveAccessibleName('Orquestrador multiagente')
   })
 
   it('jumping from the timeline scrolls the page', async () => {
@@ -112,13 +117,14 @@ describe('index and modal', () => {
 })
 
 describe('static mode', () => {
-  it('reduced motion renders every chapter and the credits, with no stage', () => {
+  it('reduced motion renders the hero, about, every project and contact, with no stage', () => {
     mockReducedMotion(true)
     renderHome()
     expect(screen.queryByTestId('stage-canvas')).toBeNull()
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1)
     for (const p of projects) expect(screen.getByRole('heading', { level: 2, name: p.titulo.pt })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Sobre mim e contato' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 2, name: 'Sobre mim' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 2, name: 'Vamos conversar' })).toBeInTheDocument()
     expect(vi.mocked(useSmoothScroll).mock.lastCall?.[0]).toMatchObject({ enabled: false })
   })
 
@@ -148,16 +154,69 @@ describe('language', () => {
   })
 })
 
-describe('credits', () => {
-  it('shows GitHub and LinkedIn and sends the visitor back to the top', async () => {
+describe('contact', () => {
+  it('shows the email, LinkedIn and GitHub, and the top button scrolls up and focuses the title', async () => {
     mockReducedMotion(true)
     const user = userEvent.setup()
     renderHome()
-    expect(screen.getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', 'https://github.com/NemirovskyDev')
-    expect(screen.getByRole('link', { name: 'LinkedIn' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Enviar e-mail' })).toHaveAttribute('href', 'mailto:bernardoborges15@gmail.com')
+    expect(screen.getByRole('link', { name: /GitHub/ })).toHaveAttribute('href', 'https://github.com/NemirovskyDev')
+    expect(screen.getByRole('link', { name: /LinkedIn/ })).toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: 'Voltar ao início' }))
-    expect(window.scrollTo).toHaveBeenCalledWith(expect.objectContaining({ top: 0 }))
-    expect(document.querySelector('form, input, textarea, a[href^="mailto:"]')).toBeNull()
+    expect(scrollToTarget).toHaveBeenCalledWith(0)
+    expect(screen.getByRole('heading', { level: 1 })).toHaveFocus()
+    expect(document.querySelector('form, input, textarea')).toBeNull()
+  })
+
+  it('copies the email and announces it', async () => {
+    mockReducedMotion(true)
+    const user = userEvent.setup()
+    const writeText = vi.fn().mockResolvedValue(undefined)
+    Object.defineProperty(navigator, 'clipboard', { value: { writeText }, configurable: true })
+    renderHome()
+    await user.click(screen.getByRole('button', { name: 'Copiar e-mail' }))
+    expect(writeText).toHaveBeenCalledWith('bernardoborges15@gmail.com')
+    expect(await screen.findAllByText('E-mail copiado')).not.toHaveLength(0)
+  })
+
+  it('tells the visitor to copy by hand when the clipboard is blocked', async () => {
+    mockReducedMotion(true)
+    const user = userEvent.setup()
+    Object.defineProperty(navigator, 'clipboard', { value: { writeText: vi.fn().mockRejectedValue(new Error('blocked')) }, configurable: true })
+    renderHome()
+    await user.click(screen.getByRole('button', { name: 'Copiar e-mail' }))
+    expect(await screen.findAllByText(/Não deu para copiar/)).not.toHaveLength(0)
+  })
+})
+
+describe('site navigation', () => {
+  it('each link scrolls to its section', async () => {
+    const user = userEvent.setup()
+    renderHome()
+    await user.click(screen.getByRole('button', { name: 'Contato' }))
+    expect(scrollToTarget).toHaveBeenLastCalledWith(document.getElementById('contato'))
+    await user.click(screen.getByRole('button', { name: 'Sobre' }))
+    expect(scrollToTarget).toHaveBeenLastCalledWith(document.getElementById('sobre'))
+  })
+
+  it('the menu toggle reports its state and Esc closes it and returns focus', async () => {
+    const user = userEvent.setup()
+    renderHome()
+    const toggle = screen.getByRole('button', { name: 'Menu' })
+    expect(toggle).toHaveAttribute('aria-expanded', 'false')
+    await user.click(toggle)
+    expect(toggle).toHaveAttribute('aria-expanded', 'true')
+    await user.keyboard('{Escape}')
+    expect(toggle).toHaveAttribute('aria-expanded', 'false')
+    expect(toggle).toHaveFocus()
+  })
+})
+
+describe('about', () => {
+  it('lists every skill group with its items', () => {
+    renderHome()
+    expect(screen.getByRole('heading', { level: 3, name: 'IA e agentes' })).toBeInTheDocument()
+    expect(screen.getAllByText('Prompt engineering').length).toBeGreaterThan(0)
   })
 })
 

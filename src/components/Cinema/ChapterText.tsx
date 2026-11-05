@@ -1,6 +1,6 @@
-import { Fragment, type ReactNode } from 'react'
-import { motion, useTransform, type MotionValue } from 'motion/react'
+import { Fragment, useRef, type ReactNode } from 'react'
 import type { Chapter } from '../../lib/chapters'
+import { useProgressEffect, type Progress } from '../../lib/progress'
 import { categoryLabel, statusLabel, t } from '../../lib/i18n'
 import { useReducedMotion } from '../../lib/useReducedMotion'
 import { useAppState } from '../../state/AppState'
@@ -14,10 +14,9 @@ const MAX_STAGGERED = 3 // keeps long titles fully visible by the time the chapt
 type ContentProps = {
   chapter: Chapter
   index: number
-  count?: number
   onOpen: (id: string) => void
   /** Scroll position `f`. Without it nothing is animated (static chapters, reduced motion). */
-  progress?: MotionValue<number>
+  progress?: Progress
 }
 
 function clamp01(n: number): number {
@@ -25,23 +24,26 @@ function clamp01(n: number): number {
 }
 
 /** One title word: rises into place and unmasks while `f` approaches its chapter. */
-function AnimatedWord({ word, index, order, progress }: { word: string; index: number; order: number; progress: MotionValue<number> }) {
-  // `enter` is 0 half a chapter before and 1 just before it is centered; the wrapper handles leaving upward.
-  const enter = useTransform(progress, (f) => clamp01((f - index + 0.5) / 0.4 - Math.min(order, MAX_STAGGERED) * STAGGER))
-  const clipPath = useTransform(enter, (e) => `inset(0 0 ${((1 - e) * 100).toFixed(1)}% 0)`)
-  const y = useTransform(enter, (e) => `${((1 - e) * 60).toFixed(1)}%`)
+function AnimatedWord({ word, index, order, progress }: { word: string; index: number; order: number; progress: Progress }) {
+  const el = useRef<HTMLSpanElement>(null)
+  useProgressEffect(progress, (f) => {
+    if (!el.current) return
+    // `enter` is 0 half a chapter before and 1 just before it is centered; the wrapper handles leaving upward.
+    const enter = clamp01((f - index + 0.5) / 0.4 - Math.min(order, MAX_STAGGERED) * STAGGER)
+    el.current.style.clipPath = `inset(0 0 ${((1 - enter) * 100).toFixed(1)}% 0)`
+    el.current.style.transform = `translateY(${((1 - enter) * 60).toFixed(1)}%)`
+  })
   return (
-    <motion.span className="chapter-word" style={{ clipPath, y }}>
+    <span ref={el} className="chapter-word">
       {word}
-    </motion.span>
+    </span>
   )
 }
 
-function Title({ as: Tag, text, index, progress }: { as: 'p' | 'h2'; text: string; index: number; progress?: MotionValue<number> }) {
+function Title({ text, index, progress }: { text: string; index: number; progress?: Progress }) {
   const words = text.split(' ')
   return (
-    // the opening title repeats the header's h1, so it is hidden from assistive technology (the header stays visible in every chapter)
-    <Tag className={Tag === 'p' ? 'chapter-title chapter-title--opening' : 'chapter-title'} aria-hidden={Tag === 'p' ? true : undefined}>
+    <h2 className="chapter-title">
       {words.map((w, i) => (
         // the plain-text space sits between the inline-block words so the accessible name keeps it
         <Fragment key={`${i}-${w}`}>
@@ -51,60 +53,53 @@ function Title({ as: Tag, text, index, progress }: { as: 'p' | 'h2'; text: strin
           </span>
         </Fragment>
       ))}
-    </Tag>
+    </h2>
   )
 }
 
 /** Wrapper that moves the whole block up and fades it once the chapter has passed. */
-function Leaving({ index, progress, children }: { index: number; progress: MotionValue<number>; children: ReactNode }) {
-  const y = useTransform(progress, (f) => `${(-clamp01(f - index) * 12).toFixed(2)}svh`)
-  // fades in over the last 0.3 chapters before centering, so the summary does not pop in while the title is still masked
-  const opacity = useTransform(progress, (f) => Math.min(1 - clamp01((f - index) / 0.5), clamp01((f - index + 0.5) / 0.3)))
+function Leaving({ index, progress, children }: { index: number; progress: Progress; children: ReactNode }) {
+  const el = useRef<HTMLDivElement>(null)
+  useProgressEffect(progress, (f) => {
+    if (!el.current) return
+    el.current.style.transform = `translateY(${(-clamp01(f - index) * 12).toFixed(2)}svh)`
+    // fades in over the last 0.3 chapters before centering, so the summary does not pop in while the title is still masked
+    el.current.style.opacity = String(Math.min(1 - clamp01((f - index) / 0.5), clamp01((f - index + 0.5) / 0.3)))
+  })
   return (
-    <motion.div className="chapter-block" style={{ y, opacity }}>
+    <div ref={el} className="chapter-block">
       {children}
-    </motion.div>
+    </div>
   )
 }
 
 /** Presentational content shared by the animated stage and the static chapters. */
-export function ChapterContent({ chapter, index, count, onOpen, progress }: ContentProps) {
+export function ChapterContent({ chapter, index, onOpen, progress }: ContentProps) {
   const { lang } = useAppState()
-  if (chapter.kind === 'credits') return null
-
-  const body =
-    chapter.kind === 'opening' ? (
-      <>
-        <Title as="p" text={t('site.name', lang)} index={index} progress={progress} />
-        <p className="chapter-summary">{t('opening.line', lang)}</p>
-        <p className="chapter-meta">
-          {typeof count === 'number' ? <span>{t('opening.count', lang).replace('{n}', String(count))}</span> : null}
-          <span className="chapter-scroll">{t('opening.scroll', lang)}</span>
-        </p>
-      </>
-    ) : (
-      <>
-        <Title as="h2" text={chapter.project.titulo[lang]} index={index} progress={progress} />
-        <p className="chapter-meta">
-          <span>{categoryLabel(chapter.project.categoria, lang)}</span>
-          <span>{statusLabel(chapter.project.status, lang)}</span>
-        </p>
-        <p className="chapter-summary">{chapter.project.resumo[lang]}</p>
-        <ul className="chapter-tags" role="list">
-          {chapter.project.stack.slice(0, MAX_TAGS).map((s) => (
-            <li key={s}>{s}</li>
-          ))}
-        </ul>
-        <button
-          type="button"
-          className="chapter-open"
-          aria-label={`${t('chapter.details', lang)}: ${chapter.project.titulo[lang]}`}
-          onClick={() => onOpen(chapter.project.id)}
-        >
-          {t('chapter.details', lang)}
-        </button>
-      </>
-    )
+  const { project } = chapter
+  const body = (
+    <>
+      <Title text={project.titulo[lang]} index={index} progress={progress} />
+      <p className="chapter-meta">
+        <span>{categoryLabel(project.categoria, lang)}</span>
+        <span>{statusLabel(project.status, lang)}</span>
+      </p>
+      <p className="chapter-summary">{project.resumo[lang]}</p>
+      <ul className="chapter-tags" role="list">
+        {project.stack.slice(0, MAX_TAGS).map((s) => (
+          <li key={s}>{s}</li>
+        ))}
+      </ul>
+      <button
+        type="button"
+        className="chapter-open"
+        aria-label={`${t('chapter.details', lang)}: ${project.titulo[lang]}`}
+        onClick={() => onOpen(project.id)}
+      >
+        {t('chapter.details', lang)}
+      </button>
+    </>
+  )
 
   return progress ? <Leaving index={index} progress={progress}>{body}</Leaving> : <div className="chapter-block">{body}</div>
 }
@@ -112,19 +107,17 @@ export function ChapterContent({ chapter, index, count, onOpen, progress }: Cont
 type Props = {
   chapter: Chapter
   index: number
-  progress: MotionValue<number>
+  progress: Progress
   active: boolean
-  count?: number
   onOpen: (id: string) => void
 }
 
-export function ChapterText({ chapter, index, progress, active, count, onOpen }: Props) {
+export function ChapterText({ chapter, index, progress, active, onOpen }: Props) {
   const reduce = useReducedMotion()
-  if (chapter.kind === 'credits') return null
   return (
     // visibility:hidden takes inactive chapters out of the tab order and the accessibility tree
     <div className="chapter-text" style={active ? undefined : { visibility: 'hidden' }}>
-      <ChapterContent chapter={chapter} index={index} count={count} onOpen={onOpen} progress={reduce ? undefined : progress} />
+      <ChapterContent chapter={chapter} index={index} onOpen={onOpen} progress={reduce ? undefined : progress} />
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { motion } from 'motion/react'
+import { gsap, useGSAP } from '../../lib/gsap'
 import type { Lang, Project } from '../../lib/types'
 import { asset } from '../../lib/assets'
 import { t } from '../../lib/i18n'
@@ -55,21 +55,27 @@ export function Lightbox({ items, index, lang, onIndex, onClose }: Props) {
     return () => document.removeEventListener('keydown', onKey, true)
   }, [])
 
+  // The print grows out of the page once, when the lightbox opens (not on every arrow press).
+  useGSAP(
+    () => {
+      if (reduce || !root.current) return
+      gsap.from(root.current, { opacity: 0, scale: 0.88, duration: 0.28, ease: 'power2.out', clearProps: 'transform,opacity' })
+    },
+    { dependencies: [reduce] },
+  )
+
   if (!item) return null
   const label = item.alt[lang]
 
   return (
     <div className="lightbox" role="presentation" data-testid="lightbox-backdrop" onClick={(e) => e.target === e.currentTarget && onClose()}>
-      <motion.div
+      <div
         ref={root}
         className="lightbox-panel"
         role="dialog"
         aria-modal="true"
         aria-label={label}
         data-lenis-prevent
-        initial={reduce ? false : { opacity: 0, scale: 0.88 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: reduce ? 0 : 0.28, ease: 'easeOut' }}
       >
         <button ref={closeBtn} type="button" className="lightbox-close" onClick={onClose}>
           {t('modal.close', lang)}
@@ -93,7 +99,7 @@ export function Lightbox({ items, index, lang, onIndex, onClose }: Props) {
             </button>
           </>
         )}
-      </motion.div>
+      </div>
     </div>
   )
 }

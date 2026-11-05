@@ -11,18 +11,17 @@ describe('buildChapters', () => {
     expect(CATEGORY_ORDER).toEqual(['IA e Agentes', 'Sites', 'Hackathons', 'Hardware', 'Universidade', 'Ferramentas'])
   })
 
-  it('wraps the projects between opening and credits', () => {
+  it('holds one chapter per project and nothing else (the hero and contact live outside the stage)', () => {
     const list = buildChapters(projects)
-    expect(list).toHaveLength(projects.length + 2)
-    expect(list[0]).toEqual({ id: 'opening', kind: 'opening' })
-    expect(list.at(-1)).toEqual({ id: 'credits', kind: 'credits' })
+    expect(list).toHaveLength(projects.length)
+    expect(list.every((c) => c.kind === 'project')).toBe(true)
   })
 
   it('orders seed projects by category, then by data order', () => {
     const order = ids(buildChapters(projects))
     expect(order).toEqual([
-      'opening', 'orquestrador', 'companion', 'jarvis', 'reveste', 'pkz', 'chat-amigos',
-      'tabbit', 'bombas', 'ap2', 'b3', 'tradingbot', 'credits',
+      'orquestrador', 'companion', 'jarvis', 'reveste', 'pkz', 'chat-amigos',
+      'tabbit', 'bombas', 'ap2', 'b3', 'tradingbot',
     ])
     expect(order.indexOf('reveste')).toBeLessThan(order.indexOf('tabbit'))
     expect(order.indexOf('pkz')).toBeLessThan(order.indexOf('tabbit'))
@@ -30,7 +29,7 @@ describe('buildChapters', () => {
 
   it('puts an unknown category after the known ones, in data order', () => {
     const list = [make('x', 'Mistério'), make('y', 'Ferramentas'), make('z', 'Outro'), make('w', 'Sites')]
-    expect(ids(buildChapters(list))).toEqual(['opening', 'w', 'y', 'x', 'z', 'credits'])
+    expect(ids(buildChapters(list))).toEqual(['w', 'y', 'x', 'z'])
   })
 
   it('does not mutate its input', () => {
@@ -41,7 +40,7 @@ describe('buildChapters', () => {
   })
 
   it('handles an empty list', () => {
-    expect(ids(buildChapters([]))).toEqual(['opening', 'credits'])
+    expect(buildChapters([])).toEqual([])
   })
 })
 

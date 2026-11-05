@@ -1,10 +1,11 @@
 import { useEffect, useId, useRef, useState, type KeyboardEvent } from 'react'
-import { motion } from 'motion/react'
+import { gsap, useGSAP } from '../../lib/gsap'
 import type { Lang, Project } from '../../lib/types'
 import { asset } from '../../lib/assets'
 import { linkLabel, statusLabel, t } from '../../lib/i18n'
 import { useReducedMotion } from '../../lib/useReducedMotion'
 import { useAppState } from '../../state/AppState'
+import { Demo } from './Demo'
 import { Lightbox } from './Lightbox'
 import './ProjectModal.css'
 
@@ -14,6 +15,14 @@ const SHOT_WIDTH = 800
 const SHOT_HEIGHT = 500
 
 type Props = { project: Project; onClose: () => void }
+
+function DownloadIcon() {
+  return (
+    <svg className="external-icon" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false">
+      <path d="M8 2v8m0 0 3-3m-3 3L5 7M3 13h10" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
 
 function ExternalIcon() {
   return (
@@ -75,6 +84,15 @@ export function ProjectModal({ project, onClose }: Props) {
   const closeBtn = useRef<HTMLButtonElement>(null)
   const [noBackdrop, setNoBackdrop] = useState(false)
 
+  // Entrance only: the dialog rises and settles. Reduced motion shows it in place at once.
+  useGSAP(
+    () => {
+      if (reduce || !panel.current) return
+      gsap.from(panel.current, { opacity: 0, scale: 0.94, y: 24, duration: 0.35, ease: 'power2.out', clearProps: 'transform,opacity' })
+    },
+    { dependencies: [reduce] },
+  )
+
   useEffect(() => {
     const opener = document.activeElement as HTMLElement | null
     closeBtn.current?.focus()
@@ -117,7 +135,9 @@ export function ProjectModal({ project, onClose }: Props) {
       data-testid="modal-backdrop"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      <motion.div
+      {/* the dialog itself keeps Tab inside it (focus trap); that key handler is the accessible pattern, not a fake control */}
+      {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
+      <div
         ref={panel}
         className="modal"
         role="dialog"
@@ -126,9 +146,6 @@ export function ProjectModal({ project, onClose }: Props) {
         data-lenis-prevent // the dialog scrolls itself; Lenis must not hijack the wheel
         aria-labelledby={titleId}
         onKeyDown={trapTab}
-        initial={reduce ? false : { opacity: 0, scale: 0.94, y: 24 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ duration: reduce ? 0 : 0.35, ease: 'easeOut' }}
       >
         {/* sticky so the close button stays reachable on phones, where there is no Esc key */}
         <div className="modal-close-bar">
@@ -150,11 +167,19 @@ export function ProjectModal({ project, onClose }: Props) {
             <ul className="actions" role="list">
               {project.links.map((l) => (
                 <li key={l.url}>
-                  <a className={l.label === 'Site' ? 'action action--primary' : 'action'} href={l.url} target="_blank" rel="noopener noreferrer">
-                    {linkLabel(l.label, lang)}
-                    <span className="sr-only"> ({t('link.newTab', lang)})</span>
-                    <ExternalIcon />
-                  </a>
+                  {/^https?:/i.test(l.url) ? (
+                    <a className={l.label === 'Site' ? 'action action--primary' : 'action'} href={l.url} target="_blank" rel="noopener noreferrer">
+                      {linkLabel(l.label, lang)}
+                      <span className="sr-only"> ({t('link.newTab', lang)})</span>
+                      <ExternalIcon />
+                    </a>
+                  ) : (
+                    // a file published with the site: downloads in place instead of opening another page
+                    <a className="action action--primary" href={asset(l.url)} download>
+                      {linkLabel(l.label, lang)}
+                      <DownloadIcon />
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>
@@ -228,8 +253,11 @@ export function ProjectModal({ project, onClose }: Props) {
               <li key={s}>{s}</li>
             ))}
           </ul>
+
+          {/* keyed by project: a hash change to another project must not keep the previous demo started */}
+          <Demo key={project.id} project={project} lang={lang} />
         </div>
-      </motion.div>
+      </div>
     </div>
   )
 }

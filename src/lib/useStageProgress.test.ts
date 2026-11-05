@@ -1,54 +1,58 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { renderHook } from '@testing-library/react'
-import { motionValue, type MotionValue } from 'motion/react'
 import { useStageProgress } from './useStageProgress'
 
-// useScroll needs real layout; swap it for a value the test drives, keep the real mapping.
-let scroll: MotionValue<number>
-const useScrollMock = vi.fn()
-vi.mock('motion/react', async (orig) => ({
-  ...(await orig<typeof import('motion/react')>()),
-  useScroll: (opts: unknown) => {
-    useScrollMock(opts)
-    return { scrollYProgress: scroll }
+// ScrollTrigger needs real layout; capture the trigger options and drive onUpdate by hand.
+type Opts = { trigger: unknown; start: string; end: string; onUpdate: (s: { progress: number }) => void }
+let opts: Opts | undefined
+const kill = vi.fn()
+vi.mock('./gsap', () => ({
+  ScrollTrigger: {
+    create: (o: Opts) => {
+      opts = o
+      return { progress: 0, kill }
+    },
   },
 }))
 
-const ref = { current: null }
+const ref = { current: document.createElement('div') }
+const scrollTo = (p: number) => opts?.onUpdate({ progress: p })
 
 beforeEach(() => {
-  scroll = motionValue(0)
-  useScrollMock.mockClear()
+  opts = undefined
+  kill.mockClear()
 })
 
 describe('useStageProgress', () => {
-  it('maps scroll 0, 0.5 and 1 onto 0 .. count-1', async () => {
+  it('maps scroll 0, 0.5 and 1 onto 0 .. count-1', () => {
     const { result } = renderHook(() => useStageProgress(ref, 12))
     expect(result.current.get()).toBe(0)
-    scroll.set(0.5)
-    // motion propagates derived values on the next frame, not synchronously.
-    await vi.waitFor(() => expect(result.current.get()).toBeCloseTo(5.5))
-    scroll.set(1)
-    await vi.waitFor(() => expect(result.current.get()).toBe(11))
+    scrollTo(0.5)
+    expect(result.current.get()).toBeCloseTo(5.5)
+    scrollTo(1)
+    expect(result.current.get()).toBe(11)
   })
 
-  it('tracks the stage from its start to its end', () => {
-    renderHook(() => useStageProgress(ref, 12))
-    expect(useScrollMock).toHaveBeenCalledWith({ target: ref, offset: ['start start', 'end end'] })
+  it('tracks the stage from its top to its bottom and stops tracking on unmount', () => {
+    const { unmount } = renderHook(() => useStageProgress(ref, 12))
+    expect(opts).toMatchObject({ trigger: ref.current, start: 'top top', end: 'bottom bottom' })
+    unmount()
+    expect(kill).toHaveBeenCalled()
   })
 
-  it('stays at 0 for a single chapter, with no division by zero', async () => {
-    const { result } = renderHook(() => useStageProgress(ref, 1))
-    scroll.set(1)
-    await new Promise((r) => setTimeout(r, 50))
-    expect(result.current.get()).toBe(0)
-    expect(Number.isFinite(result.current.get())).toBe(true)
+  it('stays at 0 for one chapter or none, with no division by zero', () => {
+    for (const count of [1, 0]) {
+      const { result, unmount } = renderHook(() => useStageProgress(ref, count))
+      scrollTo(1)
+      expect(result.current.get()).toBe(0)
+      unmount()
+    }
   })
 
-  it('stays at 0 for no chapters', async () => {
-    const { result } = renderHook(() => useStageProgress(ref, 0))
-    scroll.set(1)
-    await new Promise((r) => setTimeout(r, 50))
-    expect(result.current.get()).toBe(0)
+  it('ignores a NaN progress from a zero-height stage', () => {
+    const { result } = renderHook(() => useStageProgress(ref, 12))
+    scrollTo(0.5)
+    scrollTo(Number.NaN)
+    expect(result.current.get()).toBeCloseTo(5.5)
   })
 })

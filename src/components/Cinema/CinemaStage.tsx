@@ -1,104 +1,92 @@
-import { useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react'
-import { motion, useMotionValueEvent, useTransform } from 'motion/react'
+import { useMemo, useRef, useState, type CSSProperties } from 'react'
 import { asset } from '../../lib/assets'
+import { gsap } from '../../lib/gsap'
+import { useProgressEffect } from '../../lib/progress'
 import { activeIndex, type Chapter } from '../../lib/chapters'
-import { t } from '../../lib/i18n'
 import { useAppState } from '../../state/AppState'
 import { paletteFor } from '../../lib/palette'
 import { useStageProgress } from '../../lib/useStageProgress'
 import { ChapterText } from './ChapterText'
-import { Credits } from './Credits'
 import { StageCanvas } from './StageCanvas'
 import { TimelineBar } from './TimelineBar'
 import './CinemaStage.css'
 
-// Each chapter gets this much scroll; two extra give the opening and the credits room to breathe.
+// Each chapter gets this much scroll; one extra lets the last project rest before the contact section arrives.
 const CHAPTER_SVH = 130
-const EXTRA_CHAPTERS = 2
+const EXTRA_CHAPTERS = 1
 
 type Props = {
   chapters: Chapter[]
-  /** Number of projects, shown on the opening. */
-  projectCount: number
-  /** Rendered inside the stage so it inherits the chapter colors. */
-  header: ReactNode
   onOpen: (id: string) => void
 }
 
-/** The animated page: one tall block whose scroll drives the 3D shelf, the text, the color and the timeline. */
-export function CinemaStage({ chapters, projectCount, header, onOpen }: Props) {
+/** The projects: one tall block whose scroll drives the 3D shelf, the text, the color and the timeline. */
+export function CinemaStage({ chapters, onOpen }: Props) {
   const stageRef = useRef<HTMLDivElement>(null)
   const last = chapters.length - 1
+  const stickyRef = useRef<HTMLDivElement>(null)
   const progress = useStageProgress(stageRef, chapters.length)
   const [active, setActive] = useState(0)
   const [announce, setAnnounce] = useState('')
   const { lang } = useAppState()
-  useMotionValueEvent(progress, 'change', (f) => setActive(activeIndex(f, chapters.length)))
 
-  const palettes = useMemo(() => chapters.map((c) => paletteFor(c.id)), [chapters])
-  const stops = useMemo(() => chapters.map((_, i) => i), [chapters])
-  // A single chapter has nothing to interpolate between; motion needs at least two stops.
-  const interpolate = <K extends 'ground' | 'ink' | 'accent'>(key: K) =>
-    palettes.length > 1 ? palettes.map((p) => p[key]) : [palettes[0]?.[key] ?? '#08090c', palettes[0]?.[key] ?? '#08090c']
-  const ground = useTransform(progress, palettes.length > 1 ? stops : [0, 1], interpolate('ground'))
-  const ink = useTransform(progress, palettes.length > 1 ? stops : [0, 1], interpolate('ink'))
-  const accent = useTransform(progress, palettes.length > 1 ? stops : [0, 1], interpolate('accent'))
+  // One interpolator per color across every chapter, so the page blends from one project's palette to the next.
+  const blend = useMemo(() => {
+    const palettes = chapters.map((c) => paletteFor(c.id))
+    const across = (key: 'ground' | 'ink' | 'accent') => {
+      const colors = palettes.map((p) => p[key])
+      // a single chapter has nothing to blend between
+      return colors.length > 1 ? gsap.utils.interpolate(colors) : () => colors[0] ?? '#08090c'
+    }
+    return { ground: across('ground'), ink: across('ink'), accent: across('accent') }
+  }, [chapters])
 
-  const covers = useMemo(() => chapters.map((c) => (c.kind === 'project' ? asset(c.project.capa) : '')), [chapters])
-  const backdrops = useMemo(() => chapters.map((c) => (c.kind === 'project' ? asset(c.project.fundo) : '')), [chapters])
+  useProgressEffect(progress, (f) => {
+    setActive(activeIndex(f, chapters.length)) // React skips the render when the index did not change
+    const el = stickyRef.current
+    if (!el) return
+    const p = last > 0 ? Math.min(Math.max(f / last, 0), 1) : 0
+    const ground = blend.ground(p)
+    el.style.setProperty('--ground', ground)
+    el.style.setProperty('--ink', blend.ink(p))
+    el.style.setProperty('--accent-chapter', blend.accent(p))
+    el.style.backgroundColor = ground
+  })
+
+  const covers = useMemo(() => chapters.map((c) => asset(c.project.capa)), [chapters])
+  const backdrops = useMemo(() => chapters.map((c) => asset(c.project.fundo)), [chapters])
 
   const jumpTo = (index: number) => {
     const el = stageRef.current
     if (!el || last < 1) return
     const travel = Math.max(el.offsetHeight - window.innerHeight, 0)
-    window.scrollTo({ top: Math.max(el.offsetTop + (index / last) * travel, 0), behavior: 'auto' })
+    // page offset from the layout box: the stage sits inside its section, so offsetTop alone is not enough
+    const top = el.getBoundingClientRect().top + window.scrollY
+    window.scrollTo({ top: Math.max(top + (index / last) * travel, 0), behavior: 'auto' })
     // a jump swaps the visible chapter while focus stays on the marker, so say what is now showing
     const c = chapters[index]
-    if (c) setAnnounce(`${c.kind === 'project' ? c.project.titulo[lang] : c.kind === 'opening' ? t('site.fullName', lang) : t('about.title', lang)}, ${index + 1}/${chapters.length}`)
-  }
-
-  // the closing button vanishes with the credits, so focus moves to the timeline instead of falling to <body>
-  const backToTop = () => {
-    jumpTo(0)
-    stageRef.current?.querySelector<HTMLElement>('.timeline-marker')?.focus()
+    if (c) setAnnounce(`${c.project.titulo[lang]}, ${index + 1}/${chapters.length}`)
   }
 
   const style = {
     height: `${(chapters.length + EXTRA_CHAPTERS) * CHAPTER_SVH}svh`,
   } as CSSProperties
-  // Custom properties are not in CSSProperties' keys; motion accepts motion values for them.
-  const stickyStyle = {
-    '--ground': ground,
-    '--ink': ink,
-    '--accent-chapter': accent,
-    backgroundColor: ground,
-  } as unknown as Record<string, unknown>
-
   return (
     <div ref={stageRef} className="cinema" style={style}>
-      <motion.div className="cinema-sticky" style={stickyStyle}>
+      <div ref={stickyRef} className="cinema-sticky">
         <StageCanvas covers={covers} backdrops={backdrops} progress={progress} fallback={null} />
         <div className="cinema-scrim" aria-hidden="true" />
         <div className="cinema-bar cinema-bar--top" aria-hidden="true" />
         <div className="cinema-bar cinema-bar--bottom" aria-hidden="true" />
-        {header}
         {chapters.map((c, i) => (
-          <ChapterText key={c.id} chapter={c} index={i} progress={progress} active={i === active} count={projectCount} onOpen={onOpen} />
+          <ChapterText key={c.id} chapter={c} index={i} progress={progress} active={i === active} onOpen={onOpen} />
         ))}
-        <div className="cinema-credits" style={hiddenStyle(active !== last)}>
-          <Credits onTop={backToTop} />
-        </div>
         <p className="sr-only" role="status" aria-live="polite">
           {announce}
         </p>
         <TimelineBar chapters={chapters} activeIndex={active} onJump={jumpTo} progress={progress} />
         <div className="cinema-grain" aria-hidden="true" />
-      </motion.div>
+      </div>
     </div>
   )
-}
-
-// visibility (not display) keeps the layout and takes the hidden chapter out of the tab order
-function hiddenStyle(hidden: boolean): CSSProperties | undefined {
-  return hidden ? { visibility: 'hidden' } : undefined
 }

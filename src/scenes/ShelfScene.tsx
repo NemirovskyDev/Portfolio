@@ -10,7 +10,7 @@ import {
   type Mesh,
   type MeshBasicMaterial,
 } from 'three'
-import type { MotionValue } from 'motion/react'
+import type { Progress } from '../lib/progress'
 import { CanvasBoundary } from '../components/CanvasBoundary'
 import { shelfLayout } from '../lib/shelfLayout'
 
@@ -22,7 +22,6 @@ const MAX_TILT = 0.06 // rad of pointer parallax
 const BACKDROP_TINT = '#8d8d96' // dims the backdrop so the covers stay the focus
 const FLAT = '#1c1d24' // stand-in for a cover that failed to load
 
-const clamp01 = (n: number) => Math.min(1, Math.max(0, n))
 
 const clampIndex = (f: number, count: number) =>
   Math.min(Math.max(Number.isFinite(f) ? f : 0, 0), Math.max(count - 1, 0))
@@ -93,7 +92,7 @@ function useBackdropStore(urls: string[], active: number) {
   return store
 }
 
-function Shelf({ covers, backdrops, progress }: { covers: string[]; backdrops: string[]; progress: MotionValue<number> }) {
+function Shelf({ covers, backdrops, progress }: { covers: string[]; backdrops: string[]; progress: Progress }) {
   const root = useRef<Group>(null)
   const slots = useRef<(Group | null)[]>([])
   const mats = useRef<(MeshBasicMaterial | null)[]>([])
@@ -127,8 +126,6 @@ function Shelf({ covers, backdrops, progress }: { covers: string[]; backdrops: s
     // but never so far that the focused cover's top edge leaves the view.
     const halfH = Math.tan(MathUtils.degToRad(FOV / 2)) * CAMERA_Z
     const yFit = Math.min(Math.max(0, 1 - aspect) * 2.2, Math.max(0, halfH - COVER_SIZE[1] / 2 * 1.7 * sFit))
-    // The credits have no cover: let the shelf leave instead of hanging behind the closing text.
-    const leaving = 1 - clamp01(f - (covers.length - 2))
     shelfLayout(covers.length, f).forEach((it, i) => {
       const g = slots.current[i]
       if (!g) return
@@ -136,7 +133,7 @@ function Shelf({ covers, backdrops, progress }: { covers: string[]; backdrops: s
       g.rotation.y = it.rotY
       g.scale.setScalar(it.scale * sFit)
       const m = mats.current[i]
-      if (m) m.opacity = it.opacity * leaving
+      if (m) m.opacity = it.opacity
     })
 
     const shelf = root.current
@@ -154,7 +151,7 @@ function Shelf({ covers, backdrops, progress }: { covers: string[]; backdrops: s
     // crossfade: floor(f) backdrop underneath, ceil(f) backdrop on top at opacity f - floor(f)
     const lo = Math.floor(f)
     const hi = Math.ceil(f)
-    // the credits have no backdrop: fade the last one out instead of holding it under the closing text
+    // a backdrop that failed to load fades the one below out instead of cutting to nothing
     const hiHasTexture = textures.current.get(backdrops[hi] ?? '') instanceof Texture
     const layers = [
       [low.current, lo, hi === lo || hiHasTexture ? 1 : 1 - (f - lo)],
@@ -210,7 +207,7 @@ export default function ShelfScene({
 }: {
   covers: string[]
   backdrops: string[]
-  progress: MotionValue<number>
+  progress: Progress
 }) {
   // stop rendering while the tab is hidden
   const [visible, setVisible] = useState(() => document.visibilityState !== 'hidden')
