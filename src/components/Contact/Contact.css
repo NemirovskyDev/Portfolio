@@ -7,6 +7,16 @@
   color: var(--ink);
   background: var(--ground);
 }
+/* starts on the last project's colour and melts into the closing gradient */
+.contact::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 1;
+  height: 55%;
+  pointer-events: none;
+  background: linear-gradient(180deg, var(--seam-last, var(--ground)), transparent);
+}
 .contact-body {
   position: relative;
   z-index: 2;

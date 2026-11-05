@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { hasWebGL } from '../lib/hasWebGL'
+import { ScrollTrigger } from '../lib/gsap'
 import { scrollToTarget, useSmoothScroll } from '../lib/useSmoothScroll'
 import { Home } from './Home'
 import { AppStateProvider } from '../state/AppState'
@@ -23,7 +24,12 @@ const renderHome = () =>
     </AppStateProvider>,
   )
 
+// refresh() restores the scroll position with window.scrollTo, which would be counted as the page's own calls
+const refresh = vi.spyOn(ScrollTrigger, 'refresh')
+
 beforeEach(() => {
+  refresh.mockReset()
+  refresh.mockImplementation(() => {})
   localStorage.clear()
   window.history.replaceState(null, '', '/')
   vi.mocked(hasWebGL).mockReturnValue(true)
@@ -209,6 +215,24 @@ describe('site navigation', () => {
     await user.keyboard('{Escape}')
     expect(toggle).toHaveAttribute('aria-expanded', 'false')
     expect(toggle).toHaveFocus()
+  })
+})
+
+describe('language change', () => {
+  it('measures the page again, because the text has another height', async () => {
+    const user = userEvent.setup()
+    renderHome()
+    await vi.waitFor(() => expect(refresh).toHaveBeenCalled()) // the first render measures too
+    refresh.mockClear()
+    await user.click(screen.getByRole('button', { name: /mudar idioma para inglês/ }))
+    await vi.waitFor(() => expect(refresh).toHaveBeenCalled())
+  })
+
+  it('joins the sections on the colour of the neighbouring project', () => {
+    renderHome()
+    const main = document.querySelector('main') as HTMLElement
+    expect(main.style.getPropertyValue('--seam-first')).toMatch(/^#[0-9a-f]{6}$/)
+    expect(main.style.getPropertyValue('--seam-last')).toMatch(/^#[0-9a-f]{6}$/)
   })
 })
 

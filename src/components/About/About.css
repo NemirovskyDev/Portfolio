@@ -3,7 +3,8 @@
   align-items: center;
   min-height: 100svh;
   color: var(--ink);
-  background: var(--ground);
+  /* ends on the first project's colour, so the stage starts without an edge */
+  background: linear-gradient(180deg, var(--ground) 0%, var(--ground) 40%, var(--seam-first, var(--ground)) 100%);
 }
 .about-inner {
   display: grid;

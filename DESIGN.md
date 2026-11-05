@@ -232,7 +232,7 @@ Wordmark left (League Gothic, ellipsis), pill buttons right on `ground 70%` with
 Last chapter: League Gothic heading, about text at 86% ink, links in accent, and a ghost pill "back to top" (40% ink border, accent on hover) that returns to chapter 0 and moves focus to the first timeline marker.
 
 ### Letterbox bars and grain
-Top and bottom bars, 7svh each, `ground` mixed 35% with black, z 5, decorative. Grain is a static SVG feTurbulence tile (160px, baseFrequency .9) at 7% opacity, `mix-blend-mode: overlay`, z 6, never animated.
+Top and bottom bars, 20svh each, a gradient from the chapter `ground` itself (the colour About ends on and Contact starts on) that fades to transparent toward the middle (no hard edge, so neighbouring sections meet softly), z 5, decorative. Grain is a static SVG feTurbulence tile (160px, baseFrequency .9) at 7% opacity, `mix-blend-mode: overlay`, z 6, never animated.
 
 ### Static fallback
 `useCinemaMode` returns `static` for reduced motion, 2 cores or fewer, 2 GB or less, or no WebGL. `StaticChapters` stack one `min-height: 100svh` section per chapter, each with the chapter ground, a 35%-opacity backdrop image and a ground gradient (25% to transparent) for AA contrast; no scroll-driven animation, text rendered statically. The global reduced-motion rule also cuts transitions and animations to 0.01ms.
@@ -264,3 +264,6 @@ Order: **Hero, About, Projects (the stage), Contact**. The topbar is fixed for t
 - **About**: title and short text on the left, five skill groups (`src/data/skills.json`) in three columns on the right. Pin and scrub on screens at least 861px wide and 620px tall (one group at a time reveals as the scroll advances); smaller screens reveal once on entry. Reduced motion shows everything at once.
 - **Contact**: same gradient at 55% intensity, the email in accent with Enviar e-mail (mailto) and Copiar e-mail (clipboard, falls back to selecting the text, result announced in a live region), LinkedIn, GitHub and Voltar ao início (focuses the hero title).
 - **Motion engine**: GSAP + ScrollTrigger only. Lenis is driven by `gsap.ticker` and calls `ScrollTrigger.update` on every scroll. Every effect sits inside `gsap.matchMedia` with `prefers-reduced-motion: no-preference`.
+
+### Section seams (2026-11-05)
+Each section ends on the colour of its neighbour: the hero fades to the neutral ground, About runs a gradient from the neutral ground to the first project's ground, and Contact opens on the last project's ground and melts into its own gradient. `Home` sets `--seam-first` and `--seam-last` on `<main>` from `palette.json`; the stage's letterbox bars fade out instead of ending on an edge.

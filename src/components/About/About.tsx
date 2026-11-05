@@ -57,7 +57,8 @@ export function About({ animated }: Props) {
         })
       })
     },
-    { scope: root, dependencies: [animated, lang, groups] },
+    // the language swaps text in place: rebuilding the pin on a toggle would drop its spacer and strand the other triggers
+    { scope: root, dependencies: [animated, groups] },
   )
 
   return (

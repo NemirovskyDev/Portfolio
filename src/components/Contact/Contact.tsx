@@ -37,7 +37,7 @@ export function Contact({ colors, live, animated, onTop }: Props) {
         })
       })
     },
-    { scope: root, dependencies: [animated, lang] },
+    { scope: root, dependencies: [animated] },
   )
 
   const copyEmail = async () => {

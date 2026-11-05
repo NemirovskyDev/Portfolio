@@ -23,17 +23,16 @@
   );
 }
 
-/* Letterbox: cinema bars that follow the chapter ground, darkened. */
+/* Letterbox: the bars melt into the page instead of ending on an edge, so sections meet without a stripe. */
 .cinema-bar {
   position: absolute;
   left: 0;
   right: 0;
   z-index: 5;
-  background: color-mix(in srgb, var(--ground) 35%, black);
   pointer-events: none;
 }
-.cinema-bar--top { top: 0; height: 7svh; }
-.cinema-bar--bottom { bottom: 0; height: 7svh; }
+.cinema-bar--top { top: 0; height: 20svh; background: linear-gradient(180deg, var(--ground) 20%, transparent); }
+.cinema-bar--bottom { bottom: 0; height: 20svh; background: linear-gradient(0deg, var(--ground) 20%, transparent); }
 
 /* Film grain: a static noise tile, no animation, removed with reduced motion by the mode switch. */
 .cinema-grain {

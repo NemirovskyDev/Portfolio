@@ -7,6 +7,16 @@
   color: var(--ink);
   background: var(--ground);
 }
+/* the bottom fades into the ground the About section starts on */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 1;
+  height: 30%;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent, var(--ground));
+}
 .hero-body {
   position: relative;
   z-index: 2;

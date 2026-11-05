@@ -33,7 +33,7 @@ export function Hero({ colors, projectCount, live }: Props) {
           .from('.hero-reveal', { opacity: 0, y: 16, duration: 0.7, stagger: 0.1 }, '-=0.5')
       })
     },
-    { scope: root, dependencies: [lang] },
+    { scope: root, dependencies: [] },
   )
 
   return (
