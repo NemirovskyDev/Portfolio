@@ -59,6 +59,11 @@
     "accent": "#c15ad6",
     "ink": "#f4f2ee"
   },
+  "zenkai": {
+    "ground": "#342015",
+    "accent": "#d07345",
+    "ink": "#f4f2ee"
+  },
   "credits": {
     "ground": "#08090c",
     "ink": "#f4f2ee",

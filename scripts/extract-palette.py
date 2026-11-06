@@ -38,6 +38,7 @@ HUES = {  # degrees, per project in chapter order (see CATEGORY_ORDER in src/lib
     "ap2": 320,  # magenta: the board's neon
     "b3": 170,  # teal: market night
     "tradingbot": 95,  # lime: the green of a rising candle
+    "zenkai": 20,  # vermilion orange: the brand orange of the site and its lantern-lit facade
 }
 # Amber band, used only to report what the image says.
 AMBER = (15, 55)

@@ -18,7 +18,7 @@ const valid = {
 describe('validateProjects', () => {
   it('accepts every seed project', () => {
     const ids = validateProjects(seed).map((p) => p.id)
-    expect(ids).toEqual(['reveste', 'pkz', 'tabbit', 'orquestrador', 'companion', 'ap2', 'bombas', 'b3', 'tradingbot', 'jarvis', 'chat-amigos'])
+    expect(ids).toEqual(['reveste', 'pkz', 'tabbit', 'orquestrador', 'companion', 'ap2', 'bombas', 'b3', 'tradingbot', 'jarvis', 'chat-amigos', 'zenkai'])
   })
 
   it('throws naming id and field when titulo.pt is missing (strict)', () => {

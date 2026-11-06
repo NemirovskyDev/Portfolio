@@ -131,3 +131,16 @@ Backdrop:
 ```text
 Horizontal 16:9 cinematic wide shot of an empty trading desk at night with a wall of out-of-focus monitors showing only abstract glowing line charts in green and amber (#F5B83D), reflections on a polished desk, near-black shadows (#07080D), open negative space on the left for text, film grain. No readable text or numbers on screens, no logos, no watermark.
 ```
+
+## Zenkai Sushi: `public/projetos/zenkai/`
+
+The cover and the backdrop are crops of photos the group already generated in Gemini for the site (`imagensOriginais/` in the project repository): the open kitchen (cover, centre crop to 2:3) and the lantern-lit facade (backdrop, 16:9). Nothing needs to be generated. Replace both files if you want images in the portfolio style; these prompts keep the site orange.
+
+Cover:
+```text
+Vertical 2:3 cinematic poster. A narrow Tokyo izakaya doorway at night, a row of glowing orange paper lanterns with a faint star on each, dark wooden frame, a single warm vermilion light (#D07345) spilling onto a wet street, near-black blue shadows (#07080D), shallow depth of field, fine film grain. Lower third dark and quiet. No people, no text, no letters, no logos, no watermark.
+```
+Backdrop:
+```text
+Horizontal 16:9 cinematic wide shot of a two-storey Japanese restaurant facade at dusk in Shibuya, hundreds of orange paper lanterns along the roofline, deep blue sky, wet asphalt reflecting the lights, open negative space on the left for text, film grain. No people, no readable text, no logos, no watermark.
+```

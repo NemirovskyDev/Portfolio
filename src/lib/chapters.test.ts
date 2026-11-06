@@ -20,7 +20,7 @@ describe('buildChapters', () => {
   it('orders seed projects by category, then by data order', () => {
     const order = ids(buildChapters(projects))
     expect(order).toEqual([
-      'orquestrador', 'companion', 'jarvis', 'reveste', 'pkz', 'chat-amigos',
+      'orquestrador', 'companion', 'jarvis', 'reveste', 'pkz', 'chat-amigos', 'zenkai',
       'tabbit', 'bombas', 'ap2', 'b3', 'tradingbot',
     ])
     expect(order.indexOf('reveste')).toBeLessThan(order.indexOf('tabbit'))

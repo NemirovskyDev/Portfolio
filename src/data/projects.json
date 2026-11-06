@@ -2065,5 +2065,226 @@
         "en": "Three people in the same room: text chat and the voice room with video. The call is real (WebRTC); the cameras are the browser's test cameras."
       }
     }
+  },
+  {
+    "id": "zenkai",
+    "categoria": "Sites",
+    "capa": "projetos/zenkai/cover.webp",
+    "fundo": "projetos/zenkai/backdrop.webp",
+    "titulo": {
+      "pt": "Zenkai Sushi",
+      "en": "Zenkai Sushi"
+    },
+    "resumo": {
+      "pt": "Site de um restaurante japonês temático de Dragon Ball em Shibuya, adaptado de um template, com abertura animada e transição entre as páginas.",
+      "en": "Website for a Dragon Ball themed Japanese restaurant in Shibuya, adapted from a template, with an animated opening and a transition between pages."
+    },
+    "proposito": {
+      "pt": "Trabalho em grupo de Design Gráfico e User Experience: transformar um site base, o template Royal Master Hotel, da Colorlib, em um site para um segmento novo. A estrutura foi mantida, e logo, favicon, textos, botões e todas as fotos foram trocados.",
+      "en": "Group assignment for Graphic Design and User Experience: turn a base site, the Royal Master Hotel template by Colorlib, into a site for a new segment. The structure was kept, and the logo, favicon, texts, buttons and every photo were replaced."
+    },
+    "papel": {
+      "pt": "Trabalho em grupo de 4 integrantes. Minha parte foi as animações e transições, os textos, o SEO e a estrutura das páginas e as fotos geradas no Gemini.",
+      "en": "Group work with 4 members. My part was the animations and transitions, the texts, the SEO and page structure, and the photos generated in Gemini."
+    },
+    "stack": [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "GSAP",
+      "Bootstrap",
+      "WebGL"
+    ],
+    "status": "no-ar",
+    "links": [
+      {
+        "label": "Site",
+        "url": "https://jpedroferreira07.github.io/DSGN-AP2-2026-2/"
+      },
+      {
+        "label": "GitHub",
+        "url": "https://github.com/jpedroferreira07/DSGN-AP2-2026-2"
+      }
+    ],
+    "funcionalidades": [
+      {
+        "pt": "Abertura com um contador de poder de luta que estoura, racha a tela e a faz cair em cacos, com as esferas do dragão de 1 a 7 estrelas.",
+        "en": "An opening with a power level counter that bursts, cracks the screen and shatters it, with the dragon balls from 1 to 7 stars."
+      },
+      {
+        "pt": "Transição do Shenlong entre as páginas: o dragão cobre a tela ao sair e revela a página nova ao chegar.",
+        "en": "A Shenron transition between pages: the dragon covers the screen on the way out and reveals the new page on arrival."
+      },
+      {
+        "pt": "Brasas de ki em canvas, fundo em shader WebGL e efeitos de rolagem com GSAP, ScrollTrigger, SplitText e Lenis.",
+        "en": "Ki embers on a canvas, a WebGL shader background and scroll effects with GSAP, ScrollTrigger, SplitText and Lenis."
+      },
+      {
+        "pt": "Sete páginas (início, sobre, cardápio, galeria, blog, post e contato) e formulários que validam e confirmam, sem enviar nada.",
+        "en": "Seven pages (home, about, menu, gallery, blog, post and contact) and forms that validate and confirm, without sending anything."
+      },
+      {
+        "pt": "Os efeitos respeitam prefers-reduced-motion, e sem GSAP o site continua funcionando, só sem as animações.",
+        "en": "The effects respect prefers-reduced-motion, and without GSAP the site keeps working, just without the animations."
+      },
+      {
+        "pt": "Fotos em WebP no tamanho exato de cada espaço, com alt, title e nomes de arquivo pensados para SEO.",
+        "en": "Photos in WebP at the exact size of each slot, with alt, title and file names chosen for SEO."
+      }
+    ],
+    "comoFunciona": [
+      {
+        "pt": "No primeiro acesso, a abertura sobe o poder de luta até passar de 8 mil, racha a tela e revela o site.",
+        "en": "On the first visit, the opening raises the power level past 8,000, cracks the screen and reveals the site."
+      },
+      {
+        "pt": "Depois disso, e a cada troca de página, o Shenlong desce cobrindo a tela e sobe revelando a página nova.",
+        "en": "After that, and on every page change, Shenron comes down covering the screen and rises to reveal the new page."
+      },
+      {
+        "pt": "Na página, as brasas de ki e o shader dão vida ao banner, e os blocos aparecem conforme a rolagem.",
+        "en": "On the page, the ki embers and the shader bring the banner to life, and the blocks appear as you scroll."
+      },
+      {
+        "pt": "Nos formulários, os campos são validados na hora e a confirmação aparece, mas nada é enviado.",
+        "en": "In the forms, fields are validated on the spot and a confirmation appears, but nothing is sent."
+      }
+    ],
+    "ferramentas": [
+      {
+        "grupo": {
+          "pt": "Linguagens",
+          "en": "Languages"
+        },
+        "itens": [
+          "HTML5",
+          "CSS3",
+          "JavaScript sem framework"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Base do site",
+          "en": "Site base"
+        },
+        "itens": [
+          "Template Royal Master Hotel (Colorlib)",
+          "Bootstrap",
+          "jQuery",
+          "Owl Carousel"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Animação",
+          "en": "Animation"
+        },
+        "itens": [
+          "GSAP",
+          "ScrollTrigger",
+          "SplitText",
+          "Lenis",
+          "canvas 2D (brasas de ki)",
+          "WebGL (shader próprio)"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Imagens",
+          "en": "Images"
+        },
+        "itens": [
+          "Gemini (geração das fotos)",
+          "WebP recortado no tamanho de cada espaço"
+        ]
+      },
+      {
+        "grupo": {
+          "pt": "Colaboração e publicação",
+          "en": "Collaboration and deployment"
+        },
+        "itens": [
+          "Git e GitHub",
+          "GitHub Pages"
+        ]
+      }
+    ],
+    "metodologia": [
+      {
+        "pt": "Adaptação de um template: a estrutura do Royal Master Hotel foi mantida, e o trabalho foi trocar logo, favicon, textos, botões e todas as fotos para o novo segmento.",
+        "en": "Adapting a template: the Royal Master Hotel structure was kept, and the work was replacing the logo, favicon, texts, buttons and every photo for the new segment."
+      },
+      {
+        "pt": "Melhoria progressiva: sem GSAP o site funciona sem os efeitos, e com prefers-reduced-motion a abertura, o shader e as animações de rolagem ficam desligados.",
+        "en": "Progressive enhancement: without GSAP the site works without the effects, and with prefers-reduced-motion the opening, the shader and the scroll animations are turned off."
+      },
+      {
+        "pt": "SEO: título, descrição e Open Graph em todas as páginas, o Cardápio renomeado para cardapio.html com redirecionamento do nome antigo e imagens com alt, title e nomes de arquivo descritivos.",
+        "en": "SEO: title, description and Open Graph on every page, the Menu renamed to cardapio.html with a redirect from the old name, and images with alt, title and descriptive file names."
+      },
+      {
+        "pt": "Direção de imagem única: todas as fotos foram geradas no Gemini no mesmo estilo (izakaya real, com Dragon Ball só em detalhes) e guardadas em versão original e versão otimizada.",
+        "en": "A single image direction: every photo was generated in Gemini in the same style (a real izakaya, with Dragon Ball only in details) and kept in an original and an optimized version."
+      }
+    ],
+    "desafios": {
+      "pt": "Meu desafio foi ter muita animação (abertura, transição do Shenlong, shader, brasas) sem atrapalhar quem usa o site. A abertura só aparece no primeiro acesso, tudo respeita prefers-reduced-motion e, sem GSAP, a página segue funcionando. Aprendi a tratar a animação como uma camada opcional.",
+      "en": "My challenge was having a lot of animation (opening, Shenron transition, shader, embers) without getting in the way of people using the site. The opening only shows on the first visit, everything respects prefers-reduced-motion and, without GSAP, the page keeps working. I learned to treat animation as an optional layer."
+    },
+    "galeria": [
+      {
+        "src": "projetos/zenkai/shot-1.webp",
+        "alt": {
+          "pt": "Abertura com o contador de poder de luta e as esferas do dragão",
+          "en": "Opening with the power level counter and the dragon balls"
+        }
+      },
+      {
+        "src": "projetos/zenkai/shot-2.webp",
+        "alt": {
+          "pt": "Página inicial com a fachada do restaurante e a reserva de mesa",
+          "en": "Home page with the restaurant facade and the table booking"
+        }
+      },
+      {
+        "src": "projetos/zenkai/shot-3.webp",
+        "alt": {
+          "pt": "Cardápio com os pratos especiais e os preços em ienes",
+          "en": "Menu with the special dishes and the prices in yen"
+        }
+      },
+      {
+        "src": "projetos/zenkai/shot-4.webp",
+        "alt": {
+          "pt": "Galeria com as fotos do restaurante e dos pratos",
+          "en": "Gallery with photos of the restaurant and the dishes"
+        }
+      },
+      {
+        "src": "projetos/zenkai/shot-5.webp",
+        "alt": {
+          "pt": "Destaque do blog: receita do dia, Combo Kamehameha",
+          "en": "Blog highlight: recipe of the day, Kamehameha Combo"
+        }
+      },
+      {
+        "src": "projetos/zenkai/shot-6.webp",
+        "alt": {
+          "pt": "Página Sobre nós, com a história do restaurante e o chef",
+          "en": "About page, with the restaurant's story and the chef"
+        }
+      },
+      {
+        "src": "projetos/zenkai/shot-7.webp",
+        "alt": {
+          "pt": "Contato, com o mapa de Shibuya e o formulário",
+          "en": "Contact, with the Shibuya map and the form"
+        }
+      }
+    ],
+    "demo": {
+      "tipo": "site",
+      "url": "https://jpedroferreira07.github.io/DSGN-AP2-2026-2/"
+    }
   }
 ]

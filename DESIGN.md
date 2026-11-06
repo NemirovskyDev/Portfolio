@@ -30,6 +30,8 @@ colors:
   jarvis-accent: "#2ba2ac"
   chat-amigos-ground: "#2c1431"
   chat-amigos-accent: "#c15ad6"
+  zenkai-ground: "#342015"
+  zenkai-accent: "#d07345"
 typography:
   display:
     fontFamily: "League Gothic, Arial Narrow, sans-serif"
@@ -142,7 +144,7 @@ Near-black grounds, each tinted toward one project's hue at roughly 12 to 16% li
 - **Marquee Amber** (#f5b83d): the opening and credits accent, the `--accent` token, links, selection and the default focus ring.
 
 ### Secondary (per-chapter accents, from `src/data/palette.json`)
-- Reveste Rose (#d65c8f), PKZ Periwinkle (#6d80db), Tabbit Green (#2bab6b), Orquestrador Blue (#5188d4), Companion Violet (#9a6cda), AP2 Magenta (#d65cad), Bombas Ochre (#c48731), B3 Teal (#2aa893), Jarvis Cyan-Teal (#2ba2ac), Chat Amigos Orchid (#c15ad6). Each is used for the chapter button fill, meta line, counter, active timeline marker and hover/focus borders while its chapter is current.
+- Reveste Rose (#d65c8f), PKZ Periwinkle (#6d80db), Tabbit Green (#2bab6b), Orquestrador Blue (#5188d4), Companion Violet (#9a6cda), AP2 Magenta (#d65cad), Bombas Ochre (#c48731), B3 Teal (#2aa893), Jarvis Cyan-Teal (#2ba2ac), Chat Amigos Orchid (#c15ad6), Zenkai Vermilion (#d07345). Each is used for the chapter button fill, meta line, counter, active timeline marker and hover/focus borders while its chapter is current.
 
 ### Neutral
 - **Opening Ground** (#08090c): opening and credits ground (`--ground` default).
@@ -163,6 +165,7 @@ Near-black grounds, each tinted toward one project's hue at roughly 12 to 16% li
 | b3 | #14302b | #2aa893 |
 | jarvis | #153134 | #2ba2ac |
 | chat-amigos | #2c1431 | #c15ad6 |
+| zenkai | #342015 | #d07345 |
 | credits | #08090c | #f5b83d |
 
 ### How colour is driven
