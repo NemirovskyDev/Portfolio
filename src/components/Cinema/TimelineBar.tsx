@@ -83,6 +83,7 @@ function TimelineView({
               <button
                 type="button"
                 className="timeline-marker"
+                data-magnetic="0.15"
                 aria-label={chapterTitle(c, lang)}
                 aria-current={i === current ? 'step' : undefined}
                 onClick={() => onJump(i)}

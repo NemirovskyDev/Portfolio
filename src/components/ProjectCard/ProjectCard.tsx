@@ -1,6 +1,7 @@
-import { useState, type PointerEvent } from 'react'
+import { useState, type MouseEvent, type PointerEvent } from 'react'
 import type { Project } from '../../lib/types'
 import { asset } from '../../lib/assets'
+import { setCoverOrigin } from '../../lib/coverOrigin'
 import { useReducedMotion } from '../../lib/useReducedMotion'
 import { useAppState } from '../../state/AppState'
 import './ProjectCard.css'
@@ -29,11 +30,20 @@ export function ProjectCard({ project, onOpen }: Props) {
     e.currentTarget.style.setProperty('--rx', '0deg')
   }
 
+  const open = (e: MouseEvent<HTMLButtonElement>) => {
+    const img = e.currentTarget.querySelector('img')
+    if (img) {
+      const { left, top, width, height } = img.getBoundingClientRect()
+      if (width > 0 && height > 0) setCoverOrigin({ rect: { left, top, width, height }, src: img.currentSrc || img.src })
+    }
+    onOpen(project.id)
+  }
+
   return (
     <button
       type="button"
       className="card"
-      onClick={() => onOpen(project.id)}
+      onClick={open}
       onPointerMove={reduce ? undefined : tilt}
       onPointerLeave={reduce ? undefined : reset}
     >

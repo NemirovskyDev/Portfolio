@@ -5,17 +5,17 @@ import { t } from '../../lib/i18n'
 import type { FluidColors } from '../../lib/palette'
 import { useAppState } from '../../state/AppState'
 import { FluidBackdrop } from '../Fluid/FluidBackdrop'
+import { RollText } from '../RollText'
 import './Contact.css'
 
-type Props = { colors: FluidColors; live: boolean; animated: boolean; onTop: () => void }
+type Props = { colors: FluidColors; live: boolean; animated: boolean; onTop: () => void; paused?: boolean }
 
 type CopyState = 'idle' | 'copied' | 'failed'
 
 /** Closing section: the way to reach me. No backend, so no form: email (with copy), LinkedIn and GitHub. */
-export function Contact({ colors, live, animated, onTop }: Props) {
+export function Contact({ colors, live, animated, onTop, paused = false }: Props) {
   const { lang } = useAppState()
   const root = useRef<HTMLElement>(null)
-  const emailRef = useRef<HTMLParagraphElement>(null)
   const [copy, setCopy] = useState<CopyState>('idle')
   const links = [
     { key: 'about.linkedin', url: contact.linkedin },
@@ -45,40 +45,32 @@ export function Contact({ colors, live, animated, onTop }: Props) {
       await navigator.clipboard.writeText(contact.email)
       setCopy('copied')
     } catch {
-      // clipboard blocked (insecure context, permission): select the address so Ctrl+C works
-      const node = emailRef.current
-      if (node) {
-        const range = document.createRange()
-        range.selectNodeContents(node)
-        const sel = window.getSelection()
-        sel?.removeAllRanges()
-        sel?.addRange(range)
-      }
+      // clipboard blocked (insecure context, permission): the status message carries the address to copy by hand
       setCopy('failed')
     }
   }
 
-  const status = copy === 'copied' ? t('contact.copied', lang) : copy === 'failed' ? t('contact.copyFailed', lang) : ''
+  const failed = t('contact.copyFailed', lang)
+  // plain text for the screen reader announcement; the visible message wraps the address so one click selects it
+  const status = copy === 'copied' ? t('contact.copied', lang) : copy === 'failed' ? failed.replace('{email}', contact.email) : ''
+  const [before, after = ''] = failed.split('{email}')
 
   return (
     <section ref={root} id="contato" className="contact" aria-labelledby="contact-title">
-      <FluidBackdrop colors={colors} intensity={0.55} live={live} />
+      <FluidBackdrop colors={colors} intensity={0.55} live={live} paused={paused} />
       <div className="contact-body">
         <h2 id="contact-title">{t('contact.title', lang)}</h2>
         <p className="contact-text">{t('contact.text', lang)}</p>
-        <p ref={emailRef} className="contact-email">
-          {contact.email}
-        </p>
         <div className="contact-actions">
-          <a className="contact-primary" href={`mailto:${contact.email}`}>
-            {t('contact.write', lang)}
+          <a className="contact-primary roll-host" data-magnetic="0.35" href={`mailto:${contact.email}`}>
+            <RollText>{t('contact.write', lang)}</RollText>
           </a>
-          <button type="button" className="contact-ghost" onClick={copyEmail}>
-            {t('contact.copy', lang)}
+          <button type="button" className="contact-ghost roll-host" data-magnetic="0.35" onClick={copyEmail}>
+            <RollText>{t('contact.copy', lang)}</RollText>
           </button>
           {links.map((l) => (
-            <a key={l.key} className="contact-ghost" href={l.url} target="_blank" rel="noopener noreferrer">
-              {t(l.key, lang)}
+            <a key={l.key} className="contact-ghost roll-host" data-magnetic="0.35" href={l.url} target="_blank" rel="noopener noreferrer">
+              <RollText>{t(l.key, lang)}</RollText>
               <span className="sr-only"> ({t('link.newTab', lang)})</span>
             </a>
           ))}
@@ -88,11 +80,19 @@ export function Contact({ colors, live, animated, onTop }: Props) {
         </p>
         {status && (
           <p className="contact-status" aria-hidden="true">
-            {status}
+            {copy === 'failed' ? (
+              <>
+                {before}
+                <span className="contact-status-email">{contact.email}</span>
+                {after}
+              </>
+            ) : (
+              status
+            )}
           </p>
         )}
-        <button type="button" className="contact-top" onClick={onTop}>
-          {t('contact.top', lang)}
+        <button type="button" className="contact-top roll-host" data-magnetic="0.35" onClick={onTop}>
+          <RollText>{t('contact.top', lang)}</RollText>
         </button>
       </div>
     </section>

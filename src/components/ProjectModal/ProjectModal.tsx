@@ -2,9 +2,11 @@ import { useEffect, useId, useRef, useState, type KeyboardEvent } from 'react'
 import { gsap, useGSAP } from '../../lib/gsap'
 import type { Lang, Project } from '../../lib/types'
 import { asset } from '../../lib/assets'
+import { takeCoverOrigin, type CoverOrigin } from '../../lib/coverOrigin'
 import { linkLabel, statusLabel, t } from '../../lib/i18n'
 import { useReducedMotion } from '../../lib/useReducedMotion'
 import { useAppState } from '../../state/AppState'
+import { RollText } from '../RollText'
 import { Demo } from './Demo'
 import { Lightbox } from './Lightbox'
 import './ProjectModal.css'
@@ -76,6 +78,38 @@ function Gallery({ items, lang }: { items: NonNullable<Project['galeria']>; lang
   )
 }
 
+/** Cover clone that flies from `from` to `to`, then fades out over the real image. Returns a disposer. */
+function flyCover(from: CoverOrigin, to: DOMRect): () => void {
+  const img = document.createElement('img')
+  img.alt = ''
+  img.setAttribute('aria-hidden', 'true')
+  img.src = from.src
+  Object.assign(img.style, {
+    position: 'fixed',
+    left: `${from.rect.left}px`,
+    top: `${from.rect.top}px`,
+    width: `${from.rect.width}px`,
+    height: `${from.rect.height}px`,
+    objectFit: 'cover',
+    pointerEvents: 'none',
+    zIndex: '60', // above .modal-backdrop (50)
+    borderRadius: '6px',
+    margin: '0',
+  })
+  document.body.appendChild(img)
+
+  const tl = gsap.timeline({ onComplete: dispose })
+  tl.to(img, { left: to.left, top: to.top, width: to.width, height: to.height, borderRadius: 0, duration: 0.55, ease: 'power3.inOut' })
+  tl.to(img, { opacity: 0, duration: 0.25, ease: 'power1.out' })
+  img.addEventListener('error', dispose)
+
+  function dispose() {
+    tl.kill()
+    img.remove()
+  }
+  return dispose
+}
+
 export function ProjectModal({ project, onClose }: Props) {
   const { lang } = useAppState()
   const reduce = useReducedMotion()
@@ -84,14 +118,29 @@ export function ProjectModal({ project, onClose }: Props) {
   const closeBtn = useRef<HTMLButtonElement>(null)
   const [noBackdrop, setNoBackdrop] = useState(false)
 
+  // Taken once per mount: the origin is single-use, and StrictMode runs the effect twice.
+  const origin = useRef<CoverOrigin | null | undefined>(undefined)
+  const disposeFlight = useRef<(() => void) | null>(null)
+
   // Entrance only: the dialog rises and settles. Reduced motion shows it in place at once.
   useGSAP(
     () => {
       if (reduce || !panel.current) return
+      if (origin.current === undefined) origin.current = takeCoverOrigin()
+      // Measured before the panel's own entrance moves it, so the clone lands where the cover really settles.
+      const target = (panel.current.querySelector('.modal-cover') ?? panel.current).getBoundingClientRect()
+      const from = origin.current
       gsap.from(panel.current, { opacity: 0, scale: 0.94, y: 24, duration: 0.35, ease: 'power2.out', clearProps: 'transform,opacity' })
+      if (from && target.width > 0 && target.height > 0) {
+        disposeFlight.current?.()
+        disposeFlight.current = flyCover(from, target)
+      }
+      return () => disposeFlight.current?.()
     },
     { dependencies: [reduce] },
   )
+  // another project opened in place: drop a flight that belongs to the previous one
+  useEffect(() => () => disposeFlight.current?.(), [project.id])
 
   useEffect(() => {
     const opener = document.activeElement as HTMLElement | null
@@ -149,8 +198,8 @@ export function ProjectModal({ project, onClose }: Props) {
       >
         {/* sticky so the close button stays reachable on phones, where there is no Esc key */}
         <div className="modal-close-bar">
-          <button ref={closeBtn} type="button" className="modal-close" onClick={onClose}>
-            {t('modal.close', lang)}
+          <button ref={closeBtn} type="button" className="modal-close roll-host" data-magnetic="0.3" onClick={onClose}>
+            <RollText>{t('modal.close', lang)}</RollText>
           </button>
         </div>
 
@@ -168,15 +217,15 @@ export function ProjectModal({ project, onClose }: Props) {
               {project.links.map((l) => (
                 <li key={l.url}>
                   {/^https?:/i.test(l.url) ? (
-                    <a className={l.label === 'Site' ? 'action action--primary' : 'action'} href={l.url} target="_blank" rel="noopener noreferrer">
-                      {linkLabel(l.label, lang)}
+                    <a className={l.label === 'Site' ? 'action action--primary roll-host' : 'action roll-host'} data-magnetic="0.3" href={l.url} target="_blank" rel="noopener noreferrer">
+                      <RollText>{linkLabel(l.label, lang)}</RollText>
                       <span className="sr-only"> ({t('link.newTab', lang)})</span>
                       <ExternalIcon />
                     </a>
                   ) : (
                     // a file published with the site: downloads in place instead of opening another page
-                    <a className="action action--primary" href={asset(l.url)} download>
-                      {linkLabel(l.label, lang)}
+                    <a className="action action--primary roll-host" data-magnetic="0.3" href={asset(l.url)} download>
+                      <RollText>{linkLabel(l.label, lang)}</RollText>
                       <DownloadIcon />
                     </a>
                   )}

@@ -8,10 +8,10 @@ import './StageCanvas.css'
 // three.js lives in its own chunk, fetched only when the stage actually renders the scene
 const ShelfScene = lazy(() => import('../../scenes/ShelfScene'))
 
-type Props = { covers: string[]; backdrops: string[]; progress: Progress; fallback: ReactNode }
+type Props = { covers: string[]; backdrops: string[]; progress: Progress; fallback: ReactNode; paused?: boolean }
 
 /** Decorative 3D shelf. Any reason it cannot run (no WebGL, reduced motion, no covers, scene error) shows `fallback`. */
-export function StageCanvas({ covers, backdrops, progress, fallback }: Props) {
+export function StageCanvas({ covers, backdrops, progress, fallback, paused = false }: Props) {
   const reduce = useReducedMotion()
   const supported = useMemo(() => !reduce && covers.length > 0 && hasWebGL(), [reduce, covers.length])
 
@@ -20,7 +20,7 @@ export function StageCanvas({ covers, backdrops, progress, fallback }: Props) {
     <div className="stage-canvas" aria-hidden="true">
       <CanvasBoundary fallback={fallback}>
         <Suspense fallback={fallback}>
-          <ShelfScene covers={covers} backdrops={backdrops} progress={progress} />
+          <ShelfScene covers={covers} backdrops={backdrops} progress={progress} paused={paused} />
         </Suspense>
       </CanvasBoundary>
     </div>

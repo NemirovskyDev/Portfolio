@@ -14,7 +14,7 @@ vi.mock('../lib/useSmoothScroll', () => ({ useSmoothScroll: vi.fn(), scrollToTar
 vi.mock('../components/Fluid/FluidBackdrop', () => ({ FluidBackdrop: () => <div data-testid="fluid" /> }))
 // jsdom cannot run WebGL: the stage canvas is replaced by a marker.
 vi.mock('../components/Cinema/StageCanvas', () => ({
-  StageCanvas: () => <div data-testid="stage-canvas" />,
+  StageCanvas: ({ paused }: { paused?: boolean }) => <div data-testid="stage-canvas" data-paused={String(Boolean(paused))} />,
 }))
 
 const renderHome = () =>
@@ -166,6 +166,8 @@ describe('contact', () => {
     const user = userEvent.setup()
     renderHome()
     expect(screen.getByRole('link', { name: 'Enviar e-mail' })).toHaveAttribute('href', 'mailto:bernardoborges15@gmail.com')
+    // the address lives in the buttons only: no loose text repeating it
+    expect(screen.queryByText('bernardoborges15@gmail.com')).toBeNull()
     expect(screen.getByRole('link', { name: /GitHub/ })).toHaveAttribute('href', 'https://github.com/NemirovskyDev')
     expect(screen.getByRole('link', { name: /LinkedIn/ })).toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: 'Voltar ao início' }))
@@ -192,6 +194,8 @@ describe('contact', () => {
     renderHome()
     await user.click(screen.getByRole('button', { name: 'Copiar e-mail' }))
     expect(await screen.findAllByText(/Não deu para copiar/)).not.toHaveLength(0)
+    // the fallback hands over the address to copy by hand
+    expect(screen.getByText('bernardoborges15@gmail.com')).toHaveClass('contact-status-email')
   })
 })
 
@@ -215,6 +219,19 @@ describe('site navigation', () => {
     await user.keyboard('{Escape}')
     expect(toggle).toHaveAttribute('aria-expanded', 'false')
     expect(toggle).toHaveFocus()
+  })
+})
+
+describe('while a window covers the page', () => {
+  it('stops drawing the 3D scene behind the index and behind a project, and resumes after', async () => {
+    const user = userEvent.setup()
+    renderHome()
+    const paused = () => screen.getByTestId('stage-canvas').getAttribute('data-paused')
+    expect(paused()).toBe('false')
+    await user.click(screen.getByRole('button', { name: 'Índice' }))
+    expect(paused()).toBe('true')
+    await user.keyboard('{Escape}')
+    expect(paused()).toBe('false')
   })
 })
 

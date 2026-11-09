@@ -656,16 +656,16 @@
       "en": "Multi-agent orchestrator"
     },
     "resumo": {
-      "pt": "Prompt para o Claude Code que divide o trabalho entre três níveis de modelos: Opus orquestra e valida, Sonnet lidera e Haiku executa.",
-      "en": "A Claude Code prompt that splits work across three model tiers: Opus orchestrates and validates, Sonnet leads and Haiku executes."
+      "pt": "Prompt para o Claude Code que delega o projeto a subagentes e escolhe, para cada tarefa, o nível de modelo e o esforço mais baratos que entregam a qualidade pedida.",
+      "en": "A Claude Code prompt that delegates the project to subagents and picks, for each task, the cheapest model tier and effort that deliver the quality asked for."
     },
     "proposito": {
       "pt": "Entregar tarefas grandes com mais qualidade e menor custo, usando o modelo certo para cada papel.",
       "en": "Deliver large tasks with higher quality and lower cost by using the right model for each role."
     },
     "papel": {
-      "pt": "Autoria do desenho dos papéis e do prompt.",
-      "en": "Author of the role design and the prompt."
+      "pt": "Autoria do desenho dos papéis e do prompt, com níveis por capacidade, esforço por nível e delegação obrigatória.",
+      "en": "Author of the role design and the prompt, with capability tiers, an effort level per tier and mandatory delegation."
     },
     "stack": [
       "Claude Code",
@@ -676,62 +676,62 @@
     "funcionalidades": [
       {
         "pt": "Só ativa em projetos de várias etapas; perguntas simples recebem resposta normal.",
-        "en": "Only activates for multi-step projects; simple questions get a normal answer."
+        "en": "Only activates on multi-step projects; simple questions get a normal answer."
       },
       {
-        "pt": "Antes de agir, escolhe o papel, roda uma skill de planejamento e define critérios de aceite objetivos.",
-        "en": "Before acting, it picks the role, runs a planning skill and sets objective acceptance criteria."
+        "pt": "A delegação já vem autorizada: o orquestrador planeja e valida, e os subagentes fazem as entregas.",
+        "en": "Delegation comes pre-authorized: the orchestrator plans and validates, and the subagents do the deliverables."
       },
       {
-        "pt": "Time de até 2 subagentes líderes (Sonnet), cada um com até 2 executores (Haiku).",
-        "en": "A team of up to 2 lead subagents (Sonnet), each with up to 2 executors (Haiku)."
+        "pt": "Níveis por capacidade (forte, médio, leve) mapeados aos modelos disponíveis; cada subagente recebe nível e esforço.",
+        "en": "Capability tiers (strong, mid, light) mapped to the available models; each subagent gets a tier and an effort level."
       },
       {
-        "pt": "Cada subagente recebe uma skill específica, e os líderes repassam a saída completa dos executores.",
-        "en": "Each subagent gets a specific skill, and leads pass along the full output of their executors."
+        "pt": "Compara um caminho leve, corrigido em rodadas, com um forte, certo de primeira, e escolhe o mais barato que serve.",
+        "en": "Compares a light path, fixed over rounds, with a strong one, right the first time, and picks the cheapest that works."
       },
       {
-        "pt": "O Opus valida toda entrega, diz exatamente o que corrigir e encerra após 3 rodadas.",
-        "en": "Opus validates every delivery, says exactly what to fix, and stops after 3 rounds."
+        "pt": "Se a entrega leve falha de verdade na 1ª rodada, sobe na hora: o nível, se faltou raciocínio; o esforço, se faltou cuidado.",
+        "en": "If a light delivery truly fails in round 1, it escalates at once: the tier if reasoning was missing, the effort if care was."
       },
       {
-        "pt": "Se um subagente trava e outro está livre, o trabalho é redistribuído e os dois atuam em dupla.",
-        "en": "If one subagent gets stuck and another is free, the work is reassigned and the two work as a pair."
+        "pt": "Termina com um registro de calibração: nível, esforço, caminho e rodadas previstas e reais de cada subtarefa.",
+        "en": "Ends with a calibration log: tier, effort, path and expected versus actual rounds for each subtask."
       }
     ],
     "comoFunciona": [
       {
         "pt": "O prompt só entra em ação em projetos de várias etapas. Uma pergunta simples recebe uma resposta normal.",
-        "en": "The prompt only kicks in for multi-step projects. A simple question gets a normal answer."
+        "en": "The prompt only kicks in on multi-step projects. A simple question gets a normal answer."
       },
       {
-        "pt": "Antes de agir, o Opus escolhe o papel, roda uma skill de planejamento e define critérios de aceite objetivos.",
-        "en": "Before acting, Opus picks the role, runs a planning skill and defines objective acceptance criteria."
+        "pt": "O orquestrador não executa as entregas: planeja, escolhe o papel, roda uma skill de planejamento e define critérios de aceite objetivos.",
+        "en": "The orchestrator does not do the deliverables: it plans, picks the role, runs a planning skill and defines objective acceptance criteria."
       },
       {
-        "pt": "Ele monta um time de até 2 líderes (Sonnet), cada um com até 2 executores (Haiku), e entrega a cada subagente uma skill específica.",
-        "en": "It builds a team of up to 2 leads (Sonnet), each with up to 2 executors (Haiku), and gives each subagent a specific skill."
+        "pt": "Mapeia os níveis aos modelos que o Claude Code aceita, avisa se a sessão não está no modelo mais forte e passa o modelo escolhido em cada subagente.",
+        "en": "Maps the tiers to the models Claude Code accepts, warns if the session is not on the strongest model and passes the chosen model on every subagent."
       },
       {
-        "pt": "Os executores fazem o trabalho e os líderes repassam o resultado completo deles, sem resumir.",
-        "en": "The executors do the work and the leads pass their full output along, without summarizing."
+        "pt": "Para cada subtarefa, pontua complexidade, risco e ambiguidade e compara o custo de um caminho leve com correções contra um caminho forte feito certo de primeira.",
+        "en": "For each subtask, scores complexity, risk and ambiguity and compares the cost of a light path with corrections against a strong path done right the first time."
       },
       {
-        "pt": "O Opus valida cada entrega contra os critérios de aceite e diz exatamente o que corrigir.",
-        "en": "Opus validates every delivery against the acceptance criteria and says exactly what to fix."
+        "pt": "Monta o time (até 2 líderes médios com até 2 executores leves, achatando se o ambiente limitar o aninhamento), define nível, esforço e skill de cada um e roda em paralelo o que for independente.",
+        "en": "Builds the team (up to 2 mid leads with up to 2 light workers each, flattened if the environment limits nesting), sets each one's tier, effort and skill and runs the independent parts in parallel."
       },
       {
-        "pt": "Se um subagente travar e outro estiver livre, o trabalho é remanejado e os dois atuam em dupla.",
-        "en": "If a subagent gets stuck and another is free, the work is reassigned and the two work as a pair."
+        "pt": "Valida cada entrega pelas checagens baratas primeiro (testes, lint, build) e diz exatamente o que corrigir, em até 3 rodadas.",
+        "en": "Validates each delivery with the cheap checks first (tests, lint, build) and says exactly what to fix, in up to 3 rounds."
       },
       {
-        "pt": "A validação para depois de 3 rodadas. Se os critérios não forem atendidos, o prompt relata a falha exata em vez de insistir.",
-        "en": "Validation stops after 3 rounds. If the criteria are still unmet, the prompt reports the exact failure instead of retrying."
+        "pt": "Se um subagente trava, divide o trabalho com outro livre ou escala. Passou de 3 rodadas, para e relata a falha exata, e o relatório fecha com o registro de calibração.",
+        "en": "If a subagent gets stuck, it splits the work with an idle one or escalates. Past 3 rounds, it stops and reports the exact failure, and the report closes with the calibration log."
       }
     ],
     "desafios": {
-      "pt": "O principal desafio foi ter qualidade sem gastar tokens à toa, dando a cada papel o modelo certo. O outro foi evitar ciclos de correção infinitos: a validação tem no máximo 3 rodadas e, se os critérios não forem atendidos, o prompt para e relata a falha exata em vez de insistir.",
-      "en": "My biggest challenge was getting quality without wasting tokens, by giving each role the right model. The other was avoiding endless correction loops: validation has at most 3 rounds and, if the criteria are still not met, the prompt stops and reports the exact failure instead of retrying."
+      "pt": "O desafio foi equilibrar custo e qualidade: por isso o prompt compara dois caminhos por subtarefa e sobe de nível já na primeira falha de verdade. O outro foi garantir que o prompt delegue de fato, em vez de fazer tudo sozinho, e evitar correções infinitas: no máximo 3 rodadas e, se falhar, ele para e relata o erro.",
+      "en": "The challenge was balancing cost and quality: that is why the prompt compares two paths per subtask and escalates at the first real failure. The other was making sure the prompt actually delegates instead of doing everything itself, and avoiding endless corrections: at most 3 rounds and, if it fails, it stops and reports the error."
     }
   },
   {

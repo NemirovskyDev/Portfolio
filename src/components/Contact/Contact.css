@@ -34,15 +34,7 @@
   text-transform: uppercase;
 }
 .contact-text { max-width: 56ch; margin: 0; font-size: clamp(1rem, 1.4vw, 1.25rem); line-height: 1.6; opacity: 0.9; }
-.contact-email {
-  margin: 28px 0 0;
-  font-size: clamp(1.25rem, 3.4vw, 2.25rem);
-  font-weight: 600;
-  overflow-wrap: anywhere;
-  user-select: all;
-  color: var(--accent-chapter);
-}
-.contact-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+.contact-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
 .contact-primary,
 .contact-ghost,
 .contact-top {
@@ -60,5 +52,7 @@
 .contact-top { color: var(--ink); background: transparent; border-color: color-mix(in srgb, var(--ink) 40%, transparent); }
 .contact-ghost:hover,
 .contact-top:hover { border-color: var(--accent-chapter); }
-.contact-status { margin: 14px 0 0; font-size: 0.875rem; font-weight: 600; color: var(--accent-chapter); }
+.contact-status { margin: 14px 0 0; font-size: 0.875rem; font-weight: 600; color: var(--accent-chapter); overflow-wrap: anywhere; }
+/* one click selects the whole address, for when the clipboard is blocked */
+.contact-status-email { user-select: all; font-weight: 700; color: var(--ink); }
 .contact-top { margin-top: 56px; }

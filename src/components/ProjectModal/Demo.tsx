@@ -32,10 +32,30 @@ function SiteDemo({ project, lang, url }: { project: Project; lang: Lang; url: s
   const [started, setStarted] = useState(false)
   const [loaded, setLoaded] = useState(false)
   const [slow, setSlow] = useState(false)
+  // Sites with their own smooth scroll swallow the wheel, so a frame under the pointer would trap the window.
+  // Until the visitor clicks, a shield lets the wheel scroll the window.
+  const [active, setActive] = useState(false)
   const href = resolve(url)
   const isApp = !/^https?:/i.test(url)
   const poster = project.galeria?.[0]?.src ?? project.fundo
   const canFullscreen = typeof document !== 'undefined' && document.fullscreenEnabled
+
+  // Inside the frame the page outside gets no pointer events (and mouseleave also fires when the pointer ENTERS an iframe),
+  // so any pointer movement this page does see means the pointer left the frame: the shield goes back up.
+  useEffect(() => {
+    if (!active) return
+    let off: (() => void) | undefined
+    // wait a moment so the movement that follows the click itself is not taken for leaving
+    const arm = window.setTimeout(() => {
+      const back = () => setActive(false)
+      document.addEventListener('pointermove', back, { once: true })
+      off = () => document.removeEventListener('pointermove', back)
+    }, 250)
+    return () => {
+      window.clearTimeout(arm)
+      off?.()
+    }
+  }, [active])
 
   useEffect(() => {
     if (!started || loaded) return
@@ -80,6 +100,11 @@ function SiteDemo({ project, lang, url }: { project: Project; lang: Lang; url: s
               sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
               onLoad={() => setLoaded(true)}
             />
+            {!active && (
+              <button type="button" className="demo-shield" onClick={() => setActive(true)}>
+                <span>{t('demo.interact', lang)}</span>
+              </button>
+            )}
             {!loaded && (
               <p className="demo-note" role="status">
                 {slow ? t('demo.slow', lang) : t('demo.loading', lang)}

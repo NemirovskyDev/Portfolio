@@ -5,6 +5,7 @@ import { useProgressEffect } from '../../lib/progress'
 import { activeIndex, type Chapter } from '../../lib/chapters'
 import { useAppState } from '../../state/AppState'
 import { paletteFor } from '../../lib/palette'
+import { readShelfCover, setCoverOrigin } from '../../lib/coverOrigin'
 import { useStageProgress } from '../../lib/useStageProgress'
 import { ChapterText } from './ChapterText'
 import { StageCanvas } from './StageCanvas'
@@ -18,10 +19,12 @@ const EXTRA_CHAPTERS = 1
 type Props = {
   chapters: Chapter[]
   onOpen: (id: string) => void
+  /** true while a window covers the page. */
+  paused?: boolean
 }
 
 /** The projects: one tall block whose scroll drives the 3D shelf, the text, the color and the timeline. */
-export function CinemaStage({ chapters, onOpen }: Props) {
+export function CinemaStage({ chapters, onOpen, paused = false }: Props) {
   const stageRef = useRef<HTMLDivElement>(null)
   const last = chapters.length - 1
   const stickyRef = useRef<HTMLDivElement>(null)
@@ -68,18 +71,25 @@ export function CinemaStage({ chapters, onOpen }: Props) {
     if (c) setAnnounce(`${c.project.titulo[lang]}, ${index + 1}/${chapters.length}`)
   }
 
+  // the window flies out of the cover shown in the shelf; without one (static chapters) it just opens
+  const open = (id: string, index: number) => {
+    const origin = readShelfCover(index)
+    if (origin) setCoverOrigin(origin)
+    onOpen(id)
+  }
+
   const style = {
     height: `${(chapters.length + EXTRA_CHAPTERS) * CHAPTER_SVH}svh`,
   } as CSSProperties
   return (
     <div ref={stageRef} className="cinema" style={style}>
       <div ref={stickyRef} className="cinema-sticky">
-        <StageCanvas covers={covers} backdrops={backdrops} progress={progress} fallback={null} />
+        <StageCanvas covers={covers} backdrops={backdrops} progress={progress} fallback={null} paused={paused} />
         <div className="cinema-scrim" aria-hidden="true" />
         <div className="cinema-bar cinema-bar--top" aria-hidden="true" />
         <div className="cinema-bar cinema-bar--bottom" aria-hidden="true" />
         {chapters.map((c, i) => (
-          <ChapterText key={c.id} chapter={c} index={i} progress={progress} active={i === active} onOpen={onOpen} />
+          <ChapterText key={c.id} chapter={c} index={i} progress={progress} active={i === active} onOpen={(id) => open(id, i)} />
         ))}
         <p className="sr-only" role="status" aria-live="polite">
           {announce}

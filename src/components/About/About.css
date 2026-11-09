@@ -36,11 +36,58 @@
 }
 .skill-group ul { display: flex; flex-direction: column; gap: 6px; margin: 0; padding: 0; list-style: none; }
 .skill-group li {
-  padding-left: 14px;
+  position: relative; /* anchors the "used in" strip */
   font-size: 0.9rem;
   line-height: 1.35;
   border-left: 2px solid color-mix(in srgb, var(--ink) 25%, transparent);
 }
+.skill-btn {
+  display: block;
+  width: 100%;
+  padding: 2px 0 2px 14px;
+  font: inherit;
+  text-align: left;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.skill-btn:hover, .skill-btn[aria-expanded='true'] { color: var(--accent-chapter); }
+.skill-btn:focus-visible, .skill-chip:focus-visible { outline: 2px solid var(--accent-chapter); outline-offset: 2px; }
+.skill-group li:has(.skill-btn[aria-expanded='true']) { border-left-color: var(--accent-chapter); }
+
+/* floats over the next items instead of pushing them: the pinned section keeps its measured height */
+.skill-used {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  width: max-content;
+  max-width: min(320px, calc(100vw - 2 * var(--gutter)));
+  margin-top: 4px;
+  padding: 10px 12px;
+  color: var(--ink);
+  background: var(--ground);
+  border: 1px solid color-mix(in srgb, var(--ink) 25%, transparent);
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgb(0 0 0 / 0.35);
+}
+.skill-used-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; opacity: 0.7; }
+.skill-chip {
+  padding: 4px 10px;
+  font: inherit;
+  font-size: 0.8125rem;
+  color: inherit;
+  background: color-mix(in srgb, var(--ink) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ink) 30%, transparent);
+  border-radius: 999px;
+  cursor: pointer;
+}
+.skill-chip:hover { color: var(--ground); background: var(--accent-chapter); border-color: var(--accent-chapter); }
 
 @media (max-width: 860px) {
   .about { align-items: flex-start; }

@@ -1,5 +1,6 @@
 import { t } from '../lib/i18n'
 import { useAppState } from '../state/AppState'
+import { RollText } from './RollText'
 import './LangToggle.css'
 
 export function LangToggle() {
@@ -7,11 +8,12 @@ export function LangToggle() {
   return (
     <button
       type="button"
-      className="lang-toggle"
+      className="lang-toggle roll-host"
+      data-magnetic="0.3"
       aria-label={t('lang.switch', lang)}
       onClick={() => setLang(lang === 'pt' ? 'en' : 'pt')}
     >
-      {t('lang.short', lang)}
+      <RollText>{t('lang.short', lang)}</RollText>
     </button>
   )
 }

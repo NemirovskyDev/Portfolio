@@ -6,9 +6,10 @@ import { useSectionProgress } from '../../lib/useSectionProgress'
 import { scrollToTarget } from '../../lib/useSmoothScroll'
 import { useAppState } from '../../state/AppState'
 import { FluidBackdrop } from '../Fluid/FluidBackdrop'
+import { RollText } from '../RollText'
 import './Hero.css'
 
-type Props = { colors: FluidColors; projectCount: number; live: boolean }
+type Props = { colors: FluidColors; projectCount: number; live: boolean; paused?: boolean }
 
 const goTo = (id: string) => {
   const el = document.getElementById(id)
@@ -16,7 +17,7 @@ const goTo = (id: string) => {
 }
 
 /** First screen: the name over a living gradient, one line about the focus, and the two paths a visitor takes. */
-export function Hero({ colors, projectCount, live }: Props) {
+export function Hero({ colors, projectCount, live, paused = false }: Props) {
   const { lang } = useAppState()
   const root = useRef<HTMLElement>(null)
   const progress = useSectionProgress(root)
@@ -38,7 +39,7 @@ export function Hero({ colors, projectCount, live }: Props) {
 
   return (
     <section ref={root} id="inicio" className="hero" aria-label={t('site.name', lang)}>
-      <FluidBackdrop colors={colors} live={live} scroll={progress} />
+      <FluidBackdrop colors={colors} live={live} scroll={progress} paused={paused} />
       <div className="hero-body">
         <h1 className="hero-title" tabIndex={-1}>
           {words.map((w, i) => (
@@ -53,11 +54,11 @@ export function Hero({ colors, projectCount, live }: Props) {
         </h1>
         <p className="hero-sub hero-reveal">{t('hero.line', lang)}</p>
         <div className="hero-actions hero-reveal">
-          <button type="button" className="hero-cta" onClick={() => goTo('projetos')}>
-            {t('hero.cta', lang)}
+          <button type="button" className="hero-cta roll-host" data-magnetic="0.35" onClick={() => goTo('projetos')}>
+            <RollText>{t('hero.cta', lang)}</RollText>
           </button>
-          <button type="button" className="hero-ghost" onClick={() => goTo('contato')}>
-            {t('hero.contact', lang)}
+          <button type="button" className="hero-ghost roll-host" data-magnetic="0.35" onClick={() => goTo('contato')}>
+            <RollText>{t('hero.contact', lang)}</RollText>
           </button>
         </div>
         <p className="hero-meta hero-reveal">

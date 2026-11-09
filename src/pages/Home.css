@@ -43,4 +43,5 @@
   border-radius: 999px;
 }
 .topbar-btn:hover { border-color: var(--accent-chapter); }
+.topbar-btn--icon { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; padding: 0 12px; }
 html { scroll-padding-top: 0; }

@@ -5,6 +5,7 @@ import userEvent from '@testing-library/user-event'
 import { ProjectModal } from './ProjectModal'
 import { useHashProject } from '../../lib/useHashProject'
 import { AppStateProvider } from '../../state/AppState'
+import { setCoverOrigin, takeCoverOrigin } from '../../lib/coverOrigin'
 import { mockReducedMotion, projects, renderWithState } from '../../test/utils'
 
 const reveste = projects.find((p) => p.id === 'reveste')!
@@ -181,6 +182,21 @@ describe('ProjectModal', () => {
       expect(screen.getByRole('link', { name: 'Abrir em nova aba' })).toHaveAttribute('target', '_blank')
     })
 
+    it('a shield keeps the wheel on the window until the visitor clicks, and comes back when the pointer moves outside the frame', async () => {
+      wide(true)
+      const user = userEvent.setup()
+      renderWithState(<ProjectModal project={site} onClose={() => {}} />)
+      await user.click(screen.getByRole('button', { name: 'Testar o site aqui' }))
+      const shield = () => screen.queryByRole('button', { name: 'Clique para usar o site' })
+      expect(shield()).not.toBeNull() // a site with its own smooth scroll would otherwise swallow the wheel and trap the window
+      await user.click(shield()!)
+      expect(shield()).toBeNull()
+      // the frame swallows pointer events: one that reaches this page is the pointer outside the frame
+      await new Promise((r) => setTimeout(r, 300))
+      fireEvent.pointerMove(document.body)
+      expect(shield()).not.toBeNull()
+    })
+
     it('switching to another project resets the demo: it is not started for the new one', async () => {
       wide(true)
       const user = userEvent.setup()
@@ -343,5 +359,52 @@ describe('ProjectModal', () => {
     renderWithState(<ProjectModal project={reveste} onClose={() => {}} />)
     expect(screen.getByRole('button', { name: 'Close' })).toBeInTheDocument()
     expect(screen.getByRole('dialog')).toHaveTextContent('Live')
+  })
+})
+
+describe('ProjectModal cover flight', () => {
+  const origin = { rect: { left: 10, top: 20, width: 100, height: 150 }, src: '/capa.png' }
+  const clone = () => document.body.querySelector('img[aria-hidden="true"][src="/capa.png"]')
+  // jsdom lays nothing out: give every box a size so the destination is measurable
+  const box = { left: 0, top: 0, width: 640, height: 360, right: 640, bottom: 360, x: 0, y: 0, toJSON: () => ({}) }
+
+  beforeEach(() => {
+    takeCoverOrigin()
+    vi.spyOn(Element.prototype, 'getBoundingClientRect').mockReturnValue(box as DOMRect)
+    return () => vi.restoreAllMocks()
+  })
+
+  it('creates an aria-hidden clone from the origin and removes it on unmount', () => {
+    mockReducedMotion(false)
+    setCoverOrigin(origin)
+    const { unmount } = renderWithState(<ProjectModal project={reveste} onClose={() => {}} />)
+    const img = clone() as HTMLImageElement
+    expect(img).not.toBeNull()
+    expect(img.style.pointerEvents).toBe('none')
+    expect(screen.getByRole('dialog')).toBeInTheDocument() // the panel never depends on the clone
+    unmount()
+    expect(clone()).toBeNull()
+  })
+
+  it('removes the clone when its image fails to load', () => {
+    mockReducedMotion(false)
+    setCoverOrigin(origin)
+    renderWithState(<ProjectModal project={reveste} onClose={() => {}} />)
+    fireEvent.error(clone()!)
+    expect(clone()).toBeNull()
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
+  })
+
+  it('creates nothing without an origin', () => {
+    mockReducedMotion(false)
+    renderWithState(<ProjectModal project={reveste} onClose={() => {}} />)
+    expect(clone()).toBeNull()
+  })
+
+  it('creates nothing with reduced motion', () => {
+    mockReducedMotion(true)
+    setCoverOrigin(origin)
+    renderWithState(<ProjectModal project={reveste} onClose={() => {}} />)
+    expect(clone()).toBeNull()
   })
 })

@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { fireEvent, screen } from '@testing-library/react'
 import { ProjectCard } from './ProjectCard'
+import { takeCoverOrigin } from '../../lib/coverOrigin'
 import { mockReducedMotion, projects, renderWithState } from '../../test/utils'
 
 const reveste = projects.find((p) => p.id === 'reveste')!
@@ -56,5 +57,21 @@ describe('ProjectCard', () => {
     renderWithState(<ProjectCard project={reveste} onOpen={() => {}} />)
     const btn = screen.getByRole('button')
     expect(() => fireEvent.pointerMove(btn, { clientX: 10, clientY: 10 })).not.toThrow()
+  })
+
+  it('records the image rectangle as the cover origin before opening', () => {
+    takeCoverOrigin()
+    let seen: ReturnType<typeof takeCoverOrigin> = null
+    const { container } = renderWithState(<ProjectCard project={reveste} onOpen={() => (seen = takeCoverOrigin())} />)
+    container.querySelector('img')!.getBoundingClientRect = () => ({ ...rect, left: 5, top: 6 }) as DOMRect
+    fireEvent.click(screen.getByRole('button'))
+    expect(seen).toMatchObject({ rect: { left: 5, top: 6, width: 200, height: 300 } })
+  })
+
+  it('records no origin when the image has no size (jsdom, placeholder)', () => {
+    takeCoverOrigin()
+    renderWithState(<ProjectCard project={reveste} onOpen={() => {}} />)
+    fireEvent.click(screen.getByRole('button'))
+    expect(takeCoverOrigin()).toBeNull()
   })
 })

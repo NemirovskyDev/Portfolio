@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { t } from '../../lib/i18n'
 import { scrollToTarget } from '../../lib/useSmoothScroll'
 import { useAppState } from '../../state/AppState'
+import { RollText } from '../RollText'
 import './SiteNav.css'
 
 const ITEMS = [
@@ -47,18 +48,19 @@ export function SiteNav() {
       <button
         ref={toggle}
         type="button"
-        className="sitenav-toggle topbar-btn"
+        className="sitenav-toggle topbar-btn roll-host"
+        data-magnetic="0.3"
         aria-expanded={open}
         aria-controls="sitenav-list"
         onClick={() => setOpen((v) => !v)}
       >
-        {t('nav.menu', lang)}
+        <RollText>{t('nav.menu', lang)}</RollText>
       </button>
       <ul id="sitenav-list" className={open ? 'sitenav-list sitenav-list--open' : 'sitenav-list'} role="list">
         {ITEMS.map((it) => (
           <li key={it.id}>
-            <button type="button" className="sitenav-link" onClick={() => go(it.id)}>
-              {t(it.key, lang)}
+            <button type="button" className="sitenav-link roll-host" data-magnetic="0.3" onClick={() => go(it.id)}>
+              <RollText>{t(it.key, lang)}</RollText>
             </button>
           </li>
         ))}

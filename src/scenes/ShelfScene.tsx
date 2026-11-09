@@ -13,6 +13,8 @@ import {
 import type { Progress } from '../lib/progress'
 import { CanvasBoundary } from '../components/CanvasBoundary'
 import { shelfLayout } from '../lib/shelfLayout'
+import { registerShelfReader } from '../lib/coverOrigin'
+import { projectPlaneRect } from '../lib/projectCorners'
 
 const COVER_SIZE: [number, number] = [2, 3] // 2:3 covers
 const BACKDROP_Z = -7
@@ -105,6 +107,20 @@ function Shelf({ covers, backdrops, progress }: { covers: string[]; backdrops: s
   const [active, setActive] = useState(() => Math.round(clampIndex(progress.get(), covers.length)))
   const textures = useBackdropStore(backdrops, active)
   const viewSize = useThree((s) => s.size)
+  const camera = useThree((s) => s.camera)
+  const gl = useThree((s) => s.gl)
+
+  // lets the project window fly out of the cover that is on screen right now
+  useEffect(() => {
+    registerShelfReader((i) => {
+      const group = slots.current[i]
+      const src = covers[i]
+      if (!group || !src) return null
+      const rect = projectPlaneRect(group, COVER_SIZE, camera, gl.domElement.getBoundingClientRect())
+      return rect ? { rect, src } : null
+    })
+    return () => registerShelfReader(null)
+  }, [covers, camera, gl])
 
   const backdropScale = useMemo(() => {
     const h = 2 * (CAMERA_Z - BACKDROP_Z) * Math.tan(MathUtils.degToRad(FOV / 2))
@@ -204,10 +220,13 @@ export default function ShelfScene({
   covers,
   backdrops,
   progress,
+  paused = false,
 }: {
   covers: string[]
   backdrops: string[]
   progress: Progress
+  /** true while a window covers the page: nothing behind it needs to render. */
+  paused?: boolean
 }) {
   // stop rendering while the tab is hidden
   const [visible, setVisible] = useState(() => document.visibilityState !== 'hidden')
@@ -222,7 +241,7 @@ export default function ShelfScene({
   return (
     <Canvas
       dpr={dpr}
-      frameloop={visible ? 'always' : 'never'}
+      frameloop={visible && !paused ? 'always' : 'never'}
       // the canvas layer has pointer-events:none, so pointer parallax listens on the document instead
       eventSource={document.documentElement}
       eventPrefix="client"

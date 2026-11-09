@@ -4,6 +4,7 @@ import { useProgressEffect, type Progress } from '../../lib/progress'
 import { categoryLabel, statusLabel, t } from '../../lib/i18n'
 import { useReducedMotion } from '../../lib/useReducedMotion'
 import { useAppState } from '../../state/AppState'
+import { RollText } from '../RollText'
 import './ChapterText.css'
 
 const MAX_TAGS = 4
@@ -92,11 +93,12 @@ export function ChapterContent({ chapter, index, onOpen, progress }: ContentProp
       </ul>
       <button
         type="button"
-        className="chapter-open"
+        className="chapter-open roll-host"
+        data-magnetic="0.3"
         aria-label={`${t('chapter.details', lang)}: ${project.titulo[lang]}`}
         onClick={() => onOpen(project.id)}
       >
-        {t('chapter.details', lang)}
+        <RollText>{t('chapter.details', lang)}</RollText>
       </button>
     </>
   )

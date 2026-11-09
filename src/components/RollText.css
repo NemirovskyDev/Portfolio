@@ -1,0 +1,11 @@
+.roll { display: inline-block; position: relative; overflow: hidden; vertical-align: bottom; }
+.roll-a { display: block; }
+.roll-b { display: block; position: absolute; inset: 0; transform: translateY(100%); }
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .roll-a, .roll-b { transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
+  .roll-host:hover .roll-a,
+  .roll-host:focus-visible .roll-a { transform: translateY(-100%); }
+  .roll-host:hover .roll-b,
+  .roll-host:focus-visible .roll-b { transform: translateY(0); }
+}

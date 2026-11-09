@@ -14,6 +14,8 @@ type Props = {
   /** false renders only the still gradient (reduced motion, no WebGL, weak device). */
   live: boolean
   scroll?: Progress
+  /** true while a window covers the page. */
+  paused?: boolean
 }
 
 /** Renders only while the section is on screen and the tab is visible, so two of these never run at once. */
@@ -36,9 +38,9 @@ function useOnScreen(ref: RefObject<HTMLElement | null>): boolean {
 }
 
 /** Decorative living gradient behind a section. Always has the still version underneath as its fallback. */
-export function FluidBackdrop({ colors, intensity = 1, live, scroll }: Props) {
+export function FluidBackdrop({ colors, intensity = 1, live, scroll, paused = false }: Props) {
   const root = useRef<HTMLDivElement>(null)
-  const running = useOnScreen(root)
+  const running = useOnScreen(root) && !paused
   // the still version uses the same colours, so the swap to the live field is a soft change, not a flash
   const still = {
     '--fluid-base': colors.base,
