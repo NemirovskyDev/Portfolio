@@ -55,6 +55,14 @@
 .skill-btn:hover, .skill-btn[aria-expanded='true'] { color: var(--accent-chapter); }
 .skill-btn:focus-visible, .skill-chip:focus-visible { outline: 2px solid var(--accent-chapter); outline-offset: 2px; }
 .skill-group li:has(.skill-btn[aria-expanded='true']) { border-left-color: var(--accent-chapter); }
+/*
+ * GSAP leaves a transform on every group and item, and each one becomes its own stacking context: without this,
+ * the items after the open one (and the neighbouring group) are painted over the strip. Lift the open item and its group.
+ */
+.skill-group:has(.skill-btn[aria-expanded='true']) { position: relative; z-index: 20; }
+.skill-group li:has(.skill-btn[aria-expanded='true']) { z-index: 20; }
+/* the strip covers part of the list, so the other items step back while it is open (!important beats GSAP's inline opacity) */
+.skill-group ul:has(.skill-btn[aria-expanded='true']) > li:not(:has(.skill-btn[aria-expanded='true'])) { opacity: 0.25 !important; transition: opacity 0.2s; }
 
 /* floats over the next items instead of pushing them: the pinned section keeps its measured height */
 .skill-used {
@@ -67,6 +75,7 @@
   align-items: center;
   gap: 6px;
   width: max-content;
+  min-width: 100%; /* as wide as the column, so the rows it covers leave no stray letters at its edge */
   max-width: min(320px, calc(100vw - 2 * var(--gutter)));
   margin-top: 4px;
   padding: 10px 12px;
