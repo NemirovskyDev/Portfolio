@@ -98,10 +98,10 @@ export function About({ animated, onOpenProject, focusSkill }: Props) {
         const build = () => {
           tl.clear()
           // clear() keeps the inline styles of the previous tweens; a from() would read their opacity 0 as its end value
-          gsap.set(el.querySelectorAll('.w, .about-inner'), { clearProps: 'opacity,transform' })
+          gsap.set(el.querySelectorAll('.w, .about-inner, .skill-group li'), { clearProps: 'opacity,transform' })
           // each call brings a run of words in from the left, one after the other, starting just before the previous run ends
-          const say = (targets: HTMLElement[], gap: number) => {
-            if (targets.length) tl.from(targets, { opacity: 0, x: -24, duration: 0.5, stagger: gap }, '>-0.35')
+          const say = (targets: HTMLElement[], gap: number, at = '>-0.35') => {
+            if (targets.length) tl.from(targets, { opacity: 0, x: -24, duration: 0.5, stagger: gap }, at)
           }
           const words = (selector: string, from: ParentNode = el) => gsap.utils.toArray<HTMLElement>(`${selector} .w`, from)
           say(words('.about-head h2'), 0.25)
@@ -109,7 +109,12 @@ export function About({ animated, onOpenProject, focusSkill }: Props) {
           groups.forEach((_, i) => {
             const group = `.skill-group[data-i="${i}"]`
             say(words(`${group} h3`), 0.2)
-            el.querySelectorAll<HTMLElement>(`${group} li`).forEach((li) => say(gsap.utils.toArray<HTMLElement>('.w', li), 0.18))
+            el.querySelectorAll<HTMLElement>(`${group} li`).forEach((li) => {
+              // The item's own left bar must not show before its words: it comes in with them. It goes first so the next
+              // item still chains from the end of the words (a position like '>' counts from the last tween added).
+              tl.from(li, { opacity: 0, duration: 0.3 }, '>-0.35')
+              say(gsap.utils.toArray<HTMLElement>('.w', li), 0.18, '<')
+            })
           })
           const inner = el.querySelector<HTMLElement>('.about-inner')
           if (inner) {
