@@ -6,22 +6,13 @@
   /* ends on the first project's colour, so the stage starts without an edge */
   background: linear-gradient(180deg, var(--ground) 0%, var(--ground) 40%, var(--seam-first, var(--ground)) 100%);
 }
-/* While pinned the section is exactly one screen; taller content is slid up by the timeline (see About.tsx).
-   Auto margins centre it when it fits and let it start at the top when it does not. */
-.about--pinned { position: relative; height: 100svh; min-height: 0; align-items: flex-start; }
-.about--pinned .about-inner { margin-block: auto; }
+/* While pinned the section is exactly one screen and stays still; About.tsx zooms the content to fit when the window is short.
+   Auto margins keep it centred when it fits. */
+/* the top and bottom room is outside the zoomed block; keep the numbers in step with SAFE_TOP and SAFE_BOTTOM in About.tsx */
+.about--pinned { position: relative; box-sizing: border-box; height: 100svh; min-height: 0; padding: 80px 0 24px; align-items: flex-start; }
+.about--pinned .about-inner { margin-block: auto; padding-block: 0; }
 /* each word is its own box so the scroll can bring it in; the plain spaces between them still wrap the line */
 .w { display: inline-block; }
-/* content that slides up under the fixed top bar melts into the ground instead of colliding with the bar's buttons */
-.about--pinned::before {
-  content: '';
-  position: absolute;
-  inset: 0 0 auto;
-  z-index: 3;
-  height: 120px;
-  pointer-events: none;
-  background: linear-gradient(180deg, var(--ground) 35%, transparent);
-}
 .about-inner {
   display: grid;
   grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);

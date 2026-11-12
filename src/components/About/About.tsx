@@ -15,6 +15,13 @@ type Props = {
   focusSkill?: { id: string; n: number } | null
 }
 
+/** Room kept free while pinned: the fixed top bar above, a little air below. The content is scaled to fit what is left. */
+const SAFE_TOP = 80
+const SAFE_BOTTOM = 24
+
+/** Smallest scale the content may shrink to on a very short window; below this the text would stop being readable. */
+const MIN_FIT = 0.55
+
 /** Screen heights of scroll per unit of the timeline; one skill takes about a third of a unit, so roughly one wheel notch. */
 const UNIT_SCROLL = 0.4
 
@@ -87,18 +94,27 @@ export function About({ animated, onOpenProject, focusSkill }: Props) {
       if (!animated) return
       const mm = gsap.matchMedia()
       const calm = '(prefers-reduced-motion: no-preference)'
-      // Pinned at any window height. When the content is taller than the window, it slides up while the words appear,
-      // so nothing is cut off and the scroll still walks through the whole section.
+      // Pinned at any window height, and the screen stays still while the scroll writes it: when the content is taller
+      // than the window it is made smaller to fit (see fit), never slid up.
       mm.add(`${calm} and (min-width: 861px)`, () => {
         const el = root.current
         if (!el) return
         el.classList.add('about--pinned')
+        const inner = el.querySelector<HTMLElement>('.about-inner')
+        // Measured at full size, then scaled by CSS zoom (which re-wraps the text) so everything fits one screen.
+        const fit = () => {
+          if (!inner) return
+          inner.style.zoom = '1'
+          const room = window.innerHeight - SAFE_TOP - SAFE_BOTTOM
+          inner.style.zoom = String(Math.min(1, Math.max(MIN_FIT, room / inner.offsetHeight)))
+        }
         const tl = gsap.timeline({ defaults: { ease: 'power2.out' } })
 
         const build = () => {
           tl.clear()
+          fit() // the language changes the text, and with it the height
           // clear() keeps the inline styles of the previous tweens; a from() would read their opacity 0 as its end value
-          gsap.set(el.querySelectorAll('.w, .about-inner, .skill-group li'), { clearProps: 'opacity,transform' })
+          gsap.set(el.querySelectorAll('.w, .skill-group li'), { clearProps: 'opacity,transform' })
           // each call brings a run of words in from the left, one after the other, starting just before the previous run ends
           const say = (targets: HTMLElement[], gap: number, at = '>-0.35') => {
             if (targets.length) tl.from(targets, { opacity: 0, x: -24, duration: 0.5, stagger: gap }, at)
@@ -116,13 +132,6 @@ export function About({ animated, onOpenProject, focusSkill }: Props) {
               say(gsap.utils.toArray<HTMLElement>('.w', li), 0.18, '<')
             })
           })
-          const inner = el.querySelector<HTMLElement>('.about-inner')
-          if (inner) {
-            // a function value, so it is measured again on every refresh (resize, language change)
-            const overflow = () => Math.max(0, inner.offsetHeight - window.innerHeight)
-            const total = tl.duration()
-            tl.to(inner, { y: () => -overflow(), ease: 'none', duration: total * 0.9 }, total * 0.1)
-          }
         }
         build()
         refill.current = build
@@ -137,9 +146,11 @@ export function About({ animated, onOpenProject, focusSkill }: Props) {
           scrub: 0.5,
           anticipatePin: 1,
           invalidateOnRefresh: true,
+          onRefreshInit: fit, // a resize changes the window height before the pin is measured again
         })
         return () => {
           refill.current = null
+          if (inner) inner.style.zoom = ''
           el.classList.remove('about--pinned')
         }
       })
