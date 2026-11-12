@@ -30,22 +30,22 @@
   line-height: 0.9;
   text-transform: uppercase;
 }
-.about-head p { max-width: 52ch; margin: 0; font-size: clamp(1rem, 1.4vw, 1.25rem); line-height: 1.6; opacity: 0.88; }
+.about-head p { max-width: 52ch; margin: 0; font-size: clamp(1.125rem, 1.7vw, 1.5rem); line-height: 1.55; opacity: 0.92; }
 
 .about-skills { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px 28px; align-content: start; }
 .skill-group h3 {
-  margin: 0 0 10px;
-  font-size: 0.875rem;
+  margin: 0 0 12px;
+  font-size: 1.0625rem;
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--accent-chapter);
 }
-.skill-group ul { display: flex; flex-direction: column; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.skill-group ul { display: flex; flex-direction: column; gap: 7px; margin: 0; padding: 0; list-style: none; }
 .skill-group li {
   position: relative; /* anchors the "used in" strip */
-  font-size: 0.9rem;
-  line-height: 1.35;
+  font-size: 1.0625rem;
+  line-height: 1.4;
   border-left: 2px solid color-mix(in srgb, var(--ink) 25%, transparent);
 }
 .skill-btn {
@@ -104,6 +104,14 @@
   cursor: pointer;
 }
 .skill-chip:hover { color: var(--ground); background: var(--accent-chapter); border-color: var(--accent-chapter); }
+
+/* Wide screens: the five groups side by side in one row. Two rows of three used up the window height, which is what limits the
+   type size once the content is fitted to one screen. */
+@media (min-width: 1100px) {
+  .about-inner { grid-template-columns: minmax(0, 3fr) minmax(0, 9fr); max-width: 1560px; }
+  .about-skills { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px 22px; }
+  .about-head h2 { font-size: clamp(3rem, 7vw, 6rem); }
+}
 
 @media (max-width: 860px) {
   .about { align-items: flex-start; }
