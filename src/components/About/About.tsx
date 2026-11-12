@@ -15,6 +15,10 @@ type Props = {
   focusSkill?: { id: string; n: number } | null
 }
 
+const itemCount = groups.reduce((n, g) => n + g.itens.length, 0)
+/** Screen heights of scroll given to each skill while the section is pinned. */
+const ITEM_SCROLL = 0.14
+
 export function About({ animated, onOpenProject, focusSkill }: Props) {
   const { lang } = useAppState()
   const root = useRef<HTMLElement>(null)
@@ -58,20 +62,24 @@ export function About({ animated, onOpenProject, focusSkill }: Props) {
     onOpenProject(projectId)
   }
 
-  // Pin and scrub: the section stays on screen while the scroll walks through the intro, then each group in turn.
+  // Pin and scrub: the section stays on screen while the scroll walks through the intro, then each skill in turn.
   useGSAP(
     () => {
       if (!animated) return
       const mm = gsap.matchMedia()
       const calm = '(prefers-reduced-motion: no-preference)'
-      // Pin only where the whole section fits on one screen; a pinned block taller than the window would be cut off.
-      mm.add(`${calm} and (min-width: 861px) and (min-height: 620px)`, () => {
+      // Pinned at any window height. When the content is taller than the window, it slides up while the groups appear,
+      // so nothing is cut off and the scroll still walks through the whole section.
+      mm.add(`${calm} and (min-width: 861px)`, () => {
+        const el = root.current
+        el?.classList.add('about--pinned')
         const tl = gsap.timeline({
           defaults: { ease: 'power2.out' },
           scrollTrigger: {
             trigger: root.current,
             start: 'top top',
-            end: () => `+=${window.innerHeight * (0.6 + groups.length * 0.55)}`,
+            // a stretch of scroll for every single item, so each topic gets its own moment
+            end: () => `+=${window.innerHeight * (0.6 + itemCount * ITEM_SCROLL)}`,
             pin: true,
             scrub: 0.6,
             anticipatePin: 1,
@@ -79,13 +87,25 @@ export function About({ animated, onOpenProject, focusSkill }: Props) {
           },
         })
         tl.from('.about-head > *', { opacity: 0, y: 40, stagger: 0.25, duration: 1 })
+        // One topic at a time: each group title, then its items one after the other, overlapping just enough to feel continuous.
         groups.forEach((_, i) => {
-          tl.from(`.skill-group[data-i="${i}"]`, { opacity: 0, y: 48, duration: 1 })
-          tl.from(`.skill-group[data-i="${i}"] li`, { opacity: 0, x: -14, stagger: 0.08, duration: 0.6 }, '<0.35')
+          const group = `.skill-group[data-i="${i}"]`
+          tl.from(`${group} h3`, { opacity: 0, y: 12, duration: 0.5 }, '>-0.2')
+          el?.querySelectorAll<HTMLElement>(`${group} li`).forEach((li) => {
+            tl.from(li, { opacity: 0, x: -16, duration: 1 }, '>-0.55')
+          })
         })
+        const inner = el?.querySelector<HTMLElement>('.about-inner')
+        if (inner) {
+          // a function value, so it is measured again on every refresh (resize, language change)
+          const overflow = () => Math.max(0, inner.offsetHeight - window.innerHeight)
+          const total = tl.duration()
+          tl.to(inner, { y: () => -overflow(), ease: 'none', duration: total * 0.85 }, total * 0.15)
+        }
+        return () => el?.classList.remove('about--pinned')
       })
-      // Small or short screens: no pin, each part rises once as it enters.
-      mm.add(`${calm} and (max-width: 860px), ${calm} and (max-height: 619px)`, () => {
+      // Narrow screens: no pin, each part rises once as it enters.
+      mm.add(`${calm} and (max-width: 860px)`, () => {
         gsap.from('.about-head > *, .skill-group', {
           opacity: 0,
           y: 32,

@@ -6,6 +6,10 @@
   /* ends on the first project's colour, so the stage starts without an edge */
   background: linear-gradient(180deg, var(--ground) 0%, var(--ground) 40%, var(--seam-first, var(--ground)) 100%);
 }
+/* While pinned the section is exactly one screen; taller content is slid up by the timeline (see About.tsx).
+   Auto margins centre it when it fits and let it start at the top when it does not. */
+.about--pinned { height: 100svh; min-height: 0; align-items: flex-start; }
+.about--pinned .about-inner { margin-block: auto; }
 .about-inner {
   display: grid;
   grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
