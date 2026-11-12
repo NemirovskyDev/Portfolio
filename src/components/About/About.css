@@ -8,8 +8,20 @@
 }
 /* While pinned the section is exactly one screen; taller content is slid up by the timeline (see About.tsx).
    Auto margins centre it when it fits and let it start at the top when it does not. */
-.about--pinned { height: 100svh; min-height: 0; align-items: flex-start; }
+.about--pinned { position: relative; height: 100svh; min-height: 0; align-items: flex-start; }
 .about--pinned .about-inner { margin-block: auto; }
+/* each word is its own box so the scroll can bring it in; the plain spaces between them still wrap the line */
+.w { display: inline-block; }
+/* content that slides up under the fixed top bar melts into the ground instead of colliding with the bar's buttons */
+.about--pinned::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 3;
+  height: 120px;
+  pointer-events: none;
+  background: linear-gradient(180deg, var(--ground) 35%, transparent);
+}
 .about-inner {
   display: grid;
   grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);

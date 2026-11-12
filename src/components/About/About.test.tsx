@@ -1,20 +1,46 @@
-import { fireEvent, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { mockReducedMotion, renderWithState } from '../../test/utils'
 import { SKILL_GROUPS, skillId } from '../../lib/skills'
 import { projects } from '../../data/projects'
 import { AppStateProvider } from '../../state/AppState'
+import { LangToggle } from '../LangToggle'
 import { About } from './About'
 
 const title = (id: string) => projects.find((p) => p.id === id)!.titulo.pt
 
-beforeEach(() => mockReducedMotion(true))
+beforeEach(() => {
+  localStorage.clear() // a language chosen in one test must not leak into the next
+  mockReducedMotion(true)
+})
 
 function setup() {
   const onOpenProject = vi.fn()
   const view = renderWithState(<About animated={false} onOpenProject={onOpenProject} />)
   return { onOpenProject, ...view }
 }
+
+describe('About words', () => {
+  it('splits every text into one box per word, and the accessible names keep their spaces', () => {
+    setup()
+    const heading = screen.getByRole('heading', { level: 2, name: 'Sobre mim' })
+    expect([...heading.querySelectorAll('.w')].map((w) => w.textContent)).toEqual(['Sobre', 'mim'])
+    // a multi-word skill is read as one name, not as separate words glued together
+    const skill = screen.getByRole('button', { name: 'Prompt engineering' })
+    expect(skill.querySelectorAll('.w')).toHaveLength(2)
+  })
+
+  it('renders the same words in English after a language change', () => {
+    render(
+      <AppStateProvider>
+        <LangToggle />
+        <About animated={false} onOpenProject={() => {}} />
+      </AppStateProvider>,
+    )
+    fireEvent.click(screen.getByRole('button', { name: /mudar idioma para inglês/ }))
+    expect(screen.getByRole('heading', { level: 2, name: 'About me' }).querySelectorAll('.w')).toHaveLength(2)
+  })
+})
 
 describe('About skills', () => {
   it('opens "Usado em" with the right projects below the clicked skill', () => {

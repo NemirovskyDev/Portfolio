@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import { projects } from '../../data/projects'
-import { gsap, useGSAP } from '../../lib/gsap'
+import { gsap, ScrollTrigger, useGSAP } from '../../lib/gsap'
 import { t } from '../../lib/i18n'
 import { SKILL_GROUPS as groups } from '../../lib/skills'
 import { useAppState } from '../../state/AppState'
@@ -15,9 +15,25 @@ type Props = {
   focusSkill?: { id: string; n: number } | null
 }
 
-const itemCount = groups.reduce((n, g) => n + g.itens.length, 0)
-/** Screen heights of scroll given to each skill while the section is pinned. */
-const ITEM_SCROLL = 0.14
+/** Screen heights of scroll per unit of the timeline; one skill takes about a third of a unit, so roughly one wheel notch. */
+const UNIT_SCROLL = 0.4
+
+/**
+ * Text split into words so the scroll can bring them in one by one. Done in React (not by rewriting the DOM), so a
+ * language change simply renders new words. The spaces stay as plain text between the spans: the accessible name keeps them.
+ */
+function Words({ text }: { text: string }) {
+  return (
+    <>
+      {text.split(' ').map((w, i) => (
+        <Fragment key={`${i}-${w}`}>
+          {i > 0 ? ' ' : null}
+          <span className="w">{w}</span>
+        </Fragment>
+      ))}
+    </>
+  )
+}
 
 export function About({ animated, onOpenProject, focusSkill }: Props) {
   const { lang } = useAppState()
@@ -62,47 +78,65 @@ export function About({ animated, onOpenProject, focusSkill }: Props) {
     onOpenProject(projectId)
   }
 
-  // Pin and scrub: the section stays on screen while the scroll walks through the intro, then each skill in turn.
+  // The pin lives as long as the layout does; the words in it are refilled when the language changes (see the effect below).
+  const refill = useRef<(() => void) | null>(null)
+
+  // The section starts empty and is written by the scroll: title, intro, then every group title and skill, word by word.
   useGSAP(
     () => {
       if (!animated) return
       const mm = gsap.matchMedia()
       const calm = '(prefers-reduced-motion: no-preference)'
-      // Pinned at any window height. When the content is taller than the window, it slides up while the groups appear,
+      // Pinned at any window height. When the content is taller than the window, it slides up while the words appear,
       // so nothing is cut off and the scroll still walks through the whole section.
       mm.add(`${calm} and (min-width: 861px)`, () => {
         const el = root.current
-        el?.classList.add('about--pinned')
-        const tl = gsap.timeline({
-          defaults: { ease: 'power2.out' },
-          scrollTrigger: {
-            trigger: root.current,
-            start: 'top top',
-            // a stretch of scroll for every single item, so each topic gets its own moment
-            end: () => `+=${window.innerHeight * (0.6 + itemCount * ITEM_SCROLL)}`,
-            pin: true,
-            scrub: 0.6,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-          },
-        })
-        tl.from('.about-head > *', { opacity: 0, y: 40, stagger: 0.25, duration: 1 })
-        // One topic at a time: each group title, then its items one after the other, overlapping just enough to feel continuous.
-        groups.forEach((_, i) => {
-          const group = `.skill-group[data-i="${i}"]`
-          tl.from(`${group} h3`, { opacity: 0, y: 12, duration: 0.5 }, '>-0.2')
-          el?.querySelectorAll<HTMLElement>(`${group} li`).forEach((li) => {
-            tl.from(li, { opacity: 0, x: -16, duration: 1 }, '>-0.55')
+        if (!el) return
+        el.classList.add('about--pinned')
+        const tl = gsap.timeline({ defaults: { ease: 'power2.out' } })
+
+        const build = () => {
+          tl.clear()
+          // clear() keeps the inline styles of the previous tweens; a from() would read their opacity 0 as its end value
+          gsap.set(el.querySelectorAll('.w, .about-inner'), { clearProps: 'opacity,transform' })
+          // each call brings a run of words in from the left, one after the other, starting just before the previous run ends
+          const say = (targets: HTMLElement[], gap: number) => {
+            if (targets.length) tl.from(targets, { opacity: 0, x: -24, duration: 0.5, stagger: gap }, '>-0.35')
+          }
+          const words = (selector: string, from: ParentNode = el) => gsap.utils.toArray<HTMLElement>(`${selector} .w`, from)
+          say(words('.about-head h2'), 0.25)
+          say(words('.about-head p'), 0.09)
+          groups.forEach((_, i) => {
+            const group = `.skill-group[data-i="${i}"]`
+            say(words(`${group} h3`), 0.2)
+            el.querySelectorAll<HTMLElement>(`${group} li`).forEach((li) => say(gsap.utils.toArray<HTMLElement>('.w', li), 0.18))
           })
-        })
-        const inner = el?.querySelector<HTMLElement>('.about-inner')
-        if (inner) {
-          // a function value, so it is measured again on every refresh (resize, language change)
-          const overflow = () => Math.max(0, inner.offsetHeight - window.innerHeight)
-          const total = tl.duration()
-          tl.to(inner, { y: () => -overflow(), ease: 'none', duration: total * 0.85 }, total * 0.15)
+          const inner = el.querySelector<HTMLElement>('.about-inner')
+          if (inner) {
+            // a function value, so it is measured again on every refresh (resize, language change)
+            const overflow = () => Math.max(0, inner.offsetHeight - window.innerHeight)
+            const total = tl.duration()
+            tl.to(inner, { y: () => -overflow(), ease: 'none', duration: total * 0.9 }, total * 0.1)
+          }
         }
-        return () => el?.classList.remove('about--pinned')
+        build()
+        refill.current = build
+
+        ScrollTrigger.create({
+          animation: tl,
+          trigger: el,
+          start: 'top top',
+          // the scroll is proportional to the timeline, so every word and every skill gets its own stretch
+          end: () => `+=${tl.duration() * UNIT_SCROLL * window.innerHeight}`,
+          pin: true,
+          scrub: 0.5,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        })
+        return () => {
+          refill.current = null
+          el.classList.remove('about--pinned')
+        }
       })
       // Narrow screens: no pin, each part rises once as it enters.
       mm.add(`${calm} and (max-width: 860px)`, () => {
@@ -116,21 +150,32 @@ export function About({ animated, onOpenProject, focusSkill }: Props) {
         })
       })
     },
-    // the language swaps text in place: rebuilding the pin on a toggle would drop its spacer and strand the other triggers
+    // Not [lang]: rebuilding the pin on a language change dropped its spacer and left the stage trigger out of place.
     { scope: root, dependencies: [animated] },
   )
+
+  // A language change renders new word elements: refill the same timeline with them. Home measures the page right after.
+  useEffect(() => {
+    refill.current?.()
+  }, [lang])
 
   return (
     <section ref={root} id="sobre" className="about" aria-labelledby="about-title">
       <div className="about-inner">
         <div className="about-head">
-          <h2 id="about-title">{t('about.title', lang)}</h2>
-          <p>{t('about.text', lang)}</p>
+          <h2 id="about-title">
+            <Words text={t('about.title', lang)} />
+          </h2>
+          <p>
+            <Words text={t('about.text', lang)} />
+          </p>
         </div>
         <div className="about-skills" role="group" aria-label={t('about.skills', lang)}>
           {groups.map((g, i) => (
             <div key={g.id} className="skill-group" data-i={i}>
-              <h3>{g.grupo[lang]}</h3>
+              <h3>
+                <Words text={g.grupo[lang]} />
+              </h3>
               <ul role="list">
                 {g.itens.map((it) => {
                   const open = openId === it.id
@@ -148,7 +193,7 @@ export function About({ animated, onOpenProject, focusSkill }: Props) {
                         aria-controls={panelId}
                         onClick={() => setOpenId(open ? null : it.id)}
                       >
-                        {it[lang]}
+                        <Words text={it[lang]} />
                       </button>
                       {open && (
                         // absolute: the pinned section was measured once, so opening this must not change its height
